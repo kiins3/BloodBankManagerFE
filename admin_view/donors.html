@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donor Management - Blood Bank Manager</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -27,43 +27,43 @@
                 <li class="nav-item">
                     <a href="index.html">
                         <i class="ph-bold ph-chart-line-up"></i>
-                        Tổng quan
+                        T?ng quan
                     </a>
                 </li>
                 <li class="nav-item nav-item-dropdown">
                     <div class="nav-item-header active" id="userNavHeader">
                         <div class="left-icon">
                             <i class="ph-bold ph-users"></i>
-                            <span>Quản lý người dùng</span>
+                            <span>Qu?n l� ngu?i d�ng</span>
                         </div>
                         <i class="ph-bold ph-caret-down" id="userNavCaret"></i>
                     </div>
                     <div class="nav-dropdown-content active" id="userNavContent">
-                        <a href="#" class="nav-dropdown-item active" id="navDonorList">Quản lý người hiến</a>
-                        <a href="#" class="nav-dropdown-item" id="navStaffList">Quản lý nhân viên</a>
-                        <a href="#" class="nav-dropdown-item" id="navHospitalList">Quản lý bệnh viện</a>
+                        <a href="#" class="nav-dropdown-item active" id="navDonorList">Qu?n l� ngu?i hi?n</a>
+                        <a href="#" class="nav-dropdown-item" id="navStaffList">Qu?n l� nh�n vi�n</a>
+                        <a href="#" class="nav-dropdown-item" id="navHospitalList">Qu?n l� b?nh vi?n</a>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a href="inventory.html">
                         <i class="ph-bold ph-drop-half-bottom"></i>
-                        Kho máu
+                        Kho m�u
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="campaigns.html">
                         <i class="ph-bold ph-calendar"></i>
-                        Chiến dịch hiến máu
+                        Chi?n d?ch hi?n m�u
                     </a>
                 </li>
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Quản lý người dùng</h2>
-                <p>Quản lý hồ sơ người hiến, nhân viên và phân quyền hệ thống</p>
+                <h2>Qu?n l� ngu?i d�ng</h2>
+                <p>Qu?n l� h? so ngu?i hi?n, nh�n vi�n v� ph�n quy?n h? th?ng</p>
             </header>
 
             <!-- Donor Management View -->
@@ -72,21 +72,21 @@
             <!-- Stats -->
             <div class="grid-4">
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng người hiến</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng ngu?i hi?n</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">156</h3>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Người hiến mới</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Ngu?i hi?n m?i</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">12</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Tháng này</p>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Th�ng n�y</p>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Đủ điều kiện hiến</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">�? di?u ki?n hi?n</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--success-color);">
                         142</h3>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Đơn vị máu đã thu</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">�on v? m�u d� thu</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #ea580c;">520</h3>
                 </div>
             </div>
@@ -94,9 +94,9 @@
             <!-- Donor Database -->
             <div class="card">
                 <div style="margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách người hiến</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Tìm kiếm và lọc cơ sở dữ liệu người
-                        hiến</p>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch ngu?i hi?n</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary);">T�m ki?m v� l?c co s? d? li?u ngu?i
+                        hi?n</p>
                 </div>
 
                 <!-- Toolbar -->
@@ -109,7 +109,7 @@
                     </div>
                     <select
                         style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                        <option>Tất cả nhóm máu</option>
+                        <option>T?t c? nh�m m�u</option>
                         <option>A+</option>
                         <option>A-</option>
                         <option>B+</option>
@@ -121,13 +121,13 @@
                     </select>
                     <select
                         style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                        <option>Tất cả trạng thái</option>
-                        <option>Đủ điều kiện</option>
-                        <option>Không đủ ĐK</option>
+                        <option>T?t c? tr?ng th�i</option>
+                        <option>�? di?u ki?n</option>
+                        <option>Kh�ng d? �K</option>
                     </select>
                     <button class="btn btn-primary" data-modal-target="donorModal">
                         <i class="ph-bold ph-plus"></i>
-                        Thêm người hiến
+                        Th�m ngu?i hi?n
                     </button>
                 </div>
 
@@ -136,18 +136,18 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Họ tên</th>
+                                <th>H? t�n</th>
                                 <th>Email</th>
-                                <th>Liên hệ</th>
-                                <th>Nhóm máu</th>
-                                <th>Tổng số lần</th>
-                                <th>Lần hiến cuối</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
+                                <th>Li�n h?</th>
+                                <th>Nh�m m�u</th>
+                                <th>T?ng s? l?n</th>
+                                <th>L?n hi?n cu?i</th>
+                                <th>Tr?ng th�i</th>
+                                <th>H�nh d?ng</th>
                             </tr>
                         </thead>
                         <tbody id="donorTableBody">
-                            <!-- Dữ liệu người hiến sẽ được nạp tại đây -->
+                            <!-- D? li?u ngu?i hi?n s? du?c n?p t?i d�y -->
                         </tbody>
                     </table>
                 </div>
@@ -159,19 +159,19 @@
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng nhân viên</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng nh�n vi�n</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">24</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang hoạt động</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">�ang ho?t d?ng</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">22</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Quản lý kho</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu?n l� kho</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">8</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Quản lý kỹ thuật</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu?n l� k? thu?t</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">14</h3>
                     </div>
                 </div>
@@ -180,11 +180,11 @@
                 <div class="card">
                     <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách nhân viên</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý tài khoản và chức vụ nhân sự</p>
+                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch nh�n vi�n</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l� t�i kho?n v� ch?c v? nh�n s?</p>
                         </div>
                         <button class="btn btn-primary" onclick="openStaffModal()">
-                            <i class="ph-bold ph-plus"></i> Thêm nhân viên
+                            <i class="ph-bold ph-plus"></i> Th�m nh�n vi�n
                         </button>
                     </div>
 
@@ -193,18 +193,18 @@
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-                            <input type="text" placeholder="Tìm kiếm theo mã, tên..."
+                            <input type="text" placeholder="T�m ki?m theo m�, t�n..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
                         <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>Tất cả vị trí</option>
-                            <option>Quản lý kho</option>
-                            <option>Quản lý kỹ thuật</option>
+                            <option>T?t c? v? tr�</option>
+                            <option>Qu?n l� kho</option>
+                            <option>Qu?n l� k? thu?t</option>
                         </select>
                         <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>Tất cả trạng thái</option>
-                            <option>Hoạt động</option>
-                            <option>Đã khóa</option>
+                            <option>T?t c? tr?ng th�i</option>
+                            <option>Ho?t d?ng</option>
+                            <option>�� kh�a</option>
                         </select>
                     </div>
 
@@ -213,15 +213,15 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Mã NV</th>
-                                    <th>Họ tên</th>
-                                    <th>Vị trí</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th>M� NV</th>
+                                    <th>H? t�n</th>
+                                    <th>V? tr�</th>
+                                    <th>Tr?ng th�i</th>
+                                    <th>H�nh d?ng</th>
                                 </tr>
                             </thead>
                             <tbody id="staffTableBody">
-                                <!-- Dữ liệu nhân viên sẽ được nạp tại đây -->
+                                <!-- D? li?u nh�n vi�n s? du?c n?p t?i d�y -->
                             </tbody>
                         </table>
                     </div>
@@ -233,19 +233,19 @@
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng số bệnh viện</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng s? b?nh vi?n</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">15</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang hợp tác</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">�ang h?p t�c</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">12</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu cấp máu</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Y�u c?u c?p m�u</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">5</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Lượng máu đã cấp</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Lu?ng m�u d� c?p</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1,250</h3>
                     </div>
                 </div>
@@ -254,11 +254,11 @@
                 <div class="card">
                     <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách bệnh viện</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý đối tác và thông tin bệnh viện</p>
+                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch b?nh vi?n</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l� d?i t�c v� th�ng tin b?nh vi?n</p>
                         </div>
                         <button class="btn btn-primary" onclick="openHospitalModal()">
-                            <i class="ph-bold ph-plus"></i> Thêm bệnh viện
+                            <i class="ph-bold ph-plus"></i> Th�m b?nh vi?n
                         </button>
                     </div>
 
@@ -267,13 +267,13 @@
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-                            <input type="text" placeholder="Tìm kiếm tên bệnh viện..."
+                            <input type="text" placeholder="T�m ki?m t�n b?nh vi?n..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
                         <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>Tất cả trạng thái</option>
-                            <option>Đang hợp tác</option>
-                            <option>Ngừng hợp tác</option>
+                            <option>T?t c? tr?ng th�i</option>
+                            <option>�ang h?p t�c</option>
+                            <option>Ng?ng h?p t�c</option>
                         </select>
                     </div>
 
@@ -282,14 +282,14 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Mã BV</th>
-                                    <th>Tên bệnh viện</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th>M� BV</th>
+                                    <th>T�n b?nh vi?n</th>
+                                    <th>Tr?ng th�i</th>
+                                    <th>H�nh d?ng</th>
                                 </tr>
                             </thead>
                             <tbody id="hospitalTableBody">
-                                <!-- Dữ liệu bệnh viện sẽ được nạp tại đây -->
+                                <!-- D? li?u b?nh vi?n s? du?c n?p t?i d�y -->
                             </tbody>
                         </table>
                     </div>
@@ -302,12 +302,12 @@
     <div class="modal-overlay" id="donorModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="donorModalTitle">Thêm người hiến mới</h3>
+                <h3 id="donorModalTitle">Th�m ngu?i hi?n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Quản lý thông tin chi tiết của người hiến.
+                    Qu?n l� th�ng tin chi ti?t c?a ngu?i hi?n.
                 </p>
 
                 <form id="donorForm">
@@ -315,26 +315,26 @@
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Họ tên</label>
-                            <input type="text" id="donorName" class="form-control" placeholder="Nhập họ tên">
+                            <label>H? t�n</label>
+                            <input type="text" id="donorName" class="form-control" placeholder="Nh?p h? t�n">
                         </div>
                         <div class="form-group">
                             <label>CCCD / CMND</label>
-                            <input type="text" id="donorCCCD" class="form-control" placeholder="Nhập số CCCD">
+                            <input type="text" id="donorCCCD" class="form-control" placeholder="Nh?p s? CCCD">
                         </div>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Ngày sinh</label>
+                            <label>Ng�y sinh</label>
                             <input type="date" id="donorDob" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Giới tính</label>
+                            <label>Gi?i t�nh</label>
                             <select id="donorGender" class="form-control">
                                 <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
-                                <option value="Khác">Khác</option>
+                                <option value="N?">N?</option>
+                                <option value="Kh�c">Kh�c</option>
                             </select>
                         </div>
                     </div>
@@ -342,31 +342,31 @@
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" id="donorEmail" class="form-control" placeholder="Nhập email">
+                            <input type="email" id="donorEmail" class="form-control" placeholder="Nh?p email">
                         </div>
                         <div class="form-group">
-                            <label>Số điện thoại</label>
-                            <input type="tel" id="donorPhone" class="form-control" placeholder="Nhập số điện thoại">
+                            <label>S? di?n tho?i</label>
+                            <input type="tel" id="donorPhone" class="form-control" placeholder="Nh?p s? di?n tho?i">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Địa chỉ</label>
-                        <input type="text" id="donorAddress" class="form-control" placeholder="Nhập địa chỉ">
+                        <label>�?a ch?</label>
+                        <input type="text" id="donorAddress" class="form-control" placeholder="Nh?p d?a ch?">
                     </div>
 
                     <div class="form-group">
-                        <label>Nhóm máu & Yếu tố Rh</label>
+                        <label>Nh�m m�u & Y?u t? Rh</label>
                         <div style="display: flex; gap: 1rem;">
                             <select id="donorBloodType" class="form-control" style="flex: 1;">
-                                <option value="">Chọn nhóm máu</option>
+                                <option value="">Ch?n nh�m m�u</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="AB">AB</option>
                                 <option value="O">O</option>
                             </select>
                             <select id="donorRhFactor" class="form-control" style="flex: 1;">
-                                <option value="">Yếu tố Rh</option>
+                                <option value="">Y?u t? Rh</option>
                                 <option value="+">+</option>
                                 <option value="-">-</option>
                             </select>
@@ -374,8 +374,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
-                        <button type="submit" class="btn btn-primary" id="saveDonorBtn">Lưu thông tin</button>
+                        <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
+                        <button type="submit" class="btn btn-primary" id="saveDonorBtn">Luu th�ng tin</button>
                     </div>
                 </form>
             </div>
@@ -385,12 +385,12 @@
     <div class="modal-overlay" id="staffModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="staffModalTitle">Thêm nhân viên mới</h3>
+                <h3 id="staffModalTitle">Th�m nh�n vi�n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Quản lý thông tin chi tiết và quyền truy cập của nhân viên.
+                    Qu?n l� th�ng tin chi ti?t v� quy?n truy c?p c?a nh�n vi�n.
                 </p>
 
                 <form id="staffForm">
@@ -399,63 +399,63 @@
                     <input type="hidden" id="staffCode">
 
                     <div class="form-group">
-                        <label>Họ tên</label>
-                        <input type="text" id="staffName" class="form-control" placeholder="Nhập họ tên">
+                        <label>H? t�n</label>
+                        <input type="text" id="staffName" class="form-control" placeholder="Nh?p h? t�n">
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" id="staffEmail" class="form-control" placeholder="Địa chỉ Email">
+                            <input type="text" id="staffEmail" class="form-control" placeholder="�?a ch? Email">
                         </div>
                         <div class="form-group">
-                            <label>Mật khẩu</label>
+                            <label>M?t kh?u</label>
                             <input type="text" id="staffPassword" class="form-control" value="123126" readonly style="background-color: #f3f4f6; color: var(--text-secondary); cursor: not-allowed;">
                         </div>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Ngày sinh</label>
+                            <label>Ng�y sinh</label>
                             <input type="date" id="staffDob" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Số CCCD</label>
-                            <input type="text" id="staffCCCD" class="form-control" placeholder="Nhập số CCCD">
+                            <label>S? CCCD</label>
+                            <input type="text" id="staffCCCD" class="form-control" placeholder="Nh?p s? CCCD">
                         </div>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Giới tính</label>
+                            <label>Gi?i t�nh</label>
                             <select id="staffGender" class="form-control">
                                 <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
-                                <option value="Khác">Khác</option>
+                                <option value="N?">N?</option>
+                                <option value="Kh�c">Kh�c</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Số điện thoại</label>
-                            <input type="tel" id="staffPhone" class="form-control" placeholder="Nhập số điện thoại">
+                            <label>S? di?n tho?i</label>
+                            <input type="tel" id="staffPhone" class="form-control" placeholder="Nh?p s? di?n tho?i">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Vị trí</label>
+                        <label>V? tr�</label>
                         <select id="staffPosition" class="form-control">
-                            <option value="Quản lý kho">Quản lý kho</option>
-                            <option value="Quản lý kỹ thuật">Quản lý kỹ thuật</option>
+                            <option value="Qu?n l� kho">Qu?n l� kho</option>
+                            <option value="Qu?n l� k? thu?t">Qu?n l� k? thu?t</option>
                         </select>
                     </div>
                     
                     <div class="form-group" style="display: flex; gap: 0.5rem; align-items: center;">
                         <input type="checkbox" id="staffStatus" checked>
-                        <label for="staffStatus" style="margin-bottom: 0;">Trạng thái hoạt động</label>
+                        <label for="staffStatus" style="margin-bottom: 0;">Tr?ng th�i ho?t d?ng</label>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
-                        <button type="submit" class="btn btn-primary" id="saveStaffBtn">Lưu thông tin</button>
+                        <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
+                        <button type="submit" class="btn btn-primary" id="saveStaffBtn">Luu th�ng tin</button>
                     </div>
                 </form>
             </div>
@@ -465,12 +465,12 @@
     <div class="modal-overlay" id="hospitalModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="hospitalModalTitle">Thêm bệnh viện mới</h3>
+                <h3 id="hospitalModalTitle">Th�m b?nh vi?n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Quản lý thông tin đối tác và hệ thống liên kết bệnh viện.
+                    Qu?n l� th�ng tin d?i t�c v� h? th?ng li�n k?t b?nh vi?n.
                 </p>
 
                 <form id="hospitalForm">
@@ -479,47 +479,47 @@
                     <input type="hidden" id="hospitalCode">
 
                     <div class="form-group">
-                        <label>Tên bệnh viện</label>
-                        <input type="text" id="hospitalName" class="form-control" placeholder="Nhập tên bệnh viện">
+                        <label>T�n b?nh vi?n</label>
+                        <input type="text" id="hospitalName" class="form-control" placeholder="Nh?p t�n b?nh vi?n">
                     </div>
 
                     <div class="form-group">
-                        <label>Địa chỉ</label>
-                        <input type="text" id="hospitalAddress" class="form-control" placeholder="Nhập địa chỉ bệnh viện">
+                        <label>�?a ch?</label>
+                        <input type="text" id="hospitalAddress" class="form-control" placeholder="Nh?p d?a ch? b?nh vi?n">
                     </div>
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" id="hospitalEmail" class="form-control" placeholder="Địa chỉ Email">
+                            <input type="text" id="hospitalEmail" class="form-control" placeholder="�?a ch? Email">
                         </div>
                         <div class="form-group">
-                            <label>Mật khẩu</label>
+                            <label>M?t kh?u</label>
                             <input type="password" id="hospitalPassword" class="form-control" value="123126" readonly style="background-color: #f3f4f6; color: var(--text-secondary); cursor: not-allowed;">
                         </div>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Số điện thoại</label>
-                            <input type="text" id="hospitalPhone" class="form-control" placeholder="Nhập SĐT liên hệ">
+                            <label>S? di?n tho?i</label>
+                            <input type="text" id="hospitalPhone" class="form-control" placeholder="Nh?p S�T li�n h?">
                         </div>
                     </div>
                     
                     <div class="form-group" style="display: flex; gap: 0.5rem; align-items: center;">
                         <input type="checkbox" id="hospitalStatus" checked>
-                        <label for="hospitalStatus" style="margin-bottom: 0;">Đang hợp tác</label>
+                        <label for="hospitalStatus" style="margin-bottom: 0;">�ang h?p t�c</label>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
-                        <button type="submit" class="btn btn-primary" id="saveHospitalBtn">Lưu thông tin</button>
+                        <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
+                        <button type="submit" class="btn btn-primary" id="saveHospitalBtn">Luu th�ng tin</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     
-    <script src="../js/script.js"></script>
+    <script src="../script.js"></script>
     <script src="admin.js"></script>
 </body>
 

@@ -2594,7 +2594,7 @@ window.logout = function() {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
     }
 }
 

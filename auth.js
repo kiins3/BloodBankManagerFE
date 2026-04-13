@@ -82,7 +82,7 @@ function setupForms() {
                     // Lấy role từ payload, hoặc từ object user do BE trả về
                     const rawRole = (payload && payload.role) || (result.user && result.user.role) || result.role;
                     
-                    let defaultUrl = '../donor_view/home.html'; // Fallback an toàn
+                    let defaultUrl = 'donor_view/home.html'; // Fallback an toàn
                     
                     if (rawRole) {
                         const role = rawRole.toUpperCase();
@@ -90,22 +90,22 @@ function setupForms() {
                         localStorage.setItem('user_role', role);
 
                         if (role === 'ADMIN') {
-                            defaultUrl = '../admin_view/index.html';
+                            defaultUrl = 'admin_view/index.html';
                         } else if (role === 'DONOR') {
-                            defaultUrl = '../donor_view/home.html';
+                            defaultUrl = 'donor_view/home.html';
                         } else if (role === 'HOSPITAL') {
-                            defaultUrl = '../hospital_view/dashboard.html';
+                            defaultUrl = 'hospital_view/dashboard.html';
                         } else if (role === 'STAFF_TECH' || role === 'STAFF_INVENTORY') {
                             // Cả 2 role staff đều về chung dashboard
-                            defaultUrl = '../staff_view/dashboard.html';
+                            defaultUrl = 'staff_view/dashboard.html';
                         } else if (role === 'STAFF') {
                             // Legacy fallback
-                            defaultUrl = '../staff_view/dashboard.html';
+                            defaultUrl = 'staff_view/dashboard.html';
                         }
                     }
 
                     const returnUrl = sessionStorage.getItem('redirect_event')
-                        ? '../donor_view/events.html?id=' + sessionStorage.getItem('redirect_event')
+                        ? 'donor_view/events.html?id=' + sessionStorage.getItem('redirect_event')
                         : defaultUrl;
 
                     sessionStorage.removeItem('redirect_event');

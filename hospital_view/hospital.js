@@ -115,7 +115,7 @@ window.logout = function() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
     }
 }
 

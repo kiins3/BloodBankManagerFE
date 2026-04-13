@@ -1,5 +1,4 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 /* Staff View Logic */
 
 // Keep simplified inline helpers if not moved
@@ -2589,12 +2588,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadDistributionRequests();
     }
 });
-window.logout = function() {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.clear();
-        window.location.href = '../login.html';
-    }
-}
+
 
 
 // ==================== EXCEL EXPORT ====================

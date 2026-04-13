@@ -1,7 +1,6 @@
 /* Hospital View Logic */
 
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 let hospitalProfile = null;
 
 // Helper to get headers
@@ -111,12 +110,7 @@ window.changePassword = async function(e) {
     }
 }
 
-window.logout = function() {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.clear();
-        window.location.href = '../login.html';
-    }
-}
+
 
 
 function selectUrgency(level, element) {

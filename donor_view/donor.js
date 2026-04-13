@@ -1,5 +1,4 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Donor Portal Loaded");
     // Tự động load thông tin người dùng lên Navbar nếu có các element cần thiết
@@ -839,10 +838,5 @@ async function handleChangePassword(event) {
         btn.innerHTML = originalText;
     }
 }
-window.logout = function() {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.clear();
-        window.location.href = '../login.html';
-    }
-}
+
 

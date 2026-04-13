@@ -1,5 +1,4 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     checkAuthState();

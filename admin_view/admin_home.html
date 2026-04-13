@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="../script.js?v=3"></script>
-    <script src="admin.js?v=3"></script>
 </head>
 
 <body>
@@ -27,7 +25,7 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="admin_home.html" class="active">
+                    <a href="index.html" class="active">
                         <i class="ph-bold ph-chart-line-up"></i>
                         Tổng quan
                     </a>
@@ -50,13 +48,7 @@
                         Chiến dịch hiến máu
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)" onclick="logout()" style="color: #ef4444; margin-top: 2rem;">
-                        <i class="ph-bold ph-sign-out"></i>
-                        Đăng xuất
-                    </a>
-                </li>
-            </ul>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
         </aside>
 
         <!-- Main Content -->
@@ -173,6 +165,7 @@
             </div>
         </main>
     </div>
+    <script src="../script.js"></script>
 </body>
 
 </html>

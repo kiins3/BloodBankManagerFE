@@ -1,5 +1,4 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 
 /**
  * admin.js - Quản lý logic cho giao diện Admin
@@ -551,10 +550,5 @@ window.deactivateEquipment = async function(id, currentCap) {
         }
     } catch (e) { console.error(e); }
 };
-window.logout = function() {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.clear();
-        window.location.href = '../login.html';
-    }
-}
+
 

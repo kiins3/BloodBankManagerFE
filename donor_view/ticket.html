@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé Mời - Cổng Người Hiến Máu</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="donor.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="home.html">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-drop" style="font-size: 20px;"></i>
+                </div>
+                <span class="fw-bold">BloodBank</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Sự kiện</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_tickets.html">Vé của tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.html">Lịch sử</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center mt-2 mt-lg-0" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=random" alt="Avatar"
+                                class="rounded-circle" width="32" height="32">
+                            <span class="ms-2 d-lg-none">Nguyễn Văn A</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="navbarDropdown">
+                            <li>
+                                <h6 class="dropdown-header text-truncate" style="max-width: 200px;">Nguyễn Văn A</h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="profile.html">
+                                    <i class="ph-bold ph-user me-2"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="change_password.html">
+                                    <i class="ph-bold ph-lock-key me-2"></i> Đổi mật khẩu
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center text-danger" href="javascript:void(0)" onclick="logout()">
+                                    <i class="ph-bold ph-sign-out me-2"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 100px; padding-bottom: 80px;">
+
+        <div class="text-center mb-4">
+            <h4 class="fw-bold">Vé Mời Điện Tử</h4>
+            <p class="text-secondary">Dùng vé này để check-in tại địa điểm hiến máu</p>
+        </div>
+
+        <div class="ticket-container">
+
+            <!-- QR Section -->
+            <div class="qr-section">
+                <div class="status-badge" id="ticketStatus">
+                    <i class="ph-bold ph-spinner me-1"></i> Đang tải...
+                </div>
+
+                <div class="bg-white p-2 d-inline-block rounded shadow-sm mx-auto">
+                    <!-- QR Image -->
+                    <img id="ticketQrImg" src="https://placehold.co/150x150/ffffff/cccccc?text=Loading"
+                        alt="QR Code" width="160" height="160" style="object-fit: contain;">
+                </div>
+                <p class="mt-3 text-muted small font-monospace" id="ticketCodeText">Mã vé: -----</p>
+            </div>
+
+            <!-- Info Section -->
+            <div class="ticket-info">
+                <h5 class="fw-bold text-center mb-4" id="ticketEventName">Đang tải tên sự kiện...</h5>
+
+                <div class="row mb-3">
+                    <div class="col-5 text-secondary small">Người hiến:</div>
+                    <div class="col-7 fw-bold text-end" id="ticketDonorName">--</div>
+                </div>
+                <div class="row mb-3" id="ticketDateRow" style="display: none;">
+                    <div class="col-5 text-secondary small">Ngày hẹn:</div>
+                    <div class="col-7 fw-bold text-end" id="ticketDateVal">--/--/----</div>
+                </div>
+                <div class="row mb-3" id="ticketTimeRow" style="display: none;">
+                    <div class="col-5 text-secondary small">Khung giờ:</div>
+                    <div class="col-7 fw-bold text-end text-primary" id="ticketTimeVal">--:-- - --:--</div>
+                </div>
+                <div class="row mb-4" id="ticketLocationRow" style="display: none;">
+                    <div class="col-5 text-secondary small">Địa điểm:</div>
+                    <div class="col-7 fw-bold text-end" id="ticketLocationVal">--</div>
+                </div>
+
+                <hr class="opacity-25 mb-4">
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-light text-secondary btn-sm" onclick="alert('Đã hủy đăng ký!')">
+                        Hủy đăng ký
+                    </button>
+                    <!-- Download button just for show -->
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="ph-bold ph-download-simple me-1"></i> Tải vé về máy
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="donor.js"></script>
+</body>
+
+</html>

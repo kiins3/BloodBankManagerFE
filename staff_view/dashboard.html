@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="staff.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Check role: Dashboard allows both Staff roles
+        checkStaffRole(['STAFF_TECH', 'STAFF_INVENTORY']);
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" th:replace="~{templates/fragments/staff-sidebar :: sidebar('dashboard')}">
+            <div class="brand">
+                <div class="brand-icon"><i class="ph-bold ph-drop"></i></div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p id="staffRoleLabel">Staff Portal</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html" class="active"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h2>Tổng quan</h2>
+                    <p>Công việc cần xử lý trong ca làm việc hôm nay</p>
+                </div>
+                
+                <div class="header-user-info">
+                    <div class="user-details">
+                        <span class="header-user-name" id="headerUserName">Staff Member</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
+                    </div>
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="grid-4">
+                <!-- Lịch hẹn hôm nay -->
+                <div class="card">
+                    <div class="staff-stats-card">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Lịch hẹn hôm nay</p>
+                            <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">150</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Sự kiện đang diễn ra
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-calendar-check" style="color: var(--primary-color);"></i>
+                    </div>
+                </div>
+
+                <!-- Chờ nhập kho -->
+                <div class="card">
+                    <div class="staff-stats-card">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chờ nhập kho</p>
+                            <h3
+                                style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--warning-color);">
+                                24</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Túi máu mới lấy
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-package" style="color: var(--warning-color);"></i>
+                    </div>
+                </div>
+
+                <!-- Yêu cầu mới -->
+                <div class="card">
+                    <div class="staff-stats-card">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu mới</p>
+                            <h3
+                                style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--primary-color);">
+                                5</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Phiếu chờ duyệt
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-file-text" style="color: var(--primary-color);"></i>
+                    </div>
+                </div>
+
+                <!-- Cảnh báo -->
+                <div class="card">
+                    <div class="staff-stats-card">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo</p>
+                            <h3
+                                style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
+                                3</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Sắp hết hạn sử dụng
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-warning" style="color: var(--danger-color);"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Event -->
+            <div class="card event-card">
+                <div>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Sự kiện hôm nay: Chủ nhật Đỏ
+                        - ĐH GTVT</h3>
+                    <p style="color: var(--text-secondary);">Thời gian: 07:30 - 16:30 | Địa điểm: Hội trường A, ĐH Giao
+                        Thông Vận Tải</p>
+                    <div class="event-details">
+                        <span class="badge bg-success-light">Đang diễn ra</span>
+                        <span style="font-size: 0.875rem; color: var(--text-secondary);">Đã tiếp nhận: 56/150</span>
+                    </div>
+                </div>
+                <a href="reception.html" class="btn btn-primary btn-large"
+                    style="background-color: var(--primary-color);">
+                    <i class="ph-bold ph-qr-code"></i>
+                    Bắt đầu Check-in
+                </a>
+            </div>
+
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

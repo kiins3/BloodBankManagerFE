@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - BloodBank VN</title>
+    <link rel="stylesheet" href="../css/auth.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="auth-container">
+        <!-- Return Home Link -->
+        <a href="landing.html" class="back-home">
+            <i class="ph-bold ph-arrow-left"></i> Quay lại trang chủ
+        </a>
+
+        <!-- Left: Image -->
+        <div class="auth-image"
+            style="background-image: url('https://images.unsplash.com/photo-1516574187841-693083f0cc8c?auto=format&fit=crop&q=80');">
+        </div>
+
+        <!-- Right: Form -->
+        <div class="auth-form-container">
+            <div class="auth-form">
+                <a href="#" class="brand">
+                    <div class="brand-icon">
+                        <i class="ph-bold ph-drop"></i>
+                    </div>
+                    <div class="brand-text">BloodBank VN</div>
+                </a>
+
+                <!-- Login View -->
+                <div id="login-view">
+                    <div class="form-header">
+                        <h2>Chào mừng trở lại!</h2>
+                        <p>Vui lòng đăng nhập để tiếp tục.</p>
+                    </div>
+
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-envelope input-icon"></i>
+                                <input type="email" id="email" class="form-control" placeholder="nhanvien@example.com"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password">Mật khẩu</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-lock-key input-icon"></i>
+                                <input type="password" id="password" class="form-control" placeholder="••••••••"
+                                    required>
+                                <button type="button" class="toggle-password">
+                                    <i class="ph ph-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="#" class="forgot-link" id="forgotLink">Quên mật khẩu?</a>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Đăng nhập</button>
+
+                        <div class="auth-footer">
+                            Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Forgot Password View -->
+                <div id="forgot-view" style="display: none;">
+                    <div class="form-header">
+                        <h2>Quên mật khẩu?</h2>
+                        <p>Nhập email để nhận mã xác nhận (OTP) đặt lại mật khẩu.</p>
+                    </div>
+
+                    <form id="forgotForm">
+                        <div class="form-group">
+                            <label class="form-label" for="forgot-email">Email</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-envelope input-icon"></i>
+                                <input type="email" id="forgot-email" class="form-control"
+                                    placeholder="nhanvien@example.com" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Gửi mã xác nhận</button>
+
+                        <div class="auth-footer">
+                            <a href="#" id="backToLogin">
+                                <i class="ph-bold ph-arrow-left"></i> Quay lại đăng nhập
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Reset Password View (After OTP sent) -->
+                <div id="reset-view" style="display: none;">
+                    <div class="form-header">
+                        <h2>Xác thực OTP</h2>
+                        <p>Vui lòng nhập mã OTP đã gửi tới email và mật khẩu mới.</p>
+                    </div>
+
+                    <form id="resetPasswordForm">
+                        <div class="form-group">
+                            <label class="form-label">Mã OTP</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-key input-icon"></i>
+                                <input type="text" id="reset-otp" class="form-control" placeholder="123456" required maxlength="6">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Mật khẩu mới</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-lock-key input-icon"></i>
+                                <input type="password" id="reset-new-password" class="form-control" placeholder="••••••••" required minlength="6">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Xác nhận mật khẩu</label>
+                            <div class="input-wrapper">
+                                <i class="ph ph-lock-key input-icon"></i>
+                                <input type="password" id="reset-confirm-password" class="form-control" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Đặt lại mật khẩu</button>
+
+                        <div class="auth-footer">
+                            <a href="#" id="backToForgot">
+                                <i class="ph-bold ph-arrow-left"></i> Quay lại nhập email
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>

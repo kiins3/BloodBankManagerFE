@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Manager</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-drop" style="font-size: 20px;"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p>Management System</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="active">
+                        <i class="ph-bold ph-chart-line-up"></i>
+                        Tổng quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="donors.html">
+                        <i class="ph-bold ph-users"></i>
+                        Quản lý người hiến
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="inventory.html">
+                        <i class="ph-bold ph-drop-half-bottom"></i>
+                        Kho máu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="campaigns.html">
+                        <i class="ph-bold ph-calendar"></i>
+                        Chiến dịch hiến máu
+                    </a>
+                </li>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2>Tổng quan</h2>
+                <p>Tổng quan về hoạt động và mức tồn kho của kho máu</p>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="grid-4">
+                <!-- Card 1: Tổng chế phẩm máu -->
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng chế phẩm máu</p>
+                            <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">1,250</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Gồm 250 máu toàn phần & 1000 chế phẩm
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-drop" style="color: var(--primary-color);"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Chiến dịch sắp tới -->
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chiến dịch sắp tới</p>
+                            <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">2 Sự kiện</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                ĐH GTVT (20/11) - Đã đăng ký: 150/200
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-calendar-check" style="color: var(--text-secondary);"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3: Yêu cầu chờ duyệt -->
+                <div class="card" style="border-left: 4px solid var(--warning-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu chờ duyệt</p>
+                            <h3
+                                style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--warning-color);">
+                                5</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Cần xử lý gấp từ các bệnh viện
+                            </p>
+                        </div>
+                        <i class="ph-bold ph-clock-countdown" style="color: var(--warning-color);"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4: Cảnh báo hết hạn -->
+                <div class="card" style="border-left: 4px solid var(--danger-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo hết hạn</p>
+                            <h3
+                                style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
+                                12</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Túi máu còn hạn < 7 ngày </p>
+                        </div>
+                        <i class="ph-bold ph-warning-octagon" style="color: var(--danger-color);"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Kho máu theo Nhóm</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Số lượng tồn kho
+                        thực tế</p>
+                    <div style="height: 300px; width: 100%;">
+                        <canvas id="inventoryChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Hiệu quả Chiến dịch</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        So sánh Đăng ký Online vs Thực tế
+                    </p>
+                    <div style="height: 300px; width: 100%;">
+                        <canvas id="campaignChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blood Type Status -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Tình trạng các loại máu
+                        </h3>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Tình trạng sẵn có hiện tại</p>
+                    </div>
+                    <!-- Dropdown Filter -->
+                    <select id="bloodTypeFilter" class="form-control"
+                        style="width: auto; padding: 0.25rem 0.5rem; font-size: 0.875rem;">
+                        <option value="whole">Máu toàn phần</option>
+                        <option value="rbc">Hồng cầu</option>
+                        <option value="plasma">Huyết tương</option>
+                        <option value="platelets">Tiểu cầu</option>
+                    </select>
+                </div>
+
+                <div class="grid-4" id="bloodStatusGrid">
+                    <!-- Javascript will populate this -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

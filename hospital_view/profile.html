@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Profile - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="hospital.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-hospital" style="font-size: 20px;"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p>Hospital Portal</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <i class="ph-bold ph-squares-four"></i>
+                        Tổng quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_request.html">
+                        <i class="ph-bold ph-plus-circle"></i>
+                        Tạo yêu cầu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Lịch sử & Trạng thái
+                    </a>
+                </li>
+                <!-- Profile Link -->
+                <li class="nav-item">
+                    <a href="profile.html" class="active">
+                        <i class="ph-bold ph-user-circle"></i>
+                        Hồ sơ Bệnh viện
+                    </a>
+                </li>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2>Hồ sơ Bệnh viện</h2>
+                <p>Quản lý thông tin và tài khoản</p>
+            </header>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+
+                <!-- General Info Card -->
+                <div class="card mb-4">
+                    <h3 class="mb-3">Thông tin chung</h3>
+                    <form onsubmit="updateProfile(event)">
+                        <div class="form-group">
+                                <label>Email đăng nhập</label>
+                                <input type="email" id="profileEmail" class="form-control" value="..." readonly disabled
+                                    style="background-color: #f1f5f9;">
+                                <small class="text-secondary">Email định danh không thể thay đổi</small>
+                            </div>
+
+                            <div class="row grid-2" style="gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Tên hiển thị (Tên Bệnh viện)</label>
+                                    <input type="text" id="profileName" class="form-control" value="..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hotline (Khẩn cấp)</label>
+                                    <input type="tel" id="profileHotline" class="form-control" value="..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Địa chỉ</label>
+                                <input type="text" id="profileAddress" class="form-control" value="..."
+                                    required>
+                            </div>
+
+                            <div class="d-flex justify-end mt-3">
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color: var(--primary-color);">
+                                    <i class="ph-bold ph-floppy-disk"></i> Lưu thay đổi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Security Card -->
+                    <div class="card mb-4">
+                        <h3 class="mb-3">Bảo mật</h3>
+                        <form onsubmit="changePassword(event)">
+                            <div class="form-group">
+                                <label>Mật khẩu hiện tại</label>
+                                <input type="password" id="oldPassword" class="form-control" required>
+                            </div>
+                            <div class="row grid-2" style="gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" id="newPassword" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Xác nhận mật khẩu mới</label>
+                                    <input type="password" id="confirmPassword" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-end mt-3">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="ph-bold ph-lock-key"></i> Đổi mật khẩu
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Account Actions -->
+                    <div class="card" style="border-left: 4px solid var(--danger-color);">
+                        <div class="d-flex justify-between align-center">
+                            <div>
+                                <h3 class="text-danger">Đăng xuất</h3>
+                                <p class="text-secondary">Kết thúc phiên làm việc hiện tại</p>
+                            </div>
+                            <button onclick="logout()" class="btn btn-outline-danger"
+                                style="border-color: var(--danger-color); color: var(--danger-color);">
+                                <i class="ph-bold ph-sign-out"></i> Đăng xuất
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <script src="hospital.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                if (typeof initProfile === 'function') initProfile();
+            });
+        </script>
+    </body>
+
+</html>

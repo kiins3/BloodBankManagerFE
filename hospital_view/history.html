@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request History - Hospital Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="hospital.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-hospital" style="font-size: 20px;"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p>Hospital Portal</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <i class="ph-bold ph-squares-four"></i>
+                        Tổng quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_request.html">
+                        <i class="ph-bold ph-plus-circle"></i>
+                        Tạo yêu cầu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html" class="active">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Lịch sử & Trạng thái
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <i class="ph-bold ph-user-circle"></i>
+                        Hồ sơ Bệnh viện
+                    </a>
+                </li>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2>Lịch sử & Trạng thái</h2>
+                <p>Theo dõi quá trình xử lý yêu cầu máu</p>
+            </header>
+
+            <div class="card">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Mã phiếu</th>
+                            <th>Nội dung yêu cầu</th>
+                            <th>Mức độ</th>
+                            <th>Thời gian cần</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestHistoryBody">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="ph-bold ph-spinner ph-spin"></i> Đang tải...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="hospital.js"></script>
+    <!-- Request Detail Modal -->
+    <div id="requestDetailModal" class="modal-overlay">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Chi tiết phiếu: <span id="detailReqId">...</span></h3>
+                <button class="close-modal" onclick="closeDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body p-3" id="detailModalBody">
+                <div class="text-center py-4">
+                    <i class="ph-bold ph-spinner ph-spin"></i> Đang tải...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDetailModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

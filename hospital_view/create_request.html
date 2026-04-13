@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Request - Hospital Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="hospital.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-hospital" style="font-size: 20px;"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p>Hospital Portal</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <i class="ph-bold ph-squares-four"></i>
+                        Tổng quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create_request.html" class="active">
+                        <i class="ph-bold ph-plus-circle"></i>
+                        Tạo yêu cầu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="history.html">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Lịch sử & Trạng thái
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <i class="ph-bold ph-user-circle"></i>
+                        Hồ sơ Bệnh viện
+                    </a>
+                </li>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2>Tạo yêu cầu cấp phát máu</h2>
+                <p>Điền thông tin chi tiết để gửi yêu cầu đến Ngân hàng máu</p>
+            </header>
+
+            <div class="card" style="max-width: 800px; margin: 0 auto;">
+                <form onsubmit="submitRequest(event)">
+                    <h3 style="margin-bottom: 1rem;">Mức độ ưu tiên</h3>
+                    <div class="urgency-selector">
+                        <div class="urgency-option active" onclick="selectUrgency('normal', this)">
+                            <div style="font-size: 1.5rem; color: var(--primary-color); margin-bottom: 0.5rem;">
+                                <i class="ph-fill ph-check-circle"></i>
+                            </div>
+                            <strong>Bình thường</strong>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Dự trù, mổ phiên</p>
+                        </div>
+                        <div class="urgency-option emergency" onclick="selectUrgency('urgent', this)">
+                            <div style="font-size: 1.5rem; color: #f59e0b; margin-bottom: 0.5rem;">
+                                <i class="ph-fill ph-warning"></i>
+                            </div>
+                            <strong>Khẩn cấp</strong>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Cần trong 2h</p>
+                        </div>
+
+                        <input type="hidden" id="selectedUrgency" value="normal">
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem;">Danh sách chế phẩm</h3>
+
+                    <!-- Add Item Section -->
+                    <div class="card p-3 mb-3"
+                        style="background-color: #f8fafc; border: 1px solid var(--border-color);">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 0.75rem; align-items: end;">
+                            <div class="form-group mb-0">
+                                <label class="small text-muted fw-bold">Nhóm máu</label>
+                                <select class="form-control" id="itemBloodType">
+                                    <option value="">Chọn...</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="small text-muted fw-bold">Loại chế phẩm</label>
+                                <select class="form-control" id="itemProductType">
+                                    <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
+                                    <option value="TUI_HONG_CAU">Hồng cầu khối</option>
+                                    <option value="TUI_HUYET_TUONG">Huyết tương</option>
+                                    <option value="TUI_TIEU_CAU">Tiểu cầu</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="small text-muted fw-bold">Thể tích (ml)</label>
+                                <select class="form-control" id="itemVolume">
+                                    <option value="250">250 ml</option>
+                                    <option value="350">350 ml</option>
+                                    <option value="450">450 ml</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="small text-muted fw-bold">Số lượng</label>
+                                <input type="number" class="form-control" id="itemQuantity" min="1" value="1">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addItem()"
+                                style="background-color: var(--primary-color); height: 38px;">
+                                <i class="ph-bold ph-plus"></i> Thêm
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item List Table -->
+                    <div class="table-container mb-4">
+                        <table class="table" style="width: 100%;">
+                            <thead>
+                                <tr style="background-color: #f1f5f9;">
+                                    <th>Nhóm máu</th>
+                                    <th>Chế phẩm</th>
+                                    <th>Thể tích</th>
+                                    <th>Số lượng</th>
+                                    <th style="width: 50px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="requestItemsBody">
+                                <!-- Items will be added here -->
+                                <tr id="emptyRow">
+                                    <td colspan="5" class="text-center text-muted py-3">Chưa có chế phẩm nào được thêm
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thời gian cần (Deadline)</label>
+                        <input type="date" class="form-control" id="deadlineDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lý do / Chẩn đoán / Ghi chú</label>
+                        <textarea class="form-control" rows="3"
+                            placeholder="Ví dụ: Bệnh nhân đa chấn thương, Sốc mất máu..."></textarea>
+                    </div>
+
+                    <div class="form-footer"
+                        style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">Hủy</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="background-color: var(--primary-color); padding: 0.75rem 2rem;">
+                            <i class="ph-bold ph-paper-plane-right"></i> Gửi yêu cầu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="hospital.js"></script>
+</body>
+
+</html>

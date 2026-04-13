@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blood Inventory - Blood Bank Manager</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         .bg-blue-light {
@@ -38,62 +38,62 @@
                 <li class="nav-item">
                     <a href="index.html">
                         <i class="ph-bold ph-chart-line-up"></i>
-                        Tổng quan
+                        T?ng quan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="donors.html">
                         <i class="ph-bold ph-users"></i>
-                        Quản lý người hiến
+                        Qu?n l� ngu?i hi?n
                     </a>
                 </li>
                 <li class="nav-item nav-item-dropdown">
                     <div class="nav-item-header active" id="inventoryNavHeader">
                         <div class="left-icon">
                             <i class="ph-bold ph-drop-half-bottom"></i>
-                            <span>Kho máu</span>
+                            <span>Kho m�u</span>
                         </div>
                         <i class="ph-bold ph-caret-down" id="inventoryNavCaret"></i>
                     </div>
                     <div class="nav-dropdown-content active" id="inventoryNavContent">
-                        <a href="#" class="nav-dropdown-item active" id="navBloodList">Danh sách máu</a>
-                        <a href="#" class="nav-dropdown-item" id="navEquipmentManager">Quản lý thiết bị</a>
+                        <a href="#" class="nav-dropdown-item active" id="navBloodList">Danh s�ch m�u</a>
+                        <a href="#" class="nav-dropdown-item" id="navEquipmentManager">Qu?n l� thi?t b?</a>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a href="campaigns.html">
                         <i class="ph-bold ph-calendar"></i>
-                        Chiến dịch hiến máu
+                        Chi?n d?ch hi?n m�u
                     </a>
                 </li>
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Kho máu</h2>
-                <p>Quản lý các đơn vị máu, theo dõi hạn sử dụng và giám sát mức tồn kho.</p>
+                <h2>Kho m�u</h2>
+                <p>Qu?n l� c�c don v? m�u, theo d�i h?n s? d?ng v� gi�m s�t m?c t?n kho.</p>
             </header>
 
             <div id="bloodListView">
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng đơn vị máu</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng don v? m�u</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">4</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Sắp hết hạn</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">S?p h?t h?n</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #ea580c;">2
                         </h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đã đặt trước</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">�� d?t tru?c</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đã hủy/Hết hạn <i
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">�� h?y/H?t h?n <i
                                 class="ph-bold ph-warning-circle" style="color: #f97316;"></i></p>
                         <h3
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
@@ -105,12 +105,12 @@
                 <!-- Inventory Table -->
                 <div class="card">
                     <div style="margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh mục túi máu trong
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh m?c t�i m�u trong
                             kho
                         </h3>
-                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Theo dõi và quản lý tất cả các đơn
-                            vị
-                            máu trong kho.</p>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Theo d�i v� qu?n l� t?t c? c�c don
+                            v?
+                            m�u trong kho.</p>
                     </div>
 
                     <!-- Toolbar -->
@@ -123,7 +123,7 @@
                         </div>
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                            <option>Tất cả nhóm máu</option>
+                            <option>T?t c? nh�m m�u</option>
                             <option>A+</option>
                             <option>A-</option>
                             <option>B+</option>
@@ -135,21 +135,21 @@
                         </select>
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                            <option>Tất cả chế phẩm</option>
-                            <option>Máu toàn phần</option>
-                            <option>Khối hồng cầu</option>
-                            <option>Huyết tương</option>
-                            <option>Tiểu cầu</option>
+                            <option>T?t c? ch? ph?m</option>
+                            <option>M�u to�n ph?n</option>
+                            <option>Kh?i h?ng c?u</option>
+                            <option>Huy?t tuong</option>
+                            <option>Ti?u c?u</option>
                         </select>
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                            <option>Tất cả trạng thái</option>
-                            <option>Sẵn sàng</option>
-                            <option>Đã đặt trước</option>
+                            <option>T?t c? tr?ng th�i</option>
+                            <option>S?n s�ng</option>
+                            <option>�� d?t tru?c</option>
                         </select>
                         <button class="btn btn-primary" onclick="alert('Printing Report...')">
                             <i class="ph-bold ph-file-pdf"></i>
-                            Xuất báo cáo
+                            Xu?t b�o c�o
                         </button>
                     </div>
 
@@ -158,16 +158,16 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Mã túi</th>
-                                    <th>Nhóm máu</th>
-                                    <th>Loại chế phẩm</th>
-                                    <th>Thể tích</th>
-                                    <th>Người hiến</th>
-                                    <th>Ngày lấy</th>
-                                    <th>Hết hạn</th>
-                                    <th>Vị trí</th>
+                                    <th>M� t�i</th>
+                                    <th>Nh�m m�u</th>
+                                    <th>Lo?i ch? ph?m</th>
+                                    <th>Th? t�ch</th>
+                                    <th>Ngu?i hi?n</th>
+                                    <th>Ng�y l?y</th>
+                                    <th>H?t h?n</th>
+                                    <th>V? tr�</th>
                                      <tbody id="bloodTableBody">
-                                <!-- Dữ liệu túi máu sẽ được nạp tại đây -->
+                                <!-- D? li?u t�i m�u s? du?c n?p t?i d�y -->
                             </tbody>
 
                                         </div>
@@ -184,19 +184,19 @@
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng số tủ/thiết bị</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng s? t?/thi?t b?</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">4</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Hoạt động</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Ho?t d?ng</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">4</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">C?nh b�o</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">0</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Bảo trì/Hỏng</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">B?o tr�/H?ng</p>
                         <h3
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
                             0</h3>
@@ -208,20 +208,20 @@
                     <div
                         style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách thiết bị
-                                bảo quản</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý hệ thống tủ bảo quản
-                                máu và chế phẩm.</p>
+                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch thi?t b?
+                                b?o qu?n</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l� h? th?ng t? b?o qu?n
+                                m�u v� ch? ph?m.</p>
                         </div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <select id="equipmentTypeFilter" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                                <option value="all">Tất cả chế phẩm</option>
-                                <option value="hc">Hồng cầu</option>
-                                <option value="tc">Tiểu cầu</option>
-                                <option value="ht">Huyết tương</option>
+                                <option value="all">T?t c? ch? ph?m</option>
+                                <option value="hc">H?ng c?u</option>
+                                <option value="tc">Ti?u c?u</option>
+                                <option value="ht">Huy?t tuong</option>
                             </select>
                             <button class="btn btn-primary" onclick="openEquipmentModal()">
-                                <i class="ph-bold ph-plus"></i> Thêm thiết bị
+                                <i class="ph-bold ph-plus"></i> Th�m thi?t b?
                             </button>
                         </div>
                     </div>
@@ -230,18 +230,18 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Mã tủ</th>
-                                    <th>Tên tủ</th>
-                                    <th>Loại chế phẩm</th>
-                                    <th>Nhiệt độ (°C)</th>
-                                    <th>Sức chứa</th>
-                                    <th>Đang chứa</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
+                                    <th>M� t?</th>
+                                    <th>T�n t?</th>
+                                    <th>Lo?i ch? ph?m</th>
+                                    <th>Nhi?t d? (�C)</th>
+                                    <th>S?c ch?a</th>
+                                    <th>�ang ch?a</th>
+                                    <th>Tr?ng th�i</th>
+                                    <th>H�nh d?ng</th>
                                 </tr>
                             </thead>
                             <tbody id="equipmentTableBody">
-                                <!-- Dữ liệu thiết bị sẽ được nạp tại đây -->
+                                <!-- D? li?u thi?t b? s? du?c n?p t?i d�y -->
                             </tbody>
                         </table>
                     </div>
@@ -301,7 +301,7 @@
     <div class="modal-overlay" id="equipmentModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="equipmentModalTitle">Thêm thiết bị mới</h3>
+                <h3 id="equipmentModalTitle">Th�m thi?t b? m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
@@ -309,49 +309,49 @@
                     <input type="hidden" id="equipmentId">
 
                     <div class="form-group">
-                        <label>Tên thiết bị</label>
-                        <input type="text" id="eqName" class="form-control" placeholder="Ví dụ: Tủ hồng cầu 3" required>
+                        <label>T�n thi?t b?</label>
+                        <input type="text" id="eqName" class="form-control" placeholder="V� d?: T? h?ng c?u 3" required>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
-                            <label>Loại chế phẩm</label>
+                            <label>Lo?i ch? ph?m</label>
                             <select id="eqProductType" class="form-control" required>
-                                <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
-                                <option value="TUI_HONG_CAU">Túi hồng cầu</option>
-                                <option value="TUI_HUYET_TUONG">Túi huyết tương</option>
-                                <option value="TUI_TIEU_CAU">Túi tiểu cầu</option>
+                                <option value="MAU_TOAN_PHAN">M�u to�n ph?n</option>
+                                <option value="TUI_HONG_CAU">T�i h?ng c?u</option>
+                                <option value="TUI_HUYET_TUONG">T�i huy?t tuong</option>
+                                <option value="TUI_TIEU_CAU">T�i ti?u c?u</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Sức chứa tối đa (túi)</label>
+                            <label>S?c ch?a t?i da (t�i)</label>
                             <input type="number" id="eqMaxCapacity" class="form-control" placeholder="100" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Tiêu chuẩn nhiệt độ</label>
-                        <input type="text" id="eqStandard" class="form-control" placeholder="Ví dụ: 2 - 6 độ C" required>
+                        <label>Ti�u chu?n nhi?t d?</label>
+                        <input type="text" id="eqStandard" class="form-control" placeholder="V� d?: 2 - 6 d? C" required>
                     </div>
 
                     <div class="form-group" id="eqStatusContainer" style="display: none;">
-                        <label>Trạng thái</label>
+                        <label>Tr?ng th�i</label>
                         <select id="eqStatus" class="form-control">
-                            <option value="ACTIVE">Hoạt động (ACTIVE)</option>
-                            <option value="UNACTIVE">Ngừng hoạt động (UNACTIVE)</option>
+                            <option value="ACTIVE">Ho?t d?ng (ACTIVE)</option>
+                            <option value="UNACTIVE">Ng?ng ho?t d?ng (UNACTIVE)</option>
                         </select>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
-                        <button type="submit" class="btn btn-primary" id="saveEquipmentBtn">Lưu thiết bị</button>
+                        <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
+                        <button type="submit" class="btn btn-primary" id="saveEquipmentBtn">Luu thi?t b?</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <script src="../js/script.js"></script>
+    <script src="../script.js"></script>
     <script src="admin.js"></script>
 </body>
 

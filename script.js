@@ -314,7 +314,7 @@ window.logout = function() {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
+        window.location.href = 'login.html';
     }
 }
 
@@ -1417,7 +1417,7 @@ window.checkStaffRole = function(allowedRoles) {
 
     // 1. Check token
     if (!token) {
-        window.location.href = '../home/login.html';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -1438,7 +1438,7 @@ window.logout = function() {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
+        window.location.href = 'login.html';
     }
 };
 

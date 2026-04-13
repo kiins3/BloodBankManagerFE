@@ -88,7 +88,7 @@ if (document.getElementById('my-tickets-list')) {
 async function loadMyTickets() {
     const token = localStorage.getItem('access_token');
     if (!token) {
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -209,7 +209,7 @@ async function loadTicketDetails() {
 
     const token = localStorage.getItem('access_token');
     if (!token) {
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -403,7 +403,7 @@ async function loadDonorEvents() {
 async function loadProfile() {
     const token = localStorage.getItem('access_token');
     if (!token) {
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -543,7 +543,7 @@ async function confirmRegistration() {
         const token = localStorage.getItem('access_token');
         if (!token) {
             alert('Bạn cần đăng nhập để thao tác.');
-            window.location.href = '../home/login.html';
+            window.location.href = '../login.html';
             return;
         }
 
@@ -760,6 +760,6 @@ window.logout = function() {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
     }
 }

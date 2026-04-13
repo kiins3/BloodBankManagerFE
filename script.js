@@ -311,10 +311,20 @@ const setupStaffActions = () => {
 
 window.logout = function() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_info');
-        window.location.href = 'login.html';
+        // Xóa toàn bộ thông tin đăng nhập
+        localStorage.clear();
+        
+        // Chuyển hướng về login.html
+        const path = window.location.pathname;
+        alert("Đang đăng xuất từ: " + path);
+        console.log("Logging out from path:", path);
+        
+        if (path.includes('admin_view') || path.includes('staff_view') || 
+            path.includes('donor_view') || path.includes('hospital_view')) {
+            window.location.href = '../login.html';
+        } else {
+            window.location.href = 'login.html';
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="staff.css">
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="../script.js"></script>
+    
     <script>
         // Check role: Dashboard allows both Staff roles
         checkStaffRole(['STAFF_TECH', 'STAFF_INVENTORY']);
     </script>
+    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -28,13 +29,13 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="dashboard.html" class="active"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
-                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="active"><i class="ph-bold ph-squares-four"></i> Tá»•ng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiáº¿p nháº­n</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Ká»¹ thuáº­t</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Äiá»u phá»‘i xuáº¥t kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quáº£n lÃ½ kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Äá»•i máº­t kháº©u</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> ÄÄƒng xuáº¥t</a></li>
             </ul>
         </aside>
 
@@ -42,16 +43,16 @@
         <main class="main-content">
             <header class="header">
                 <div>
-                    <h2>Tổng quan</h2>
-                    <p>Công việc cần xử lý trong ca làm việc hôm nay</p>
+                    <h2>Tá»•ng quan</h2>
+                    <p>CÃ´ng viá»‡c cáº§n xá»­ lÃ½ trong ca lÃ m viá»‡c hÃ´m nay</p>
                 </div>
                 
                 <div class="header-user-info">
                     <div class="user-details">
                         <span class="header-user-name" id="headerUserName">Staff Member</span>
-                        <span id="headerRoleLabel">Đang xác định...</span>
+                        <span id="headerRoleLabel">Äang xÃ¡c Ä‘á»‹nh...</span>
                     </div>
-                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                    <button onclick="logout()" class="logout-btn-header" title="ÄÄƒng xuáº¥t">
                         <i class="ph-bold ph-sign-out"></i>
                     </button>
                 </div>
@@ -59,62 +60,62 @@
 
             <!-- Stats Cards -->
             <div class="grid-4">
-                <!-- Lịch hẹn hôm nay -->
+                <!-- Lá»‹ch háº¹n hÃ´m nay -->
                 <div class="card">
                     <div class="staff-stats-card">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Lịch hẹn hôm nay</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Lá»‹ch háº¹n hÃ´m nay</p>
                             <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">150</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Sự kiện đang diễn ra
+                                Sá»± kiá»‡n Ä‘ang diá»…n ra
                             </p>
                         </div>
                         <i class="ph-bold ph-calendar-check" style="color: var(--primary-color);"></i>
                     </div>
                 </div>
 
-                <!-- Chờ nhập kho -->
+                <!-- Chá» nháº­p kho -->
                 <div class="card">
                     <div class="staff-stats-card">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chờ nhập kho</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chá» nháº­p kho</p>
                             <h3
                                 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--warning-color);">
                                 24</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Túi máu mới lấy
+                                TÃºi mÃ¡u má»›i láº¥y
                             </p>
                         </div>
                         <i class="ph-bold ph-package" style="color: var(--warning-color);"></i>
                     </div>
                 </div>
 
-                <!-- Yêu cầu mới -->
+                <!-- YÃªu cáº§u má»›i -->
                 <div class="card">
                     <div class="staff-stats-card">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu mới</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">YÃªu cáº§u má»›i</p>
                             <h3
                                 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--primary-color);">
                                 5</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Phiếu chờ duyệt
+                                Phiáº¿u chá» duyá»‡t
                             </p>
                         </div>
                         <i class="ph-bold ph-file-text" style="color: var(--primary-color);"></i>
                     </div>
                 </div>
 
-                <!-- Cảnh báo -->
+                <!-- Cáº£nh bÃ¡o -->
                 <div class="card">
                     <div class="staff-stats-card">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cáº£nh bÃ¡o</p>
                             <h3
                                 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
                                 3</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Sắp hết hạn sử dụng
+                                Sáº¯p háº¿t háº¡n sá»­ dá»¥ng
                             </p>
                         </div>
                         <i class="ph-bold ph-warning" style="color: var(--danger-color);"></i>
@@ -125,25 +126,26 @@
             <!-- Today's Event -->
             <div class="card event-card">
                 <div>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Sự kiện hôm nay: Chủ nhật Đỏ
-                        - ĐH GTVT</h3>
-                    <p style="color: var(--text-secondary);">Thời gian: 07:30 - 16:30 | Địa điểm: Hội trường A, ĐH Giao
-                        Thông Vận Tải</p>
+                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Sá»± kiá»‡n hÃ´m nay: Chá»§ nháº­t Äá»
+                        - ÄH GTVT</h3>
+                    <p style="color: var(--text-secondary);">Thá»i gian: 07:30 - 16:30 | Äá»‹a Ä‘iá»ƒm: Há»™i trÆ°á»ng A, ÄH Giao
+                        ThÃ´ng Váº­n Táº£i</p>
                     <div class="event-details">
-                        <span class="badge bg-success-light">Đang diễn ra</span>
-                        <span style="font-size: 0.875rem; color: var(--text-secondary);">Đã tiếp nhận: 56/150</span>
+                        <span class="badge bg-success-light">Äang diá»…n ra</span>
+                        <span style="font-size: 0.875rem; color: var(--text-secondary);">ÄÃ£ tiáº¿p nháº­n: 56/150</span>
                     </div>
                 </div>
                 <a href="reception.html" class="btn btn-primary btn-large"
                     style="background-color: var(--primary-color);">
                     <i class="ph-bold ph-qr-code"></i>
-                    Bắt đầu Check-in
+                    Báº¯t Ä‘áº§u Check-in
                 </a>
             </div>
 
         </main>
     </div>
-    <script src="../script.js"></script>
+    
 </body>
 
 </html>
+

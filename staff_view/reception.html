@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
@@ -11,11 +11,12 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- html5-qrcode for QR scanning -->
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="../script.js"></script>
+    
     <script>
         // Check role: Reception only for STAFF_TECH
         checkStaffRole(['STAFF_TECH']);
     </script>
+    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -30,13 +31,13 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html" class="active"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
-                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tá»•ng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html" class="active"><i class="ph-bold ph-user-plus"></i> Tiáº¿p nháº­n</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Ká»¹ thuáº­t</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Äiá»u phá»‘i xuáº¥t kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quáº£n lÃ½ kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Äá»•i máº­t kháº©u</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> ÄÄƒng xuáº¥t</a></li>
             </ul>
         </aside>
 
@@ -45,21 +46,21 @@
             <header class="header">
                 <div class="reception-header" style="flex: 1;">
                     <div>
-                        <h2>Tiếp nhận hiến máu</h2>
-                        <p>Check-in và Khám sàng lọc ban đầu</p>
+                        <h2>Tiáº¿p nháº­n hiáº¿n mÃ¡u</h2>
+                        <p>Check-in vÃ  KhÃ¡m sÃ ng lá»c ban Ä‘áº§u</p>
                     </div>
                     <!-- Event Filter -->
                     <select class="form-control" id="eventFilterSelect" style="width: auto; min-width: 250px;" onchange="handleEventSelectChange()">
-                        <option value="">-- Đang tải sự kiện --</option>
+                        <option value="">-- Äang táº£i sá»± kiá»‡n --</option>
                     </select>
                 </div>
                 
                 <div class="header-user-info" style="margin-left: 2rem;">
                     <div class="user-details">
                         <span class="header-user-name">Staff Member</span>
-                        <span id="headerRoleLabel">Đang xác định...</span>
+                        <span id="headerRoleLabel">Äang xÃ¡c Ä‘á»‹nh...</span>
                     </div>
-                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                    <button onclick="logout()" class="logout-btn-header" title="ÄÄƒng xuáº¥t">
                         <i class="ph-bold ph-sign-out"></i>
                     </button>
                 </div>
@@ -70,26 +71,26 @@
                 <button class="btn btn-primary btn-scan-qr" style="background-color: var(--primary-color);"
                     onclick="openQrScanModal()">
                     <i class="ph-bold ph-qr-code" style="font-size: 1.5rem;"></i>
-                    Quét mã QR Check-in
+                    QuÃ©t mÃ£ QR Check-in
                 </button>
                 <button class="btn btn-secondary btn-walk-in" onclick="openWalkInModal()">
                     <i class="ph-bold ph-plus"></i>
-                    Đăng ký vãng lai
+                    ÄÄƒng kÃ½ vÃ£ng lai
                 </button>
-                <button class="btn" style="background-color:#16a34a; color:#fff;" onclick="exportEventDonors()" id="exportEventBtn" title="Xuất danh sách người hiến ra Excel">
+                <button class="btn" style="background-color:#16a34a; color:#fff;" onclick="exportEventDonors()" id="exportEventBtn" title="Xuáº¥t danh sÃ¡ch ngÆ°á»i hiáº¿n ra Excel">
                     <i class="ph-bold ph-microsoft-excel-logo"></i>
-                    Xuất Excel
+                    Xuáº¥t Excel
                 </button>
             </div>
 
             <!-- Donors Table -->
             <div class="card">
                 <div class="table-header-control">
-                    <h3>Danh sách chờ khám</h3>
+                    <h3>Danh sÃ¡ch chá» khÃ¡m</h3>
 
                     <!-- Search -->
                     <div class="search-box-wrapper">
-                        <input type="text" class="form-control search-input" placeholder="Tìm theo tên hoặc SĐT...">
+                        <input type="text" class="form-control search-input" placeholder="TÃ¬m theo tÃªn hoáº·c SÄT...">
                         <i class="ph-bold ph-magnifying-glass search-icon-overlay"></i>
                     </div>
                 </div>
@@ -97,14 +98,14 @@
                 <table style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Họ tên</th>
-                            <th>SĐT</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
+                            <th>Há» tÃªn</th>
+                            <th>SÄT</th>
+                            <th>Tráº¡ng thÃ¡i</th>
+                            <th>HÃ nh Ä‘á»™ng</th>
                         </tr>
                     </thead>
                     <tbody id="receptionTableBody">
-                        <tr><td colspan="4" class="text-center text-muted py-4">Vui lòng chọn sự kiện ở góc trên bên phải</td></tr>
+                        <tr><td colspan="4" class="text-center text-muted py-4">Vui lÃ²ng chá»n sá»± kiá»‡n á»Ÿ gÃ³c trÃªn bÃªn pháº£i</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -115,51 +116,51 @@
     <div id="vitalModal" class="modal-overlay">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
-                <h3>Khám sàng lọc: <span id="donorNameDisplay"></span></h3>
+                <h3>KhÃ¡m sÃ ng lá»c: <span id="donorNameDisplay"></span></h3>
                 <button class="close-modal" onclick="closeVitalModal()">&times;</button>
             </div>
 
             <div class="modal-body p-3">
                 <!-- 1. Layout: Read-only Info -->
                 <div class="bg-light p-3 rounded mb-3">
-                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">Thông tin người hiến</h6>
+                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">ThÃ´ng tin ngÆ°á»i hiáº¿n</h6>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <span class="d-block small text-muted">Họ tên</span>
-                            <span class="fw-bold" id="readName">Trần Thị B</span>
+                            <span class="d-block small text-muted">Há» tÃªn</span>
+                            <span class="fw-bold" id="readName">Tráº§n Thá»‹ B</span>
                         </div>
                         <div>
-                            <span class="d-block small text-muted">Tuổi</span>
+                            <span class="d-block small text-muted">Tuá»•i</span>
                             <span class="fw-bold">25</span>
                         </div>
                         <div>
-                            <span class="d-block small text-muted">Cân nặng (Khai báo)</span>
+                            <span class="d-block small text-muted">CÃ¢n náº·ng (Khai bÃ¡o)</span>
                             <span class="fw-bold">50 kg</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2. Layout: Input Stats -->
-                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Chỉ số sinh hiệu thực tế</h6>
+                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Chá»‰ sá»‘ sinh hiá»‡u thá»±c táº¿</h6>
                 <div class="row g-3 mb-3">
                     <div class="col-md-4">
-                        <label class="form-label small">Cân nặng (kg)</label>
+                        <label class="form-label small">CÃ¢n náº·ng (kg)</label>
                         <input type="number" id="weightInput" class="form-control" placeholder="VD: 55">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small">Huyết áp (mmHg)</label>
+                        <label class="form-label small">Huyáº¿t Ã¡p (mmHg)</label>
                         <input type="text" id="bpInput" class="form-control" placeholder="110/70">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small">Mạch (lần/phút)</label>
+                        <label class="form-label small">Máº¡ch (láº§n/phÃºt)</label>
                         <input type="number" id="pulseInput" class="form-control" placeholder="80">
                     </div>
                     <div class="col-md-8">
-                        <label class="form-label small">Nồng độ Hb / Test nhanh (Optional)</label>
-                        <input type="text" id="hbInput" class="form-control" placeholder="Kết quả test nhanh...">
+                        <label class="form-label small">Ná»“ng Ä‘á»™ Hb / Test nhanh (Optional)</label>
+                        <input type="text" id="hbInput" class="form-control" placeholder="Káº¿t quáº£ test nhanh...">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small">Lượng máu y/cầu</label>
+                        <label class="form-label small">LÆ°á»£ng mÃ¡u y/cáº§u</label>
                         <select id="expectedVolumeSelect" class="form-control">
                             <option value="250">250 ml</option>
                             <option value="350" selected>350 ml</option>
@@ -169,21 +170,21 @@
                 </div>
 
                 <!-- 3. Conclusion -->
-                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Kết luận</h6>
+                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Káº¿t luáº­n</h6>
                 <div class="mb-3">
                     <div class="d-flex gap-3">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="qualification" id="statusEligible"
                                 value="eligible" checked onchange="toggleReasonInput()">
                             <label class="form-check-label fw-bold text-success" for="statusEligible">
-                                ĐỦ ĐIỀU KIỆN
+                                Äá»¦ ÄIá»€U KIá»†N
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="qualification" id="statusDeferred"
                                 value="deferred" onchange="toggleReasonInput()">
                             <label class="form-check-label fw-bold text-danger" for="statusDeferred">
-                                TẠM HOÃN / TỪ CHỐI
+                                Táº M HOÃƒN / Tá»ª CHá»I
                             </label>
                         </div>
                     </div>
@@ -191,15 +192,15 @@
 
                 <!-- Reason Input (Hidden by default) -->
                 <div id="deferReasonGroup" class="mb-3" style="display: none;">
-                    <label class="form-label small text-danger">Lý do hoãn</label>
-                    <input type="text" id="deferReason" class="form-control border-danger" placeholder="Nhập lý do...">
+                    <label class="form-label small text-danger">LÃ½ do hoÃ£n</label>
+                    <input type="text" id="deferReason" class="form-control border-danger" placeholder="Nháº­p lÃ½ do...">
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeVitalModal()">Hủy</button>
+                <button class="btn btn-secondary" onclick="closeVitalModal()">Há»§y</button>
                 <button class="btn btn-primary" onclick="saveVitalResult()"
-                    style="background-color: var(--primary-color);">Lưu kết quả</button>
+                    style="background-color: var(--primary-color);">LÆ°u káº¿t quáº£</button>
             </div>
         </div>
     </div>
@@ -208,27 +209,27 @@
     <div id="collectBloodModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
-                <h3>Thu nhận máu: <span id="collectDonorName"></span></h3>
+                <h3>Thu nháº­n mÃ¡u: <span id="collectDonorName"></span></h3>
                 <button class="close-modal" onclick="closeCollectModal()">&times;</button>
             </div>
 
             <div class="modal-body p-4">
                 <!-- 1. Bag ID -->
                 <div class="mb-4">
-                    <label class="form-label small text-secondary text-uppercase fw-bold">Mã túi máu (Bag ID)</label>
+                    <label class="form-label small text-secondary text-uppercase fw-bold">MÃ£ tÃºi mÃ¡u (Bag ID)</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light"><i class="ph-bold ph-barcode"></i></span>
                         <input type="text" id="bagIdDisplay" class="form-control fw-bold fs-5 text-primary" readonly
                             value="290-123456" style="letter-spacing: 1px;">
                     </div>
-                    <small class="text-muted fst-italic mt-1 d-block"><i class="ph-fill ph-info"></i> Mã được sinh tự
-                        động
-                        từ hệ thống</small>
+                    <small class="text-muted fst-italic mt-1 d-block"><i class="ph-fill ph-info"></i> MÃ£ Ä‘Æ°á»£c sinh tá»±
+                        Ä‘á»™ng
+                        tá»« há»‡ thá»‘ng</small>
                 </div>
 
                 <!-- 2. Volume -->
                 <div class="mb-4">
-                    <label class="form-label small text-secondary text-uppercase fw-bold">Thể tích thực tế</label>
+                    <label class="form-label small text-secondary text-uppercase fw-bold">Thá»ƒ tÃ­ch thá»±c táº¿</label>
                     <div class="d-flex gap-2">
                         <input type="radio" class="btn-check" name="volume" id="vol250" autocomplete="off">
                         <label class="btn btn-outline-secondary flex-fill" for="vol250">250ml</label>
@@ -243,20 +244,20 @@
 
                 <!-- 3. Result -->
                 <div class="mb-3">
-                    <label class="form-label small text-secondary text-uppercase fw-bold">Kết quả thu gom</label>
+                    <label class="form-label small text-secondary text-uppercase fw-bold">Káº¿t quáº£ thu gom</label>
                     <div class="p-3 bg-light rounded border">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="collectionResult" id="resultSuccess"
                                 value="success" checked>
                             <label class="form-check-label fw-bold text-success" for="resultSuccess">
-                                <i class="ph-fill ph-check-circle me-1"></i> Thành công
+                                <i class="ph-fill ph-check-circle me-1"></i> ThÃ nh cÃ´ng
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="collectionResult" id="resultFail"
                                 value="fail">
                             <label class="form-check-label fw-bold text-secondary" for="resultFail">
-                                <i class="ph-fill ph-warning-circle me-1"></i> Thất bại (Vỡ ven, ngất,...)
+                                <i class="ph-fill ph-warning-circle me-1"></i> Tháº¥t báº¡i (Vá»¡ ven, ngáº¥t,...)
                             </label>
                         </div>
                     </div>
@@ -264,9 +265,9 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeCollectModal()">Hủy</button>
+                <button class="btn btn-secondary" onclick="closeCollectModal()">Há»§y</button>
                 <button class="btn btn-danger" onclick="completeCollection()">
-                    <i class="ph-bold ph-check-circle me-1"></i> Hoàn tất lấy máu
+                    <i class="ph-bold ph-check-circle me-1"></i> HoÃ n táº¥t láº¥y mÃ¡u
                 </button>
             </div>
         </div>
@@ -276,14 +277,14 @@
     <div id="walkInModal" class="modal-overlay">
         <div class="modal" style="max-width: 600px;">
             <div class="modal-header">
-                <h3>Đăng ký hiến máu vãng lai</h3>
+                <h3>ÄÄƒng kÃ½ hiáº¿n mÃ¡u vÃ£ng lai</h3>
                 <button class="close-modal" onclick="closeWalkInModal()">&times;</button>
             </div>
             <div class="modal-body p-4">
                 <form id="walkInForm">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label small">Họ và tên <span class="text-danger">*</span></label>
+                            <label class="form-label small">Há» vÃ  tÃªn <span class="text-danger">*</span></label>
                             <input type="text" id="wiName" class="form-control" required>
                         </div>
                         <div class="col-md-6">
@@ -291,18 +292,18 @@
                             <input type="text" id="wiCccd" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small">Ngày sinh <span class="text-danger">*</span></label>
+                            <label class="form-label small">NgÃ y sinh <span class="text-danger">*</span></label>
                             <input type="date" id="wiDob" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small">Giới tính <span class="text-danger">*</span></label>
+                            <label class="form-label small">Giá»›i tÃ­nh <span class="text-danger">*</span></label>
                             <select id="wiGender" class="form-control" required>
                                 <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
+                                <option value="Ná»¯">Ná»¯</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small">Số ĐT <span class="text-danger">*</span></label>
+                            <label class="form-label small">Sá»‘ ÄT <span class="text-danger">*</span></label>
                             <input type="text" id="wiPhone" class="form-control" required>
                         </div>
                         <div class="col-md-6">
@@ -310,13 +311,13 @@
                             <input type="email" id="wiEmail" class="form-control" required>
                         </div>
                         <div class="col-md-12">
-                            <label class="form-label small">Địa chỉ <span class="text-danger">*</span></label>
+                            <label class="form-label small">Äá»‹a chá»‰ <span class="text-danger">*</span></label>
                             <input type="text" id="wiAddress" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small">Nhóm máu (Nếu biết)</label>
+                            <label class="form-label small">NhÃ³m mÃ¡u (Náº¿u biáº¿t)</label>
                             <select id="wiBloodType" class="form-control">
-                                <option value="">Chưa rõ</option>
+                                <option value="">ChÆ°a rÃµ</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="AB">AB</option>
@@ -326,7 +327,7 @@
                         <div class="col-md-6">
                             <label class="form-label small">Rh Factor</label>
                             <select id="wiRhFactor" class="form-control">
-                                <option value="">Chưa rõ</option>
+                                <option value="">ChÆ°a rÃµ</option>
                                 <option value="+">+</option>
                                 <option value="-">-</option>
                             </select>
@@ -335,8 +336,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeWalkInModal()">Hủy</button>
-                <button class="btn btn-primary" style="background-color: var(--primary-color);" onclick="submitWalkInRegistration()">Lưu & Đăng ký</button>
+                <button class="btn btn-secondary" onclick="closeWalkInModal()">Há»§y</button>
+                <button class="btn btn-primary" style="background-color: var(--primary-color);" onclick="submitWalkInRegistration()">LÆ°u & ÄÄƒng kÃ½</button>
             </div>
         </div>
     </div>
@@ -345,11 +346,11 @@
     <div id="qrScanModal" class="modal-overlay">
         <div class="modal" style="max-width: 480px;">
             <div class="modal-header">
-                <h3><i class="ph-bold ph-qr-code me-2"></i> Quét mã QR Check-in</h3>
+                <h3><i class="ph-bold ph-qr-code me-2"></i> QuÃ©t mÃ£ QR Check-in</h3>
                 <button class="close-modal" onclick="closeQrScanModal()">&times;</button>
             </div>
             <div class="modal-body p-3">
-                <p class="text-muted small mb-2">Hướng camera vào mã QR trên vé điện tử của người hiến</p>
+                <p class="text-muted small mb-2">HÆ°á»›ng camera vÃ o mÃ£ QR trÃªn vÃ© Ä‘iá»‡n tá»­ cá»§a ngÆ°á»i hiáº¿n</p>
                 <div id="qr-reader" style="width: 100%; border-radius: 0.5rem; overflow: hidden;"></div>
                 <div id="qr-scan-result" class="mt-3" style="display:none;">
                     <div class="alert alert-success">
@@ -359,7 +360,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeQrScanModal()">Huỷ</button>
+                <button class="btn btn-secondary" onclick="closeQrScanModal()">Huá»·</button>
             </div>
         </div>
     </div>
@@ -368,7 +369,7 @@
     <div id="checkinConfirmModal" class="modal-overlay">
         <div class="modal" style="max-width: 440px;">
             <div class="modal-header" style="background: linear-gradient(135deg, #ef4444, #b91c1c); color: white;">
-                <h3 style="color: white;"><i class="ph-bold ph-check-circle me-2"></i> Xác nhận Check-in</h3>
+                <h3 style="color: white;"><i class="ph-bold ph-check-circle me-2"></i> XÃ¡c nháº­n Check-in</h3>
                 <button class="close-modal" onclick="closeCheckinConfirmModal()" style="color: white;">&times;</button>
             </div>
             <div class="modal-body p-4">
@@ -379,42 +380,42 @@
                         </div>
                         <div>
                             <div style="font-weight: 700; font-size: 1rem;" id="ci-donorName">--</div>
-                            <div style="font-size: 0.75rem; color: #6b7280;">Người hiến máu</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">NgÆ°á»i hiáº¿n mÃ¡u</div>
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Giới tính</div>
+                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Giá»›i tÃ­nh</div>
                             <div style="font-weight: 500;" id="ci-gender">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Ngày sinh</div>
+                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">NgÃ y sinh</div>
                             <div style="font-weight: 500;" id="ci-dob">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Số điện thoại</div>
+                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Sá»‘ Ä‘iá»‡n thoáº¡i</div>
                             <div style="font-weight: 500;" id="ci-phone">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Mã vé</div>
+                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">MÃ£ vÃ©</div>
                             <div style="font-weight: 500; font-family: monospace;" id="ci-ticketCode">--</div>
                         </div>
                     </div>
                 </div>
                 <p class="text-center mt-3 mb-0" style="color: #6b7280; font-size: 0.875rem;">
-                    Xác nhận check-in cho người hiến này vào sự kiện?
+                    XÃ¡c nháº­n check-in cho ngÆ°á»i hiáº¿n nÃ y vÃ o sá»± kiá»‡n?
                 </p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeCheckinConfirmModal()">Huỷ</button>
+                <button class="btn btn-secondary" onclick="closeCheckinConfirmModal()">Huá»·</button>
                 <button class="btn btn-primary" id="confirmCheckinBtn" style="background-color: #ef4444; border-color: #ef4444;" onclick="doConfirmCheckin()">
-                    <i class="ph-bold ph-check me-1"></i> Xác nhận Check-in
+                    <i class="ph-bold ph-check me-1"></i> XÃ¡c nháº­n Check-in
                 </button>
             </div>
         </div>
     </div>
 
-    <script src="../script.js"></script>
+    
     <script src="staff.js"></script>
     <!-- <script>
         function openVitalModal(name) {
@@ -433,3 +434,4 @@
 </body>
 
 </html>
+

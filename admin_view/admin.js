@@ -553,9 +553,8 @@ window.deactivateEquipment = async function(id, currentCap) {
 };
 window.logout = function() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_info');
+        localStorage.clear();
         window.location.href = '../login.html';
     }
 }
+

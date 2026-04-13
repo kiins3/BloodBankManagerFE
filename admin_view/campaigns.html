@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -73,7 +73,6 @@
             gap: 1rem;
         }
     </style>
-    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -92,59 +91,59 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="admin_home.html">
+                    <a href="index.html">
                         <i class="ph-bold ph-chart-line-up"></i>
-                        Tá»•ng quan
+                        Tổng quan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="donors.html">
                         <i class="ph-bold ph-users"></i>
-                        Quáº£n lÃ½ ngÆ°á»i hiáº¿n
+                        Quản lý người hiến
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="inventory.html">
                         <i class="ph-bold ph-drop-half-bottom"></i>
-                        Kho mÃ¡u
+                        Kho máu
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="campaigns.html" class="active">
                         <i class="ph-bold ph-calendar"></i>
-                        Chiáº¿n dá»‹ch hiáº¿n mÃ¡u
+                        Chiến dịch hiến máu
                     </a>
                 </li>
                 <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger"
-                        style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ï¿½ang xu?t</a></li>
+                        style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Chiáº¿n dá»‹ch hiáº¿n mÃ¡u</h2>
-                <p>Quáº£n lÃ½ cÃ¡c chiáº¿n dá»‹ch hiáº¿n mÃ¡u vÃ  theo dÃµi hiá»‡u suáº¥t sá»± kiá»‡n</p>
+                <h2>Chiến dịch hiến máu</h2>
+                <p>Quản lý các chiến dịch hiến máu và theo dõi hiệu suất sự kiện</p>
             </header>
 
             <!-- Stats KPI -->
             <div class="grid-4">
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Sá»± kiá»‡n sáº¯p tá»›i</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Sự kiện sắp tới</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">3</h3>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Äang diá»…n ra</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang diễn ra</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">1</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">HÃ´m nay</p>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Hôm nay</p>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tá»•ng lÆ°á»£t Ä‘Äƒng kÃ½</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng lượt đăng ký</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">850</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">ThÃ¡ng nÃ y</p>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Tháng này</p>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tá»· lá»‡ hoÃ n thÃ nh</p>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tỷ lệ hoàn thành</p>
                     <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">85%</h3>
                 </div>
             </div>
@@ -152,9 +151,9 @@
             <!-- Campaign Events Table -->
             <div class="card">
                 <div style="margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sÃ¡ch Sá»± kiá»‡n</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Quáº£n lÃ½ vÃ  theo dÃµi táº¥t cáº£ cÃ¡c sá»± kiá»‡n
-                        hiáº¿n mÃ¡u
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách Sự kiện</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý và theo dõi tất cả các sự kiện
+                        hiến máu
                     </p>
                 </div>
 
@@ -163,20 +162,20 @@
                     <div style="position: relative; flex: 1; min-width: 200px;">
                         <i class="ph ph-magnifying-glass"
                             style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-                        <input type="text" placeholder="TÃ¬m kiáº¿m theo tÃªn sá»± kiá»‡n, Ä‘á»‹a Ä‘iá»ƒm..."
+                        <input type="text" placeholder="Tìm kiếm theo tên sự kiện, địa điểm..."
                             style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                     </div>
                     <select
                         style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                        <option>Táº¥t cáº£ tráº¡ng thÃ¡i</option>
-                        <option>Sáº¯p diá»…n ra</option>
-                        <option>Äang diá»…n ra</option>
-                        <option>ÄÃ£ káº¿t thÃºc</option>
-                        <option>Há»§y</option>
+                        <option>Tất cả trạng thái</option>
+                        <option>Sắp diễn ra</option>
+                        <option>Đang diễn ra</option>
+                        <option>Đã kết thúc</option>
+                        <option>Hủy</option>
                     </select>
                     <button class="btn btn-primary" onclick="openCreateEventModal()">
                         <i class="ph-bold ph-plus"></i>
-                        Táº¡o sá»± kiá»‡n
+                        Tạo sự kiện
                     </button>
                 </div>
 
@@ -185,12 +184,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>TÃªn sá»± kiá»‡n</th>
-                                <th>Thá»i gian</th>
-                                <th>Má»¥c tiÃªu</th>
-                                <th>Tiáº¿n Ä‘á»™</th>
-                                <th>Tráº¡ng thÃ¡i</th>
-                                <th>HÃ nh Ä‘á»™ng</th>
+                                <th>Tên sự kiện</th>
+                                <th>Thời gian</th>
+                                <th>Mục tiêu</th>
+                                <th>Tiến độ</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody id="campaignTableBody">
@@ -206,14 +205,14 @@
     <div class="modal-overlay" id="eventDetailModal">
         <div class="modal" style="max-width: 800px;">
             <div class="modal-header">
-                <h3 id="eventDetailTitle">Chi tiáº¿t sá»± kiá»‡n</h3>
+                <h3 id="eventDetailTitle">Chi tiết sự kiện</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body" id="eventDetailBody">
                 <!-- Content injected by JS -->
             </div>
             <div class="modal-footer" id="eventDetailFooter">
-                <button type="button" class="btn btn-secondary" data-modal-close>ÄÃ³ng</button>
+                <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
             </div>
         </div>
     </div>
@@ -221,53 +220,53 @@
     <div class="modal-overlay" id="createEventModal">
         <div class="modal" style="max-width: 700px;">
             <div class="modal-header">
-                <h3>Táº¡o Sá»± Kiá»‡n Má»›i</h3>
+                <h3>Tạo Sự Kiện Mới</h3>
                 <button class="close-modal" onclick="closeCreateEventModal()"><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
                 <div class="grid-2" style="margin-bottom: 1rem;">
                     <div>
-                        <label class="form-label">TÃªn sá»± kiá»‡n <span class="text-danger">*</span></label>
-                        <input type="text" id="evtName" class="form-control" placeholder="VD: Chá»§ nháº­t Äá» 2024">
+                        <label class="form-label">Tên sự kiện <span class="text-danger">*</span></label>
+                        <input type="text" id="evtName" class="form-control" placeholder="VD: Chủ nhật Đỏ 2024">
                     </div>
                     <div>
-                        <label class="form-label">Äá»‹a Ä‘iá»ƒm tá»• chá»©c <span class="text-danger">*</span></label>
-                        <input type="text" id="evtLocation" class="form-control" placeholder="VD: Há»™i trÆ°á»ng A">
+                        <label class="form-label">Địa điểm tổ chức <span class="text-danger">*</span></label>
+                        <input type="text" id="evtLocation" class="form-control" placeholder="VD: Hội trường A">
                     </div>
                 </div>
 
                 <div class="grid-2" style="margin-bottom: 1rem;">
                     <div>
-                        <label class="form-label">Thá»i gian báº¯t Ä‘áº§u <span class="text-danger">*</span></label>
+                        <label class="form-label">Thời gian bắt đầu <span class="text-danger">*</span></label>
                         <input type="datetime-local" id="evtStart" class="form-control">
                     </div>
                     <div>
-                        <label class="form-label">Thá»i gian káº¿t thÃºc <span class="text-danger">*</span></label>
+                        <label class="form-label">Thời gian kết thúc <span class="text-danger">*</span></label>
                         <input type="datetime-local" id="evtEnd" class="form-control">
                     </div>
                 </div>
 
                 <div class="grid-2" style="margin-bottom: 1rem;">
                     <div>
-                        <label class="form-label">Má»¥c tiÃªu dá»± kiáº¿n (ÄÆ¡n vá»‹ mÃ¡u) <span
+                        <label class="form-label">Mục tiêu dự kiến (Đơn vị máu) <span
                                 class="text-danger">*</span></label>
                         <input type="number" id="evtGoal" class="form-control" placeholder="VD: 500">
                     </div>
                     <div>
-                        <label class="form-label">HÃ¬nh áº£nh Banner</label>
+                        <label class="form-label">Hình ảnh Banner</label>
                         <input type="file" id="evtBanner" class="form-control" accept="image/*">
                     </div>
                 </div>
 
                 <div style="margin-bottom: 1rem;">
-                    <label class="form-label">MÃ´ táº£ chi tiáº¿t</label>
+                    <label class="form-label">Mô tả chi tiết</label>
                     <textarea id="evtDesc" class="form-control" rows="3"
-                        placeholder="Ná»™i dung kÃªu gá»i, lÆ°u Ã½..."></textarea>
+                        placeholder="Nội dung kêu gọi, lưu ý..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeCreateEventModal()">Há»§y</button>
-                <button class="btn btn-primary" id="saveEventBtn">LÆ°u sá»± kiá»‡n</button>
+                <button class="btn btn-secondary" onclick="closeCreateEventModal()">Hủy</button>
+                <button class="btn btn-primary" id="saveEventBtn">Lưu sự kiện</button>
             </div>
         </div>
     </div>
@@ -315,7 +314,7 @@
 
             // 2. Validate Empty
             if (!name || !location || !startVal || !endVal || !goal) {
-                alert('Vui lÃ²ng Ä‘iá»n Ä‘áº§y Ä‘á»§ cÃ¡c trÆ°á»ng báº¯t buá»™c!');
+                alert('Vui lòng điền đầy đủ các trường bắt buộc!');
                 return;
             }
 
@@ -324,7 +323,7 @@
             const endDate = new Date(endVal);
 
             if (endDate <= startDate) {
-                alert('Thá»i gian káº¿t thÃºc pháº£i lá»›n hÆ¡n thá»i gian báº¯t Ä‘áº§u!');
+                alert('Thời gian kết thúc phải lớn hơn thời gian bắt đầu!');
                 return;
             }
 
@@ -347,13 +346,13 @@
                 startDate: payloadStart,
                 endDate: payloadEnd,
                 targetAmount: goal,
-                status: "SAP_TOI" // Tráº¡ng thÃ¡i máº·c Ä‘á»‹nh khi táº¡o má»›i
+                status: "SAP_TOI" // Trạng thái mặc định khi tạo mới
             };
 
             const token = localStorage.getItem('access_token');
             const origText = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = 'Äang lÆ°u...';
+            btn.innerHTML = 'Đang lưu...';
 
             try {
                 const response = await fetch('http://localhost:8080/api/admin/event/create-event', {
@@ -366,13 +365,13 @@
                 });
 
                 if (response.ok) {
-                    alert('ÄÃ£ táº¡o sá»± kiá»‡n thÃ nh cÃ´ng trÃªn há»‡ thá»‘ng!');
+                    alert('Đã tạo sự kiện thành công trên hệ thống!');
 
-                    // 5. Äá»“ng bá»™ láº¡i danh sÃ¡ch tá»« BE Ä‘á»ƒ Ä‘áº£m báº£o Ä‘áº§y Ä‘á»§ chá»©c nÄƒng
+                    // 5. Đồng bộ lại danh sách từ BE để đảm bảo đầy đủ chức năng
                     if (typeof loadCampaigns === 'function') {
                         await loadCampaigns();
                     } else {
-                        // Náº¿u chÆ°a ká»‹p load global thÃ¬ reload trang cho cháº¯c
+                        // Nếu chưa kịp load global thì reload trang cho chắc
                         location.reload();
                     }
 
@@ -383,19 +382,17 @@
                     document.getElementById('evtGoal').value = '';
                 } else {
                     const err = await response.text();
-                    alert('Lá»—i táº¡o sá»± kiá»‡n: ' + err);
+                    alert('Lỗi tạo sự kiện: ' + err);
                 }
             } catch (err) {
-                alert('KhÃ´ng káº¿t ná»‘i Ä‘Æ°á»£c tá»›i Backend!');
+                alert('Không kết nối được tới Backend!');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = origText;
             }
         }
     </script>
-    
+    <script src="../script.js"></script>
 </body>
 
 </html>
-
-

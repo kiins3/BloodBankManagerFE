@@ -1,5 +1,5 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+var API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
+var API_BASE = API_DEPLOY;
 // Chart Configuration
 const setupCharts = () => {
     // Inventory Bar Chart (Existing)

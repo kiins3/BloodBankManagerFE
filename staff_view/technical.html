@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
@@ -9,12 +9,11 @@
     <link rel="stylesheet" href="staff.css">
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+    <script src="../script.js"></script>
     <script>
         // Check role: Technical only for STAFF_TECH
         checkStaffRole(['STAFF_TECH']);
     </script>
-    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -29,13 +28,13 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tá»•ng quan</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiáº¿p nháº­n</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html" class="active"><i class="ph-bold ph-flask"></i> Ká»¹ thuáº­t</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Äiá»u phá»‘i xuáº¥t kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quáº£n lÃ½ kho</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Äá»•i máº­t kháº©u</a></li>
-                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> ÄÄƒng xuáº¥t</a></li>
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html" class="active"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -43,16 +42,16 @@
         <main class="main-content">
             <header class="header">
                 <div style="flex: 1;">
-                    <h2>Quy trÃ¬nh ká»¹ thuáº­t</h2>
-                    <p>Nháº­p kho, TÃ¡ch chiáº¿t, vÃ  XÃ©t nghiá»‡m sÃ ng lá»c</p>
+                    <h2>Quy trình kỹ thuật</h2>
+                    <p>Nhập kho, Tách chiết, và Xét nghiệm sàng lọc</p>
                 </div>
                 
                 <div class="header-user-info">
                     <div class="user-details">
                         <span class="header-user-name">Staff Member</span>
-                        <span id="headerRoleLabel">Äang xÃ¡c Ä‘á»‹nh...</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
                     </div>
-                    <button onclick="logout()" class="logout-btn-header" title="ÄÄƒng xuáº¥t">
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
                         <i class="ph-bold ph-sign-out"></i>
                     </button>
                 </div>
@@ -64,51 +63,51 @@
                     style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div class="filter-group" style="margin-bottom: 0;">
                         <select class="form-control filter-select" id="filterBloodType" onchange="loadBloodBags()">
-                            <option value="">Táº¥t cáº£ NhÃ³m mÃ¡u</option>
+                            <option value="">Tất cả Nhóm máu</option>
                             <option value="A">A</option>
                             <option value="B">B</option>
                             <option value="AB">AB</option>
                             <option value="O">O</option>
                         </select>
                         <select class="form-control filter-select" id="filterRhFactor" onchange="loadBloodBags()">
-                            <option value="">Táº¥t cáº£ Rh</option>
+                            <option value="">Tất cả Rh</option>
                             <option value="+">Rh+</option>
                             <option value="-">Rh-</option>
                         </select>
                         <select class="form-control filter-select" id="filterProductType" onchange="loadBloodBags()">
-                            <option value="">Táº¥t cáº£ Loáº¡i cháº¿ pháº©m</option>
-                            <option value="MAU_TOAN_PHAN">MÃ¡u toÃ n pháº§n</option>
-                            <option value="TUI_HONG_CAU">TÃºi há»“ng cáº§u</option>
-                            <option value="TUI_HUYET_TUONG">TÃºi huyáº¿t tÆ°Æ¡ng</option>
-                            <option value="TUI_TIEU_CAU">TÃºi tiá»ƒu cáº§u</option>
-                            <option value="HONG_CAU">Há»“ng cáº§u khá»‘i</option>
-                            <option value="HUYET_TUONG">Huyáº¿t tÆ°Æ¡ng</option>
-                            <option value="TIEU_CAU">Tiá»ƒu cáº§u</option>
+                            <option value="">Tất cả Loại chế phẩm</option>
+                            <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
+                            <option value="TUI_HONG_CAU">Túi hồng cầu</option>
+                            <option value="TUI_HUYET_TUONG">Túi huyết tương</option>
+                            <option value="TUI_TIEU_CAU">Túi tiểu cầu</option>
+                            <option value="HONG_CAU">Hồng cầu khối</option>
+                            <option value="HUYET_TUONG">Huyết tương</option>
+                            <option value="TIEU_CAU">Tiểu cầu</option>
                         </select>
                         <select class="form-control filter-select" id="filterStatus" onchange="loadBloodBags()">
-                            <option value="">Táº¥t cáº£ Tráº¡ng thÃ¡i</option>
-                            <option value="CHO_XET_NGHIEM">Chá» xÃ©t nghiá»‡m</option>
-                            <option value="CHO_TACH_CHIET">Chá» tÃ¡ch chiáº¿t</option>
-                            <option value="SACH">Sáº¡ch (An toÃ n)</option>
-                            <option value="NHIEM">Nhiá»…m bá»‡nh</option>
-                            <option value="CHO_NHAP_KHO">Chá» nháº­p kho</option>
-                            <option value="CHO_BAO_QUAN">Chá» báº£o quáº£n</option>
-                            <option value="SAN_SANG">Sáºµn sÃ ng</option>
+                            <option value="">Tất cả Trạng thái</option>
+                            <option value="CHO_XET_NGHIEM">Chờ xét nghiệm</option>
+                            <option value="CHO_TACH_CHIET">Chờ tách chiết</option>
+                            <option value="SACH">Sạch (An toàn)</option>
+                            <option value="NHIEM">Nhiễm bệnh</option>
+                            <option value="CHO_NHAP_KHO">Chờ nhập kho</option>
+                            <option value="CHO_BAO_QUAN">Chờ bảo quản</option>
+                            <option value="SAN_SANG">Sẵn sàng</option>
                             <option value="TRONG_KHO">Trong kho</option>
-                            <option value="CHO_HUY">Chá» há»§y</option>
-                            <option value="DA_HUY">ÄÃ£ há»§y</option>
-                            <option value="DA_SU_DUNG">ÄÃ£ sá»­ dá»¥ng</option>
-                            <option value="HET_HAN">Háº¿t háº¡n</option>
+                            <option value="CHO_HUY">Chờ hủy</option>
+                            <option value="DA_HUY">Đã hủy</option>
+                            <option value="DA_SU_DUNG">Đã sử dụng</option>
+                            <option value="HET_HAN">Hết hạn</option>
                         </select>
                     </div>
                     <div class="bulk-actions" style="display: flex; gap: 0.5rem;">
                         <button class="btn btn-secondary bulk-btn" id="bulkStoreBtn" onclick="openBulkStoreModal()"
                             disabled>
-                            <i class="ph-bold ph-floppy-disk"></i> LÆ°u kho hÃ ng loáº¡t
+                            <i class="ph-bold ph-floppy-disk"></i> Lưu kho hàng loạt
                         </button>
                         <button class="btn btn-danger bulk-btn" id="bulkDisposeBtn" onclick="openBulkDisposalModal()"
                             disabled>
-                            <i class="ph-bold ph-trash"></i> Há»§y hÃ ng loáº¡t
+                            <i class="ph-bold ph-trash"></i> Hủy hàng loạt
                         </button>
                     </div>
                 </div>
@@ -119,18 +118,18 @@
                             <th style="width: 40px; text-align: center;">
                                 <input type="checkbox" id="selectAllTechnical" onchange="toggleAllTechnicalCB(this)">
                             </th>
-                            <th>MÃ£ tÃºi mÃ¡u</th>
-                            <th class="text-center" style="text-align: center;">NhÃ³m mÃ¡u</th>
-                            <th>Loáº¡i cháº¿ pháº©m</th>
-                            <th>NgÃ y láº¥y</th>
-                            <th>Vá»‹ trÃ­</th>
-                            <th>Tráº¡ng thÃ¡i</th>
-                            <th>HÃ nh Ä‘á»™ng</th>
+                            <th>Mã túi máu</th>
+                            <th class="text-center" style="text-align: center;">Nhóm máu</th>
+                            <th>Loại chế phẩm</th>
+                            <th>Ngày lấy</th>
+                            <th>Vị trí</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody id="technicalTableBody">
                         <tr><td colspan="8" class="text-center text-muted py-4">
-                            <i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite;"></i> Äang táº£i dá»¯ liá»‡u...
+                            <i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite;"></i> Đang tải dữ liệu...
                         </td></tr>
                     </tbody>
                 </table>
@@ -142,17 +141,17 @@
     <div id="testModal" class="modal-overlay">
         <div class="modal" style="max-width: 650px;">
             <div class="modal-header">
-                <h3>Káº¿t quáº£ XÃ©t nghiá»‡m & SÃ ng lá»c: <span id="testBagId"></span></h3>
+                <h3>Kết quả Xét nghiệm & Sàng lọc: <span id="testBagId"></span></h3>
                 <button class="close-modal" data-modal-close>&times;</button>
             </div>
 
             <div class="modal-body p-3">
                 <!-- Part A: Blood Typing -->
                 <div class="mb-4">
-                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">A. Äá»‹nh nhÃ³m mÃ¡u (Blood Typing)</h6>
+                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">A. Định nhóm máu (Blood Typing)</h6>
                     <div class="d-flex gap-4">
                         <div class="flex-grow-1">
-                            <label class="form-label small">Há»‡ ABO</label>
+                            <label class="form-label small">Hệ ABO</label>
                             <div class="d-flex gap-2">
                                 <input type="radio" class="btn-check" name="aboType" id="typeA" value="A">
                                 <label class="btn btn-outline-primary flex-fill" for="typeA">A</label>
@@ -168,7 +167,7 @@
                             </div>
                         </div>
                         <div style="min-width: 200px;">
-                            <label class="form-label small">Há»‡ Rh</label>
+                            <label class="form-label small">Hệ Rh</label>
                             <div class="d-flex gap-2">
                                 <input type="radio" class="btn-check" name="rhType" id="rhPos" value="+">
                                 <label class="btn btn-outline-secondary flex-fill" for="rhPos">Rh+</label>
@@ -183,9 +182,9 @@
                 <!-- Part B: Infectious Disease Screening -->
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="text-secondary small text-uppercase fw-bold mb-0">B. SÃ ng lá»c bá»‡nh truyá»n nhiá»…m</h6>
+                        <h6 class="text-secondary small text-uppercase fw-bold mb-0">B. Sàng lọc bệnh truyền nhiễm</h6>
                         <button class="btn btn-light btn-sm py-0 border" onclick="setAllNegative()">
-                            <i class="ph-bold ph-check-double text-success"></i> Táº¥t cáº£ Ã‚m tÃ­nh
+                            <i class="ph-bold ph-check-double text-success"></i> Tất cả Âm tính
                         </button>
                     </div>
 
@@ -193,8 +192,8 @@
                         <table class="table table-sm mb-0 align-middle">
                             <thead class="bg-light">
                                 <tr>
-                                    <th class="ps-3">Chá»‰ sá»‘ xÃ©t nghiá»‡m</th>
-                                    <th class="text-end pe-3" style="width: 150px;">Káº¿t quáº£</th>
+                                    <th class="ps-3">Chỉ số xét nghiệm</th>
+                                    <th class="text-end pe-3" style="width: 150px;">Kết quả</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -205,32 +204,32 @@
                                         <div class="form-check form-switch d-inline-block">
                                             <input class="form-check-input" type="checkbox" role="switch" id="testHIV"
                                                 onchange="updateTestConclusion(this)">
-                                            <label class="form-check-label fw-bold text-success small" for="testHIV">Ã‚m
-                                                tÃ­nh (-)</label>
+                                            <label class="form-check-label fw-bold text-success small" for="testHIV">Âm
+                                                tính (-)</label>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- Item 2 -->
                                 <tr>
-                                    <td class="ps-3 fw-medium">HBsAg (ViÃªm gan B)</td>
+                                    <td class="ps-3 fw-medium">HBsAg (Viêm gan B)</td>
                                     <td class="text-end pe-3">
                                         <div class="form-check form-switch d-inline-block">
                                             <input class="form-check-input" type="checkbox" role="switch" id="testHBV"
                                                 onchange="updateTestConclusion(this)">
-                                            <label class="form-check-label fw-bold text-success small" for="testHBV">Ã‚m
-                                                tÃ­nh (-)</label>
+                                            <label class="form-check-label fw-bold text-success small" for="testHBV">Âm
+                                                tính (-)</label>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- Item 3 -->
                                 <tr>
-                                    <td class="ps-3 fw-medium">HCV Ab (ViÃªm gan C)</td>
+                                    <td class="ps-3 fw-medium">HCV Ab (Viêm gan C)</td>
                                     <td class="text-end pe-3">
                                         <div class="form-check form-switch d-inline-block">
                                             <input class="form-check-input" type="checkbox" role="switch" id="testHCV"
                                                 onchange="updateTestConclusion(this)">
-                                            <label class="form-check-label fw-bold text-success small" for="testHCV">Ã‚m
-                                                tÃ­nh (-)</label>
+                                            <label class="form-check-label fw-bold text-success small" for="testHCV">Âm
+                                                tính (-)</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -242,19 +241,19 @@
                                             <input class="form-check-input" type="checkbox" role="switch"
                                                 id="testSyphilis" onchange="updateTestConclusion(this)">
                                             <label class="form-check-label fw-bold text-success small"
-                                                for="testSyphilis">Ã‚m tÃ­nh (-)</label>
+                                                for="testSyphilis">Âm tính (-)</label>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- Item 5 -->
                                 <tr>
-                                    <td class="ps-3 fw-medium">KÃ½ sinh trÃ¹ng sá»‘t rÃ©t</td>
+                                    <td class="ps-3 fw-medium">Ký sinh trùng sốt rét</td>
                                     <td class="text-end pe-3">
                                         <div class="form-check form-switch d-inline-block">
                                             <input class="form-check-input" type="checkbox" role="switch"
                                                 id="testMalaria" onchange="updateTestConclusion(this)">
                                             <label class="form-check-label fw-bold text-success small"
-                                                for="testMalaria">Ã‚m tÃ­nh (-)</label>
+                                                for="testMalaria">Âm tính (-)</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -265,22 +264,22 @@
 
                 <!-- Part C: Conclusion -->
                 <div class="mb-3">
-                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">C. Káº¿t luáº­n cuá»‘i cÃ¹ng</h6>
+                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">C. Kết luận cuối cùng</h6>
                     <div id="testConclusionAlert" class="alert alert-success d-flex align-items-center mb-0">
                         <i id="testIcon" class="ph-fill ph-check-circle fs-4 me-2"></i>
                         <div>
-                            <strong id="testSummary">AN TOÃ€N / Sáº´N SÃ€NG</strong>
-                            <div class="small" id="testDesc">Táº¥t cáº£ chá»‰ sá»‘ Ä‘á»u Ã‚m tÃ­nh. CÃ³ thá»ƒ nháº­p kho.</div>
+                            <strong id="testSummary">AN TOÀN / SẴN SÀNG</strong>
+                            <div class="small" id="testDesc">Tất cả chỉ số đều Âm tính. Có thể nhập kho.</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal-close>Há»§y</button>
+                <button class="btn btn-secondary" data-modal-close>Hủy</button>
                 <button class="btn btn-primary" id="saveTestBtn" onclick="saveTestResult()"
                     style="background-color: var(--primary-color);">
-                    LÆ°u káº¿t quáº£ & Cáº­p nháº­t kho
+                    Lưu kết quả & Cập nhật kho
                 </button>
             </div>
         </div>
@@ -290,7 +289,7 @@
     <div id="bagDetailsModal" class="modal-overlay">
         <div class="modal" style="max-width: 650px;">
             <div class="modal-header">
-                <h3>Chi tiáº¿t TÃºi mÃ¡u: <span id="detailBagId" class="text-primary font-mono"></span></h3>
+                <h3>Chi tiết Túi máu: <span id="detailBagId" class="text-primary font-mono"></span></h3>
                 <button class="close-modal" data-modal-close>&times;</button>
             </div>
 
@@ -337,19 +336,19 @@
                     <div>
                         <ul class="detail-list">
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-user detail-icon"></i> NgÆ°á»i hiáº¿n</span>
+                                <span class="label"><i class="ph-fill ph-user detail-icon"></i> Người hiến</span>
                                 <span class="value" id="detailDonorName">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-drop detail-icon"></i> Loáº¡i cháº¿ pháº©m</span>
+                                <span class="label"><i class="ph-fill ph-drop detail-icon"></i> Loại chế phẩm</span>
                                 <span class="value" id="detailProductType">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-flask detail-icon"></i> Thá»ƒ tÃ­ch</span>
+                                <span class="label"><i class="ph-fill ph-flask detail-icon"></i> Thể tích</span>
                                 <span class="value" id="detailVolume">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-activity detail-icon"></i> Tráº¡ng thÃ¡i</span>
+                                <span class="label"><i class="ph-fill ph-activity detail-icon"></i> Trạng thái</span>
                                 <span class="value" id="detailStatus">--</span>
                             </li>
                         </ul>
@@ -359,21 +358,21 @@
                     <div>
                         <ul class="detail-list">
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-heart detail-icon text-danger"></i> NhÃ³m
-                                    mÃ¡u</span>
+                                <span class="label"><i class="ph-fill ph-heart detail-icon text-danger"></i> Nhóm
+                                    máu</span>
                                 <span class="value text-danger fs-5" id="detailBloodType">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-calendar-plus detail-icon"></i> NgÃ y láº¥y
-                                    mÃ¡u</span>
+                                <span class="label"><i class="ph-fill ph-calendar-plus detail-icon"></i> Ngày lấy
+                                    máu</span>
                                 <span class="value" id="detailCollectionDate">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-calendar-x detail-icon"></i> Háº¡n sá»­ dá»¥ng</span>
+                                <span class="label"><i class="ph-fill ph-calendar-x detail-icon"></i> Hạn sử dụng</span>
                                 <span class="value" id="detailExpiryDate">--</span>
                             </li>
                             <li class="detail-item">
-                                <span class="label"><i class="ph-fill ph-map-pin detail-icon"></i> Vá»‹ trÃ­ lÆ°u kho</span>
+                                <span class="label"><i class="ph-fill ph-map-pin detail-icon"></i> Vị trí lưu kho</span>
                                 <span class="value text-primary" id="detailLocation">--</span>
                             </li>
                         </ul>
@@ -382,17 +381,17 @@
 
                 <!-- Test Results Summary -->
                 <div class="mb-2">
-                    <h6 class="text-secondary small text-uppercase fw-bold border-bottom pb-2">Lá»‹ch sá»­ XÃ©t nghiá»‡m & SÃ ng
-                        lá»c</h6>
+                    <h6 class="text-secondary small text-uppercase fw-bold border-bottom pb-2">Lịch sử Xét nghiệm & Sàng
+                        lọc</h6>
                     <div id="detailTestResults" class="p-2 bg-light rounded small mt-2">
                         <!-- Populated by JS -->
-                        <span class="text-muted italic">ChÆ°a cÃ³ káº¿t quáº£ xÃ©t nghiá»‡m.</span>
+                        <span class="text-muted italic">Chưa có kết quả xét nghiệm.</span>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal-close>ÄÃ³ng</button>
+                <button class="btn btn-secondary" data-modal-close>Đóng</button>
             </div>
         </div>
     </div>
@@ -401,115 +400,115 @@
     <div id="disposalModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h3>XÃ¡c nháº­n tiÃªu há»§y: <span id="disposalBagId"></span></h3>
+                <h3>Xác nhận tiêu hủy: <span id="disposalBagId"></span></h3>
                 <button class="close-modal" data-modal-close>&times;</button>
             </div>
             <div class="form-group">
-                <label>LÃ½ do há»§y</label>
+                <label>Lý do hủy</label>
                 <input type="text" class="form-control mb-2 text-danger fw-bold" id="disposalReasonAuto" readonly
                     style="display: none; background: #fff5f5;">
 
                 <select class="form-control" id="disposalReasonSelect">
-                    <option value="">-- Chá»n lÃ½ do --</option>
-                    <option value="Háº¿t háº¡n sá»­ dá»¥ng">Háº¿t háº¡n sá»­ dá»¥ng</option>
-                    <option value="Há»ng/Vá»¡ tÃºi trong kho">Há»ng/Vá»¡ tÃºi trong kho</option>
-                    <option value="Lá»—i tem nhÃ£n">Lá»—i tem nhÃ£n</option>
-                    <option value="KhÃ¡c">KhÃ¡c</option>
+                    <option value="">-- Chọn lý do --</option>
+                    <option value="Hết hạn sử dụng">Hết hạn sử dụng</option>
+                    <option value="Hỏng/Vỡ túi trong kho">Hỏng/Vỡ túi trong kho</option>
+                    <option value="Lỗi tem nhãn">Lỗi tem nhãn</option>
+                    <option value="Khác">Khác</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>NgÆ°á»i thá»±c hiá»‡n</label>
+                <label>Người thực hiện</label>
                 <input type="text" class="form-control" value="Admin/Staff (Current User)" readonly>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-modal-close>Há»§y bá»</button>
+                <button class="btn btn-secondary" data-modal-close>Hủy bỏ</button>
                 <button class="btn btn-danger" onclick="confirmDisposal()">
-                    <i class="ph-bold ph-trash"></i> XÃ¡c nháº­n há»§y
+                    <i class="ph-bold ph-trash"></i> Xác nhận hủy
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: BLOOD FRACTIONATION (TÃCH CHIáº¾T) -->
+    <!-- MODAL: BLOOD FRACTIONATION (TÁCH CHIẾT) -->
     <div id="fractionationModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">TÃ¡ch chiáº¿t cháº¿ pháº©m</h5>
+                <h5 class="mb-0 fw-bold">Tách chiết chế phẩm</h5>
                 <button class="btn-close" data-modal-close aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info py-2 d-flex align-items-center mb-3">
                     <i class="ph-bold ph-info fs-5 me-2"></i>
                     <div>
-                        TÃ¡ch tÃºi mÃ¡u <strong id="fracBagId">#--</strong> thÃ nh cÃ¡c thÃ nh pháº§n.
-                        Dung tÃ­ch thu gom: <strong id="fracParentVolume">--</strong> ml
+                        Tách túi máu <strong id="fracBagId">#--</strong> thành các thành phần.
+                        Dung tích thu gom: <strong id="fracParentVolume">--</strong> ml
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Há»“ng cáº§u (Red Cells) - ml</label>
+                    <label class="form-label small fw-bold">Hồng cầu (Red Cells) - ml</label>
                     <input type="number" id="fracRedCell" class="form-control" placeholder="0" min="0">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Huyáº¿t tÆ°Æ¡ng (Plasma) - ml</label>
+                    <label class="form-label small fw-bold">Huyết tương (Plasma) - ml</label>
                     <input type="number" id="fracPlasma" class="form-control" placeholder="0" min="0">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Tiá»ƒu cáº§u (Platelets) - ml</label>
+                    <label class="form-label small fw-bold">Tiểu cầu (Platelets) - ml</label>
                     <input type="number" id="fracPlatelets" class="form-control" placeholder="0" min="0">
                 </div>
 
                 <div id="fracHint" class="small text-muted mb-0">
-                    * LÆ°u Ã½: Tá»•ng dung tÃ­ch cháº¿ pháº©m khÃ´ng nÃªn vÆ°á»£t quÃ¡ dung tÃ­ch tÃºi gá»‘c + dung dá»‹ch chá»‘ng Ä‘Ã´ng.
+                    * Lưu ý: Tổng dung tích chế phẩm không nên vượt quá dung tích túi gốc + dung dịch chống đông.
                 </div>
             </div>
             <div class="modal-footer border-top pt-3 mt-3">
-                <button class="btn btn-light border" data-modal-close>Bá» qua</button>
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
                 <button class="btn btn-primary" id="saveFracBtn" onclick="saveFractionation()">
-                    <i class="ph-bold ph-columns"></i> XÃ¡c nháº­n tÃ¡ch chiáº¿t
+                    <i class="ph-bold ph-columns"></i> Xác nhận tách chiết
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: BULK STORE TO INVENTORY (LÆ¯U KHO HÃ€NG LOáº T) -->
+    <!-- MODAL: BULK STORE TO INVENTORY (LƯU KHO HÀNG LOẠT) -->
     <div id="storeModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
             <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">LÆ°u kho hÃ ng loáº¡t</h5>
+                <h5 class="mb-0 fw-bold">Lưu kho hàng loạt</h5>
                 <button class="btn-close" data-modal-close aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info py-2 d-flex align-items-center mb-3">
                     <i class="ph-bold ph-info fs-5 me-2"></i>
                     <div>
-                        LÆ°u <strong id="storeBagCount">0</strong> tÃºi mÃ¡u Ä‘Ã£ chá»n vÃ o thiáº¿t bá»‹ báº£o quáº£n.
+                        Lưu <strong id="storeBagCount">0</strong> túi máu đã chọn vào thiết bị bảo quản.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Chá»n thiáº¿t bá»‹ báº£o quáº£n (Tá»§)</label>
+                    <label class="form-label small fw-bold">Chọn thiết bị bảo quản (Tủ)</label>
                     <select id="storageSelect" class="form-select">
-                        <option value="">-- Äang táº£i danh sÃ¡ch thiáº¿t bá»‹ --</option>
+                        <option value="">-- Đang tải danh sách thiết bị --</option>
                     </select>
                 </div>
 
                 <div class="small text-muted mb-0">
-                    * Danh sÃ¡ch tÃºi: <span id="storeBagIds"></span>
+                    * Danh sách túi: <span id="storeBagIds"></span>
                 </div>
             </div>
             <div class="modal-footer border-top pt-3 mt-3">
-                <button class="btn btn-light border" data-modal-close>Bá» qua</button>
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
                 <button class="btn btn-success" id="confirmStoreBtn" onclick="confirmBulkStore()">
-                    <i class="ph-bold ph-floppy-disk"></i> XÃ¡c nháº­n lÆ°u kho
+                    <i class="ph-bold ph-floppy-disk"></i> Xác nhận lưu kho
                 </button>
             </div>
         </div>
     </div>
 
-    
+    <script src="../script.js"></script>
     <script src="staff.js"></script>
     <!-- <script>
         // Init Date
@@ -522,8 +521,8 @@
 
         // Keep simplified inline helpers if not moved
         function fractionateBlood(id) {
-            if (confirm('XÃ¡c nháº­n tÃ¡ch chiáº¿t tÃºi mÃ¡u ' + id + ' thÃ nh 3 cháº¿ pháº©m?')) {
-                alert('ÄÃ£ tÃ¡ch chiáº¿t thÃ nh cÃ´ng!');
+            if (confirm('Xác nhận tách chiết túi máu ' + id + ' thành 3 chế phẩm?')) {
+                alert('Đã tách chiết thành công!');
             }
         }
         function openTestModal(id) {
@@ -547,5 +546,4 @@
 </body>
 
 </html>
-
 

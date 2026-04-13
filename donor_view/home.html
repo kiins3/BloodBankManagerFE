@@ -118,8 +118,52 @@
             <a href="events.html" class="text-decoration-none text-danger small fw-bold">Xem tất cả</a>
         </div>
 
-        <div class="row g-3 mb-4" id="donor-events-list">
-            <!-- Dữ liệu sự kiện sẽ được load từ API -->
+        <div class="row g-3 mb-4">
+            <!-- Event 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="event-card bg-white h-100 position-relative">
+                    <img src="https://placehold.co/600x300/ffeeee/red?text=Hien+Mau+Nhan+Dao"
+                        class="card-img-top event-img" alt="Event">
+                    <div class="p-3">
+                        <div class="badge bg-danger mb-2">Sắp diễn ra</div>
+                        <h6 class="fw-bold">Ngày hội hiến máu - ĐH Y Hà Nội</h6>
+                        <div class="d-flex align-items-center text-muted small mt-2">
+                            <i class="ph-bold ph-calendar-blank me-1"></i>
+                            <span>15/02/2026 • 08:00 - 11:30</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted small mt-1 mb-3">
+                            <i class="ph-bold ph-map-pin me-1"></i>
+                            <span>Đống Đa, Hà Nội</span>
+                        </div>
+                        <a href="#"
+                            onclick="handleRegistration(event, 'evt1', 'Ngày hội hiến máu - ĐH Y Hà Nội', '15/02/2026 • 08:00 - 11:30')"
+                            class="btn btn-outline-danger w-100 rounded-pill">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="event-card bg-white h-100 position-relative">
+                    <img src="https://placehold.co/600x300/eef2ff/blue?text=Trao+Giot+Hong"
+                        class="card-img-top event-img" alt="Event">
+                    <div class="p-3">
+                        <div class="badge bg-primary mb-2">Tháng sau</div>
+                        <h6 class="fw-bold">Chủ nhật Đỏ - BV Bạch Mai</h6>
+                        <div class="d-flex align-items-center text-muted small mt-2">
+                            <i class="ph-bold ph-calendar-blank me-1"></i>
+                            <span>20/02/2026 • 07:30 - 16:30</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted small mt-1 mb-3">
+                            <i class="ph-bold ph-map-pin me-1"></i>
+                            <span>Hai Bà Trưng, Hà Nội</span>
+                        </div>
+                        <a href="#"
+                            onclick="handleRegistration(event, 'evt2', 'Chủ nhật Đỏ - BV Bạch Mai', '20/02/2026 • 07:30 - 16:30')"
+                            class="btn btn-outline-danger w-100 rounded-pill">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Recent History -->

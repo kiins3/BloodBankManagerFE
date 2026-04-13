@@ -1,5 +1,4 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+
 function parseJwt(token) {
     try {
         const base64Url = token.split('.')[1];

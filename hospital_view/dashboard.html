@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="hospital.css">
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
-    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -31,35 +29,35 @@
                 <li class="nav-item">
                     <a href="dashboard.html" class="active">
                         <i class="ph-bold ph-squares-four"></i>
-                        Tá»•ng quan
+                        Tổng quan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="create_request.html">
                         <i class="ph-bold ph-plus-circle"></i>
-                        Táº¡o yÃªu cáº§u
+                        Tạo yêu cầu
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="history.html">
                         <i class="ph-bold ph-clock-counter-clockwise"></i>
-                        Lá»‹ch sá»­ & Tráº¡ng thÃ¡i
+                        Lịch sử & Trạng thái
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="profile.html">
                         <i class="ph-bold ph-user-circle"></i>
-                        Há»“ sÆ¡ Bá»‡nh viá»‡n
+                        Hồ sơ Bệnh viện
                     </a>
                 </li>
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> Ðang xu?t</a></li></ul>
+            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Tá»•ng quan</h2>
-                <p>Theo dÃµi tÃ¬nh tráº¡ng mÃ¡u vÃ  Ä‘Æ¡n hÃ ng</p>
+                <h2>Tổng quan</h2>
+                <p>Theo dõi tình trạng máu và đơn hàng</p>
             </header>
 
             <!-- KPI Cards -->
@@ -67,7 +65,7 @@
                 <div class="card hospital-kpi-card">
                     <div>
                         <div class="stat-value">3</div>
-                        <div class="stat-label">Äang chá» duyá»‡t</div>
+                        <div class="stat-label">Đang chờ duyệt</div>
                     </div>
                     <div class="kpi-icon text-secondary">
                         <i class="ph-bold ph-hourglass"></i>
@@ -76,7 +74,7 @@
                 <div class="card hospital-kpi-card" style="border-left: 4px solid #f97316;">
                     <div>
                         <div class="stat-value text-warning">2</div>
-                        <div class="stat-label">Äang váº­n chuyá»ƒn</div>
+                        <div class="stat-label">Đang vận chuyển</div>
                     </div>
                     <div class="kpi-icon text-warning">
                         <i class="ph-bold ph-truck"></i>
@@ -85,7 +83,7 @@
                 <div class="card hospital-kpi-card">
                     <div>
                         <div class="stat-value text-success">156</div>
-                        <div class="stat-label">Sá»‘ tÃºi mÃ¡u Ä‘Ã£ nháº­n</div>
+                        <div class="stat-label">Số túi máu đã nhận</div>
                     </div>
                     <div class="kpi-icon text-success">
                         <i class="ph-bold ph-drop"></i>
@@ -96,30 +94,30 @@
             <div class="grid-2" style="grid-template-columns: 2fr 1fr; margin-top: 2rem;">
                 <!-- Recent Orders Config -->
                 <div class="card">
-                    <h3>ÄÆ¡n hÃ ng gáº§n Ä‘Ã¢y</h3>
+                    <h3>Đơn hàng gần đây</h3>
                     <table style="width: 100%; margin-top: 1rem;">
                         <thead>
                             <tr>
-                                <th>MÃ£ phiáº¿u</th>
-                                <th>Ná»™i dung</th>
-                                <th>Tráº¡ng thÃ¡i</th>
+                                <th>Mã phiếu</th>
+                                <th>Nội dung</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="text-mono">REQ-009</td>
-                                <td>5 TÃºi O+ (Há»“ng cáº§u)</td>
-                                <td><span class="badge bg-warning-light">Äang váº­n chuyá»ƒn</span></td>
+                                <td>5 Túi O+ (Hồng cầu)</td>
+                                <td><span class="badge bg-warning-light">Đang vận chuyển</span></td>
                             </tr>
                             <tr>
                                 <td class="text-mono">REQ-008</td>
-                                <td>10 TÃºi A- (Huyáº¿t tÆ°Æ¡ng)</td>
-                                <td><span class="badge bg-secondary-light">Chá» duyá»‡t</span></td>
+                                <td>10 Túi A- (Huyết tương)</td>
+                                <td><span class="badge bg-secondary-light">Chờ duyệt</span></td>
                             </tr>
                             <tr>
                                 <td class="text-mono">REQ-007</td>
-                                <td>2 TÃºi B+ (Tiá»ƒu cáº§u)</td>
-                                <td><span class="badge bg-success-light">ÄÃ£ nháº­n</span></td>
+                                <td>2 Túi B+ (Tiểu cầu)</td>
+                                <td><span class="badge bg-success-light">Đã nhận</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,10 +127,10 @@
                 <div class="card flex-center-center flex-column" style="text-align: center;">
                     <i class="ph-duotone ph-ambulance"
                         style="font-size: 4rem; color: var(--danger-color); margin-bottom: 1rem;"></i>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Cáº§n mÃ¡u kháº©n cáº¥p?</p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Cần máu khẩn cấp?</p>
                     <a href="create_request.html" class="btn btn-primary btn-large"
                         style="width: 100%; justify-content: center; background-color: var(--danger-color);">
-                        <i class="ph-bold ph-plus"></i> Táº¡o YÃªu cáº§u Cáº¥p cá»©u
+                        <i class="ph-bold ph-plus"></i> Tạo Yêu cầu Cấp cứu
                     </a>
                 </div>
             </div>
@@ -141,5 +139,3 @@
 </body>
 
 </html>
-
-

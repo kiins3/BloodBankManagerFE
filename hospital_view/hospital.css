@@ -1,0 +1,182 @@
+/* Hospital View Specific Styles */
+
+/* KPI Cards */
+.hospital-kpi-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.kpi-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+}
+
+/* Request Form */
+.urgency-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.urgency-option {
+    flex: 1;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.urgency-option:hover {
+    border-color: var(--primary-color);
+    background-color: var(--background-color);
+}
+
+.urgency-option.active {
+    border-color: var(--primary-color);
+    background-color: #eff6ff;
+}
+
+.urgency-option.critical.active {
+    border-color: var(--danger-color);
+    background-color: #fef2f2;
+}
+
+.urgency-option.emergency.active {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+}
+
+/* History Table */
+.time-cell-main {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.time-cell-sub {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Status Badges */
+.status-transit {
+    background-color: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #ffedd5;
+}
+
+/* --- Premium Modal UI --- */
+.detail-modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-header-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem!important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.detail-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-info-item .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.detail-info-item .value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.stat-chip {
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.detail-section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.75rem;
+}
+
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.premium-table th {
+    background-color: #f1f5f9;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.premium-table td {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+
+.premium-table tr:nth-child(even) {
+    background-color: #fbfcfe;
+}
+
+.status-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: status-pulse-anim 2s infinite;
+}
+
+@keyframes status-pulse-anim {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}

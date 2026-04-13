@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="staff.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="../js/script.js"></script>
+    <!-- WebSocket -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        /* ===== URGENT ALERT BOX ===== */
+        #urgent-alert-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #d32f2f;
+            color: white;
+            width: 360px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 2px 8px rgba(0,0,0,0.25);
+            z-index: 99999;
+            font-family: 'Inter', Arial, sans-serif;
+            border: 2px solid #ff8a80;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s;
+            transform: translateX(0);
+            opacity: 1;
+        }
+        #urgent-alert-box.alert-hidden {
+            transform: translateX(120%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .alert-pulse {
+            animation: alertPulse 1.2s infinite;
+        }
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 0 0 0 rgba(211,47,47,0.5); }
+            50%       { box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 0 0 12px rgba(211,47,47,0); }
+        }
+        .alert-header {
+            background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%);
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+        .alert-body {
+            padding: 14px 16px 10px;
+            line-height: 1.6;
+        }
+        .alert-body h3 {
+            color: #fff200;
+            margin: 0 0 10px;
+            font-size: 1.05rem;
+        }
+        .alert-body p {
+            margin: 4px 0;
+            font-size: 0.88rem;
+            opacity: 0.92;
+        }
+        .alert-close-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .alert-close-btn:hover { background: rgba(255,255,255,0.3); }
+        .alert-confirm-btn {
+            width: 100%;
+            background: #ffffff;
+            color: #c62828;
+            border: none;
+            padding: 13px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 0 0 8px 8px;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+        .alert-confirm-btn:hover { background: #ffe6e6; }
+        .alert-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            margin: 0 16px;
+        }
+    </style>
+    <script>
+        // Check role: Distribution only for STAFF_INVENTORY
+        checkStaffRole(['STAFF_INVENTORY']);
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" th:replace="~{templates/fragments/staff-sidebar :: sidebar('distribution')}">
+            <div class="brand">
+                <div class="brand-icon"><i class="ph-bold ph-drop"></i></div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p id="staffRoleLabel">Staff Portal</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i
+                            class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i
+                            class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"
+                        class="active"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i
+                            class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()"
+                        style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()"
+                        style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div style="flex: 1;">
+                    <h2>Điều phối & Xuất kho</h2>
+                    <p>Xử lý yêu cầu cấp phát máu từ bệnh viện</p>
+                </div>
+
+                <div class="header-user-info">
+                    <div class="user-details">
+                        <span class="header-user-name">Staff Member</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
+                    </div>
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1.5rem;">Danh sách yêu cầu</h3>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Bệnh viện</th>
+                            <th>Loại máu yêu cầu</th>
+                            <th>Số lượng</th>
+                            <th>Mức độ</th>
+                            <th>Tồn kho khả dụng</th>
+                            <th>Thời gian cần</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bloodRequestTableBody">
+                        <tr>
+                            <td>
+                                <div class="hospital-name">BV Bạch Mai</div>
+                                <div class="hospital-dept">Kho cấp cứu</div>
+                            </td>
+                            <td>
+                                <div><span class="badge bg-danger-light" style="color: var(--danger-color);">O+</span>
+                                </div>
+                                <div class="hospital-dept">Hồng cầu khối</div>
+                            </td>
+                            <td>5 Túi</td>
+                            <td><span class="badge bg-danger-solid">Khẩn cấp</span></td>
+                            <td><span class="text-success fw-bold">50/5</span></td>
+                            <td>
+                                <div>09:30</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary);">09/01/2024</div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary"
+                                    style="background-color: #44afef; padding: 0.35rem 0.75rem;"
+                                    onclick="openApproveModal('BV Bạch Mai', 'O+', 'Hồng cầu khối', 5)">
+                                    <i class="ph-bold ph-check"></i> Duyệt
+                                </button>
+                                <button class="btn btn-danger" style="padding: 0.35rem 0.75rem;"
+                                    onclick="openRejectModal('BV Bạch Mai')">
+                                    <i class="ph-bold ph-x"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="hospital-name">BV Việt Đức</div>
+                                <div class="hospital-dept">Kho Đa khoa</div>
+                            </td>
+                            <td>
+                                <div><span class="badge bg-danger-light" style="color: var(--danger-color);">A-</span>
+                                </div>
+                                <div class="hospital-dept">Huyết tương</div>
+                            </td>
+                            <td>10 Túi</td>
+                            <td>Bình thường</td>
+                            <td><span class="text-danger fw-bold">3/10</span></td>
+                            <td>
+                                <div>08:15</div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary);">10/01/2024</div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary"
+                                    style="background-color: #44afef; padding: 0.35rem 0.75rem;"
+                                    onclick="openApproveModal('BV Việt Đức', 'A-', 'Huyết tương', 10)">
+                                    <i class="ph-bold ph-check"></i> Duyệt
+                                </button>
+                                <button class="btn btn-danger" style="padding: 0.35rem 0.75rem;"
+                                    onclick="openRejectModal('BV Việt Đức')">
+                                    <i class="ph-bold ph-x"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Approve Modal inside Distribution -->
+    <div id="approveModal" class="modal-overlay">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Duyệt xuất kho: <span id="approveHospital">...</span></h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+
+            <div class="modal-body p-3">
+                <div class="alert alert-warning mb-3 d-none" id="partialWarning">
+                    <i class="ph-fill ph-warning me-1"></i> Lưu ý: Số lượng xuất ít hơn yêu cầu (Xuất một phần).
+                </div>
+
+                <div class="detail-header-card mb-4"
+                    style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem!important;">
+                    <div class="detail-info-item">
+                        <div class="label">Mức độ ưu tiên</div>
+                        <div class="value" id="approvePriority">---</div>
+                    </div>
+                    <div class="detail-info-item text-end">
+                        <div class="label">Tổng lượng duyệt</div>
+                        <div class="value justify-content-end"><strong id="totalReqQty" class="text-primary"
+                                style="font-size: 1.2rem;">0</strong> <span class="text-muted small">Túi</span></div>
+                    </div>
+                </div>
+
+                <!-- Premium Scan Section -->
+                <div id="scanSection" class="mb-4" style="display:none;">
+                    <div class="scan-card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="scan-icon-pulse">
+                                    <i class="ph-duotone ph-barcode"></i>
+                                </div>
+                                <span class="fw-bold text-dark small text-uppercase">Quét đối chiếu túi máu</span>
+                            </div>
+                            <span id="scanStatus" class="badge bg-primary-light text-primary">Sẵn sàng...</span>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 scan-input" id="barcodeInput"
+                                placeholder="Đưa đầu đọc vào mã vạch trên túi máu..."
+                                onkeypress="handleBarcodeKeyPress(event)" autocomplete="off">
+                            <button class="btn btn-primary px-4" onclick="handleBarcodeKeyPress({key:'Enter'})">
+                                <i class="ph-bold ph-magnifying-glass me-1"></i> Kiểm tra
+                            </button>
+                        </div>
+                        <div id="scanFeedback" class="mt-2 text-center"></div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h4 class="m-0 d-flex align-items-center gap-2" style="font-size: 0.95rem; color: #334155;">
+                        <i class="ph-duotone ph-list-checks text-primary"></i>
+                        <span>Danh sách túi máu dự kiến</span>
+                    </h4>
+                    <span class="badge bg-secondary-light text-secondary" style="font-size: 0.7rem; font-weight: 600;">
+                        SẮP XẾP THEO FEFO (HẠN DÙNG)
+                    </span>
+                </div>
+
+                <div class="card fifo-table-container">
+                    <table style="width: 100%; font-size: 0.875rem;">
+                        <thead class="fifo-thead">
+                            <tr>
+                                <th>Mã túi máu</th>
+                                <th>Hạn sử dụng</th>
+                                <th>Vị trí</th>
+                                <th style="width: 40px;" class="text-center">
+                                    <input type="checkbox" id="selectAllBags" onclick="toggleSelectAllBags(this)">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="fifoTableBody">
+                            <!-- Dynamic Content -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="ph-bold ph-scan"></i> Quét Barcode thay thế
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Hủy</button>
+                <button class="btn btn-outline-secondary">
+                    <i class="ph-bold ph-printer"></i> In Phiếu
+                </button>
+                <button class="btn btn-primary" id="confirmExportBtn"
+                    style="background-color: var(--primary-color);">Xác nhận Xuất kho</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div id="rejectModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="text-danger">Từ chối yêu cầu</h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+            <div class="modal-body p-3">
+                <p>Bạn có chắc chắn muốn từ chối yêu cầu của <strong id="rejectHospital">...</strong>?</p>
+                <div class="form-group mt-3">
+                    <label class="form-label">Lý do từ chối <span class="text-danger">*</span></label>
+                    <select class="form-select mb-2" id="rejectReasonSelect">
+                        <option value="">-- Chọn lý do --</option>
+                        <option value="Kho hết hàng / Không đủ đáp ứng">Kho hết hàng / Không đủ đáp ứng</option>
+                        <option value="Bệnh viện chưa thanh toán công nợ">Bệnh viện chưa thanh toán công nợ</option>
+                        <option value="Sai thông tin yêu cầu">Sai thông tin yêu cầu</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                    <textarea class="form-control" id="rejectReasonDetail" rows="2"
+                        placeholder="Ghi chú thêm (tùy chọn)..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Quay lại</button>
+                <button class="btn btn-danger" onclick="confirmRejectV2()">Xác nhận Từ chối</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal (Staff View) -->
+    <div id="orderDetailModal" class="modal-overlay">
+        <div class="modal" style="max-width: 750px;">
+            <div class="modal-header">
+                <h3>Chi tiết phiếu yêu cầu: <span id="staffDetailReqId">...</span></h3>
+                <button class="close-modal" onclick="closeStaffDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body p-0" id="staffDetailModalBody">
+                <div class="text-center py-5">
+                    <i class="ph-bold ph-spinner ph-spin" style="font-size:2.5rem; color: var(--primary-color);"></i>
+                    <p class="mt-3 text-muted fw-bold">Đang tải dữ liệu hồ sơ...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeStaffDetailModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== URGENT REQUEST ALERT BOX ===== -->
+    <div id="urgent-alert-box" class="alert-hidden">
+        <div class="alert-header">
+            <span id="alert-title">🚨 BÁO ĐỘNG KHẨN CẤP</span>
+            <button onclick="closeUrgentAlert()" class="alert-close-btn" title="Đóng">✖</button>
+        </div>
+        <div class="alert-body">
+            <h3 id="alert-message"></h3>
+            <p id="alert-priority"></p>
+            <p id="alert-hospital"></p>
+            <p id="alert-time"></p>
+        </div>
+        <div class="alert-divider"></div>
+        <button onclick="closeUrgentAlert()" class="alert-confirm-btn">✔ TÔI ĐÃ TIẾP NHẬN</button>
+    </div>
+
+    <script src="staff.js"></script>
+    <!-- <script>
+        function openApproveModal(hospital, type, product, qty) {
+            const modal = document.getElementById('approveModal');
+            if (modal) {
+                document.getElementById('approveHospital').innerText = hospital;
+                document.getElementById('reqSummary').innerText = `${qty} Túi ${type} (${product})`;
+                modal.classList.add('active');
+            }
+        }
+    </script> -->
+</body>
+
+</html>

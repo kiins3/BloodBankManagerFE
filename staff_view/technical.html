@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Technical - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="staff.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Check role: Technical only for STAFF_TECH
+        checkStaffRole(['STAFF_TECH']);
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" th:replace="~{templates/fragments/staff-sidebar :: sidebar('technical')}">
+            <div class="brand">
+                <div class="brand-icon"><i class="ph-bold ph-drop"></i></div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p id="staffRoleLabel">Staff Portal</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html" class="active"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div style="flex: 1;">
+                    <h2>Quy trình kỹ thuật</h2>
+                    <p>Nhập kho, Tách chiết, và Xét nghiệm sàng lọc</p>
+                </div>
+                
+                <div class="header-user-info">
+                    <div class="user-details">
+                        <span class="header-user-name">Staff Member</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
+                    </div>
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Table -->
+            <div class="card">
+                <div class="filter-group-container"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div class="filter-group" style="margin-bottom: 0;">
+                        <select class="form-control filter-select" id="filterBloodType" onchange="loadBloodBags()">
+                            <option value="">Tất cả Nhóm máu</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+                        </select>
+                        <select class="form-control filter-select" id="filterRhFactor" onchange="loadBloodBags()">
+                            <option value="">Tất cả Rh</option>
+                            <option value="+">Rh+</option>
+                            <option value="-">Rh-</option>
+                        </select>
+                        <select class="form-control filter-select" id="filterProductType" onchange="loadBloodBags()">
+                            <option value="">Tất cả Loại chế phẩm</option>
+                            <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
+                            <option value="TUI_HONG_CAU">Túi hồng cầu</option>
+                            <option value="TUI_HUYET_TUONG">Túi huyết tương</option>
+                            <option value="TUI_TIEU_CAU">Túi tiểu cầu</option>
+                            <option value="HONG_CAU">Hồng cầu khối</option>
+                            <option value="HUYET_TUONG">Huyết tương</option>
+                            <option value="TIEU_CAU">Tiểu cầu</option>
+                        </select>
+                        <select class="form-control filter-select" id="filterStatus" onchange="loadBloodBags()">
+                            <option value="">Tất cả Trạng thái</option>
+                            <option value="CHO_XET_NGHIEM">Chờ xét nghiệm</option>
+                            <option value="CHO_TACH_CHIET">Chờ tách chiết</option>
+                            <option value="SACH">Sạch (An toàn)</option>
+                            <option value="NHIEM">Nhiễm bệnh</option>
+                            <option value="CHO_NHAP_KHO">Chờ nhập kho</option>
+                            <option value="CHO_BAO_QUAN">Chờ bảo quản</option>
+                            <option value="SAN_SANG">Sẵn sàng</option>
+                            <option value="TRONG_KHO">Trong kho</option>
+                            <option value="CHO_HUY">Chờ hủy</option>
+                            <option value="DA_HUY">Đã hủy</option>
+                            <option value="DA_SU_DUNG">Đã sử dụng</option>
+                            <option value="HET_HAN">Hết hạn</option>
+                        </select>
+                    </div>
+                    <div class="bulk-actions" style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary bulk-btn" id="bulkStoreBtn" onclick="openBulkStoreModal()"
+                            disabled>
+                            <i class="ph-bold ph-floppy-disk"></i> Lưu kho hàng loạt
+                        </button>
+                        <button class="btn btn-danger bulk-btn" id="bulkDisposeBtn" onclick="openBulkDisposalModal()"
+                            disabled>
+                            <i class="ph-bold ph-trash"></i> Hủy hàng loạt
+                        </button>
+                    </div>
+                </div>
+
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" id="selectAllTechnical" onchange="toggleAllTechnicalCB(this)">
+                            </th>
+                            <th>Mã túi máu</th>
+                            <th class="text-center" style="text-align: center;">Nhóm máu</th>
+                            <th>Loại chế phẩm</th>
+                            <th>Ngày lấy</th>
+                            <th>Vị trí</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="technicalTableBody">
+                        <tr><td colspan="8" class="text-center text-muted py-4">
+                            <i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite;"></i> Đang tải dữ liệu...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Test Result Modal -->
+    <div id="testModal" class="modal-overlay">
+        <div class="modal" style="max-width: 650px;">
+            <div class="modal-header">
+                <h3>Kết quả Xét nghiệm & Sàng lọc: <span id="testBagId"></span></h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+
+            <div class="modal-body p-3">
+                <!-- Part A: Blood Typing -->
+                <div class="mb-4">
+                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">A. Định nhóm máu (Blood Typing)</h6>
+                    <div class="d-flex gap-4">
+                        <div class="flex-grow-1">
+                            <label class="form-label small">Hệ ABO</label>
+                            <div class="d-flex gap-2">
+                                <input type="radio" class="btn-check" name="aboType" id="typeA" value="A">
+                                <label class="btn btn-outline-primary flex-fill" for="typeA">A</label>
+
+                                <input type="radio" class="btn-check" name="aboType" id="typeB" value="B">
+                                <label class="btn btn-outline-primary flex-fill" for="typeB">B</label>
+
+                                <input type="radio" class="btn-check" name="aboType" id="typeAB" value="AB">
+                                <label class="btn btn-outline-primary flex-fill" for="typeAB">AB</label>
+
+                                <input type="radio" class="btn-check" name="aboType" id="typeO" value="O">
+                                <label class="btn btn-outline-primary flex-fill" for="typeO">O</label>
+                            </div>
+                        </div>
+                        <div style="min-width: 200px;">
+                            <label class="form-label small">Hệ Rh</label>
+                            <div class="d-flex gap-2">
+                                <input type="radio" class="btn-check" name="rhType" id="rhPos" value="+">
+                                <label class="btn btn-outline-secondary flex-fill" for="rhPos">Rh+</label>
+
+                                <input type="radio" class="btn-check" name="rhType" id="rhNeg" value="-">
+                                <label class="btn btn-outline-secondary flex-fill" for="rhNeg">Rh-</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part B: Infectious Disease Screening -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="text-secondary small text-uppercase fw-bold mb-0">B. Sàng lọc bệnh truyền nhiễm</h6>
+                        <button class="btn btn-light btn-sm py-0 border" onclick="setAllNegative()">
+                            <i class="ph-bold ph-check-double text-success"></i> Tất cả Âm tính
+                        </button>
+                    </div>
+
+                    <div class="table-responsive rounded border">
+                        <table class="table table-sm mb-0 align-middle">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-3">Chỉ số xét nghiệm</th>
+                                    <th class="text-end pe-3" style="width: 150px;">Kết quả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Item 1 -->
+                                <tr>
+                                    <td class="ps-3 fw-medium">HIV Ab/Ag</td>
+                                    <td class="text-end pe-3">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="testHIV"
+                                                onchange="updateTestConclusion(this)">
+                                            <label class="form-check-label fw-bold text-success small" for="testHIV">Âm
+                                                tính (-)</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Item 2 -->
+                                <tr>
+                                    <td class="ps-3 fw-medium">HBsAg (Viêm gan B)</td>
+                                    <td class="text-end pe-3">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="testHBV"
+                                                onchange="updateTestConclusion(this)">
+                                            <label class="form-check-label fw-bold text-success small" for="testHBV">Âm
+                                                tính (-)</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Item 3 -->
+                                <tr>
+                                    <td class="ps-3 fw-medium">HCV Ab (Viêm gan C)</td>
+                                    <td class="text-end pe-3">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="testHCV"
+                                                onchange="updateTestConclusion(this)">
+                                            <label class="form-check-label fw-bold text-success small" for="testHCV">Âm
+                                                tính (-)</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Item 4 -->
+                                <tr>
+                                    <td class="ps-3 fw-medium">Giang mai (Syphilis)</td>
+                                    <td class="text-end pe-3">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="testSyphilis" onchange="updateTestConclusion(this)">
+                                            <label class="form-check-label fw-bold text-success small"
+                                                for="testSyphilis">Âm tính (-)</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Item 5 -->
+                                <tr>
+                                    <td class="ps-3 fw-medium">Ký sinh trùng sốt rét</td>
+                                    <td class="text-end pe-3">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="testMalaria" onchange="updateTestConclusion(this)">
+                                            <label class="form-check-label fw-bold text-success small"
+                                                for="testMalaria">Âm tính (-)</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Part C: Conclusion -->
+                <div class="mb-3">
+                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">C. Kết luận cuối cùng</h6>
+                    <div id="testConclusionAlert" class="alert alert-success d-flex align-items-center mb-0">
+                        <i id="testIcon" class="ph-fill ph-check-circle fs-4 me-2"></i>
+                        <div>
+                            <strong id="testSummary">AN TOÀN / SẴN SÀNG</strong>
+                            <div class="small" id="testDesc">Tất cả chỉ số đều Âm tính. Có thể nhập kho.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Hủy</button>
+                <button class="btn btn-primary" id="saveTestBtn" onclick="saveTestResult()"
+                    style="background-color: var(--primary-color);">
+                    Lưu kết quả & Cập nhật kho
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bag Details Modal -->
+    <div id="bagDetailsModal" class="modal-overlay">
+        <div class="modal" style="max-width: 650px;">
+            <div class="modal-header">
+                <h3>Chi tiết Túi máu: <span id="detailBagId" class="text-primary font-mono"></span></h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+
+            <div class="modal-body p-3">
+                <style>
+                    .detail-list {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+
+                    .detail-item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0.75rem 1rem;
+                        margin-bottom: 0.5rem;
+                        background-color: #f8fafc;
+                        border-radius: 0.5rem;
+                        border: 1px solid #e2e8f0;
+                    }
+
+                    .detail-item .label {
+                        color: #64748b;
+                        font-size: 0.875rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+
+                    .detail-item .value {
+                        font-weight: 600;
+                        color: #1e293b;
+                        text-align: right;
+                    }
+
+                    .detail-icon {
+                        font-size: 1.1rem;
+                        color: #94a3b8;
+                    }
+                </style>
+                <div class="grid-2 gap-3 mb-4">
+                    <!-- Column 1 -->
+                    <div>
+                        <ul class="detail-list">
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-user detail-icon"></i> Người hiến</span>
+                                <span class="value" id="detailDonorName">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-drop detail-icon"></i> Loại chế phẩm</span>
+                                <span class="value" id="detailProductType">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-flask detail-icon"></i> Thể tích</span>
+                                <span class="value" id="detailVolume">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-activity detail-icon"></i> Trạng thái</span>
+                                <span class="value" id="detailStatus">--</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div>
+                        <ul class="detail-list">
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-heart detail-icon text-danger"></i> Nhóm
+                                    máu</span>
+                                <span class="value text-danger fs-5" id="detailBloodType">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-calendar-plus detail-icon"></i> Ngày lấy
+                                    máu</span>
+                                <span class="value" id="detailCollectionDate">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-calendar-x detail-icon"></i> Hạn sử dụng</span>
+                                <span class="value" id="detailExpiryDate">--</span>
+                            </li>
+                            <li class="detail-item">
+                                <span class="label"><i class="ph-fill ph-map-pin detail-icon"></i> Vị trí lưu kho</span>
+                                <span class="value text-primary" id="detailLocation">--</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Test Results Summary -->
+                <div class="mb-2">
+                    <h6 class="text-secondary small text-uppercase fw-bold border-bottom pb-2">Lịch sử Xét nghiệm & Sàng
+                        lọc</h6>
+                    <div id="detailTestResults" class="p-2 bg-light rounded small mt-2">
+                        <!-- Populated by JS -->
+                        <span class="text-muted italic">Chưa có kết quả xét nghiệm.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disposal Modal -->
+    <div id="disposalModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Xác nhận tiêu hủy: <span id="disposalBagId"></span></h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Lý do hủy</label>
+                <input type="text" class="form-control mb-2 text-danger fw-bold" id="disposalReasonAuto" readonly
+                    style="display: none; background: #fff5f5;">
+
+                <select class="form-control" id="disposalReasonSelect">
+                    <option value="">-- Chọn lý do --</option>
+                    <option value="Hết hạn sử dụng">Hết hạn sử dụng</option>
+                    <option value="Hỏng/Vỡ túi trong kho">Hỏng/Vỡ túi trong kho</option>
+                    <option value="Lỗi tem nhãn">Lỗi tem nhãn</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Người thực hiện</label>
+                <input type="text" class="form-control" value="Admin/Staff (Current User)" readonly>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Hủy bỏ</button>
+                <button class="btn btn-danger" onclick="confirmDisposal()">
+                    <i class="ph-bold ph-trash"></i> Xác nhận hủy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BLOOD FRACTIONATION (TÁCH CHIẾT) -->
+    <div id="fractionationModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Tách chiết chế phẩm</h5>
+                <button class="btn-close" data-modal-close aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info py-2 d-flex align-items-center mb-3">
+                    <i class="ph-bold ph-info fs-5 me-2"></i>
+                    <div>
+                        Tách túi máu <strong id="fracBagId">#--</strong> thành các thành phần.
+                        Dung tích thu gom: <strong id="fracParentVolume">--</strong> ml
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Hồng cầu (Red Cells) - ml</label>
+                    <input type="number" id="fracRedCell" class="form-control" placeholder="0" min="0">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Huyết tương (Plasma) - ml</label>
+                    <input type="number" id="fracPlasma" class="form-control" placeholder="0" min="0">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Tiểu cầu (Platelets) - ml</label>
+                    <input type="number" id="fracPlatelets" class="form-control" placeholder="0" min="0">
+                </div>
+
+                <div id="fracHint" class="small text-muted mb-0">
+                    * Lưu ý: Tổng dung tích chế phẩm không nên vượt quá dung tích túi gốc + dung dịch chống đông.
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
+                <button class="btn btn-primary" id="saveFracBtn" onclick="saveFractionation()">
+                    <i class="ph-bold ph-columns"></i> Xác nhận tách chiết
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BULK STORE TO INVENTORY (LƯU KHO HÀNG LOẠT) -->
+    <div id="storeModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Lưu kho hàng loạt</h5>
+                <button class="btn-close" data-modal-close aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info py-2 d-flex align-items-center mb-3">
+                    <i class="ph-bold ph-info fs-5 me-2"></i>
+                    <div>
+                        Lưu <strong id="storeBagCount">0</strong> túi máu đã chọn vào thiết bị bảo quản.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Chọn thiết bị bảo quản (Tủ)</label>
+                    <select id="storageSelect" class="form-select">
+                        <option value="">-- Đang tải danh sách thiết bị --</option>
+                    </select>
+                </div>
+
+                <div class="small text-muted mb-0">
+                    * Danh sách túi: <span id="storeBagIds"></span>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
+                <button class="btn btn-success" id="confirmStoreBtn" onclick="confirmBulkStore()">
+                    <i class="ph-bold ph-floppy-disk"></i> Xác nhận lưu kho
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="staff.js"></script>
+    <!-- <script>
+        // Init Date
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('collectionDate');
+            if (dateInput) {
+                dateInput.valueAsDate = new Date();
+            }
+        });
+
+        // Keep simplified inline helpers if not moved
+        function fractionateBlood(id) {
+            if (confirm('Xác nhận tách chiết túi máu ' + id + ' thành 3 chế phẩm?')) {
+                alert('Đã tách chiết thành công!');
+            }
+        }
+        function openTestModal(id) {
+            const modal = document.getElementById('testModal');
+            document.getElementById('testBagId').innerText = id;
+            if (modal) {
+                // Ensure helper works for test modal
+                if (typeof openModal === 'function') openModal(modal);
+                else modal.classList.add('active');
+
+                const select = document.getElementById('testResultSelect');
+                const warning = document.getElementById('positiveWarning');
+                if (select && warning) {
+                    select.onchange = (e) => {
+                        warning.style.display = e.target.value === 'positive' ? 'block' : 'none';
+                    };
+                }
+            }
+        }
+    </script> -->
+</body>
+
+</html>
+

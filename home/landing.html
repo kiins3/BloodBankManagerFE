@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodBank VN - Chung tay vì cộng đồng</title>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Custom Landing CSS -->
+    <link rel="stylesheet" href="../css/landing.css">
+</head>
+
+<body>
+    <!-- 1. Sticky Header -->
+    <header class="header">
+        <div class="container header-content">
+            <!-- Brand -->
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-drop"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank VN</h1>
+                </div>
+            </a>
+
+            <!-- Nav (Optional) -->
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active">Trang chủ</a></li>
+                <li><a href="#events" class="nav-link">Sự kiện</a></li>
+                <li><a href="#" class="nav-link">Về chúng tôi</a></li>
+            </ul>
+
+            <!-- Auth Actions (Dynamic) -->
+            <div id="auth-container" class="auth-buttons">
+                <!-- Javascript will populate this -->
+                <!-- Example Default: -->
+                <a href="login.html" class="btn btn-login">Đăng nhập</a>
+                <a href="register.html" class="btn btn-register">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Một giọt máu cho đi <br> Một cuộc đời ở lại</h2>
+            <p>Hàng ngàn bệnh nhân đang chờ đợi tấm lòng nhân ái của bạn. <br> Hãy tham gia hiến máu ngay hôm nay để lan
+                tỏa yêu thương.</p>
+            <button class="btn btn-hero" onclick="handleRegister()">
+                <i class="ph-bold ph-heart"></i> Đăng ký hiến ngay
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. Events Section -->
+    <section id="events" class="container">
+        <div class="section-header">
+            <h3>Chiến dịch sắp diễn ra</h3>
+            <p>Các sự kiện hiến máu tình nguyện nôi bật trên toàn quốc</p>
+        </div>
+
+        <div class="events-grid">
+            <!-- Event 1 -->
+            <div class="event-card">
+                <div class="card-banner"
+                    style="background-image: url('https://placehold.co/600x400/fee2e2/ef4444?text=Chu+Nhat+Do');">
+                    <span class="card-badge">Sắp diễn ra</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="event-title">Chủ nhật Đỏ 2026 - ĐH GTVT</h4>
+
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <i class="ph-bold ph-calendar-blank"></i>
+                            <span>20/01/2026 • 07:30 - 16:30</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="ph-bold ph-map-pin"></i>
+                            <span>Hội trường A, ĐH Giao Thông Vận Tải</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Mục tiêu: 500 đơn vị</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-card" onclick="handleRegister('E001')">
+                        Đăng ký ngay
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-card">
+                <div class="card-banner"
+                    style="background-image: url('https://placehold.co/600x400/ecfdf5/10b981?text=Vincom+Center');">
+                    <span class="card-badge" style="color: #059669; background: #ecfdf5;">Đang diễn ra</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="event-title">Hiến máu nhân đạo - Vincom Center</h4>
+
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <i class="ph-bold ph-calendar-blank"></i>
+                            <span>22/01/2026 • 08:00 - 17:00</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="ph-bold ph-map-pin"></i>
+                            <span>Sảnh chính Vincom Center, Q1, TP.HCM</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Mục tiêu: 300 đơn vị</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-card" onclick="handleRegister('E002')">
+                        Đăng ký ngay
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-card">
+                <div class="card-banner"
+                    style="background-image: url('https://placehold.co/600x400/e0f2fe/0ea5e9?text=Phuong+5');">
+                    <span class="card-badge" style="color: #0ea5e9; background: #e0f2fe;">Sắp tới</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="event-title">Ngày hội Hiến máu Phường 5</h4>
+
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <i class="ph-bold ph-calendar-blank"></i>
+                            <span>25/01/2026 • 07:00 - 11:30</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="ph-bold ph-map-pin"></i>
+                            <span>UBND Phường 5, Quận 3, TP.HCM</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Mục tiêu: 200 đơn vị</span>
+                            <span>10%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 10%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-card" onclick="handleRegister('E003')">
+                        Đăng ký ngay
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event 4 (To show Grid 4 items/row capability if screen allows, but keeping 3 for now as per code) -->
+            <div class="event-card">
+                <div class="card-banner"
+                    style="background-image: url('https://placehold.co/600x400/fff7ed/f97316?text=Trao+Yeu+Thuong');">
+                    <span class="card-badge" style="color: #ea580c; background: #fff7ed;">Sắp tới</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="event-title">Giọt máu hồng - Trao yêu thương</h4>
+
+                    <div class="event-meta">
+                        <div class="meta-item">
+                            <i class="ph-bold ph-calendar-blank"></i>
+                            <span>28/01/2026 • 07:30 - 16:30</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="ph-bold ph-map-pin"></i>
+                            <span>Nhà văn hóa Thanh Niên</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Mục tiêu: 400 đơn vị</span>
+                            <span>5%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 5%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-card" onclick="handleRegister('E004')">
+                        Đăng ký ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="ph-fill ph-drop text-danger"></i> BloodBank VN
+            </div>
+            <div class="footer-links">
+                <a href="#">Trang chủ</a>
+                <a href="#">Về chúng tôi</a>
+                <a href="#">Điều khoản sử dụng</a>
+                <a href="#">Chính sách bảo mật</a>
+                <a href="#">Liên hệ</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 BloodBank Project. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script src="../js/landing.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <aside class="sidebar" th:fragment="sidebar(activeNav)" id="staffSidebar">
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="ph-bold ph-drop" style="font-size: 20px;"></i>
+            </div>
+            <div class="brand-text">
+                <h1>BloodBank</h1>
+                <p id="staffRoleLabel">Staff Portal</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <!-- Chung: Tổng quan -->
+            <li class="nav-item">
+                <a href="dashboard.html" th:classappend="${activeNav == 'dashboard'} ? 'active' : ''">
+                    <i class="ph-bold ph-squares-four"></i>
+                    Tổng quan
+                </a>
+            </li>
+
+            <!-- STAFF_TECH: Tiếp nhận -->
+            <li class="nav-item staff-tech-only" style="display:none;">
+                <a href="reception.html" th:classappend="${activeNav == 'reception'} ? 'active' : ''">
+                    <i class="ph-bold ph-user-plus"></i>
+                    Tiếp nhận
+                </a>
+            </li>
+
+            <!-- STAFF_TECH: Kỹ thuật -->
+            <li class="nav-item staff-tech-only" style="display:none;">
+                <a href="technical.html" th:classappend="${activeNav == 'technical'} ? 'active' : ''">
+                    <i class="ph-bold ph-flask"></i>
+                    Quy trình kỹ thuật
+                </a>
+            </li>
+
+            <!-- STAFF_INVENTORY: Điều phối -->
+            <li class="nav-item staff-inventory-only" style="display:none;">
+                <a href="distribution.html" th:classappend="${activeNav == 'distribution'} ? 'active' : ''">
+                    <i class="ph-bold ph-truck"></i>
+                    Điều phối xuất kho
+                </a>
+            </li>
+
+            <!-- STAFF_INVENTORY: Quản lý kho -->
+            <li class="nav-item staff-inventory-only" style="display:none;">
+                <a href="distribution.html" th:classappend="${activeNav == 'inventory'} ? 'active' : ''">
+                    <i class="ph-bold ph-drop-half-bottom"></i>
+                    Quản lý kho
+                </a>
+            </li>
+
+            <!-- Chung: Tài khoản -->
+            <li class="nav-item" style="margin-top: auto;">
+                <a href="#" th:classappend="${activeNav == 'account'} ? 'active' : ''">
+                    <i class="ph-bold ph-user-circle"></i>
+                    Tài khoản
+                </a>
+            </li>
+
+            <!-- Đổi mật khẩu -->
+            <li class="nav-item">
+                <a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color: var(--secondary-color);">
+                    <i class="ph-bold ph-lock"></i>
+                    Đổi mật khẩu
+                </a>
+            </li>
+
+            <!-- Đăng xuất -->
+            <li class="nav-item">
+                <a href="javascript:void(0)" onclick="logout()" style="color: #ef4444;">
+                    <i class="ph-bold ph-sign-out"></i>
+                    Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </aside>
+</body>
+
+</html>

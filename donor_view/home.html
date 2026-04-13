@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Cổng Người Hiến Máu</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="donor.css">
+</head>
+
+<body>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="home.html">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-drop" style="font-size: 20px;"></i>
+                </div>
+                <span class="fw-bold">BloodBank</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home.html">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Sự kiện</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_tickets.html">Vé của tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.html">Lịch sử</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center mt-2 mt-lg-0" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img id="navbarAvatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar"
+                                class="rounded-circle" width="32" height="32">
+                            <span class="ms-2 d-lg-none" id="navbarUserNameMobile">Đang tải...</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="navbarDropdown">
+                            <li>
+                                <h6 class="dropdown-header text-truncate" id="navbarDropdownName" style="max-width: 200px;">Đang tải...</h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="profile.html">
+                                    <i class="ph-bold ph-user me-2"></i> Hồ sơ cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="change_password.html">
+                                    <i class="ph-bold ph-lock-key me-2"></i> Đổi mật khẩu
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center text-danger" href="javascript:void(0)" onclick="logout()">
+                                    <i class="ph-bold ph-sign-out me-2"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 80px; padding-bottom: 80px;">
+
+        <!-- Welcome Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h4 class="mb-0 text-muted">Xin chào,</h4>
+                <h2 class="fw-bold" id="welcomeUserName">Đang tải... 👋</h2>
+            </div>
+        </div>
+
+        <!-- Achievement Card -->
+        <div class="donor-card mb-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="badge-donor mb-2 d-inline-block">Người hiến Vàng</span>
+                    <h1 class="display-4 fw-bold mb-0">O+</h1>
+                    <p class="opacity-75">Nhóm máu</p>
+                </div>
+                <div class="text-end">
+                    <div class="display-6 fw-bold">12</div>
+                    <p class="opacity-75">Lần hiến</p>
+                </div>
+            </div>
+            <hr class="opacity-25 my-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <small>Cảm ơn bạn đã cứu người!</small>
+                <i class="ph-fill ph-heart" style="font-size: 24px;"></i>
+            </div>
+        </div>
+
+        <!-- Featured Events -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Sự kiện sắp tới</h5>
+            <a href="events.html" class="text-decoration-none text-danger small fw-bold">Xem tất cả</a>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <!-- Event 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="event-card bg-white h-100 position-relative">
+                    <img src="https://placehold.co/600x300/ffeeee/red?text=Hien+Mau+Nhan+Dao"
+                        class="card-img-top event-img" alt="Event">
+                    <div class="p-3">
+                        <div class="badge bg-danger mb-2">Sắp diễn ra</div>
+                        <h6 class="fw-bold">Ngày hội hiến máu - ĐH Y Hà Nội</h6>
+                        <div class="d-flex align-items-center text-muted small mt-2">
+                            <i class="ph-bold ph-calendar-blank me-1"></i>
+                            <span>15/02/2026 • 08:00 - 11:30</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted small mt-1 mb-3">
+                            <i class="ph-bold ph-map-pin me-1"></i>
+                            <span>Đống Đa, Hà Nội</span>
+                        </div>
+                        <a href="#"
+                            onclick="handleRegistration(event, 'evt1', 'Ngày hội hiến máu - ĐH Y Hà Nội', '15/02/2026 • 08:00 - 11:30')"
+                            class="btn btn-outline-danger w-100 rounded-pill">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="event-card bg-white h-100 position-relative">
+                    <img src="https://placehold.co/600x300/eef2ff/blue?text=Trao+Giot+Hong"
+                        class="card-img-top event-img" alt="Event">
+                    <div class="p-3">
+                        <div class="badge bg-primary mb-2">Tháng sau</div>
+                        <h6 class="fw-bold">Chủ nhật Đỏ - BV Bạch Mai</h6>
+                        <div class="d-flex align-items-center text-muted small mt-2">
+                            <i class="ph-bold ph-calendar-blank me-1"></i>
+                            <span>20/02/2026 • 07:30 - 16:30</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted small mt-1 mb-3">
+                            <i class="ph-bold ph-map-pin me-1"></i>
+                            <span>Hai Bà Trưng, Hà Nội</span>
+                        </div>
+                        <a href="#"
+                            onclick="handleRegistration(event, 'evt2', 'Chủ nhật Đỏ - BV Bạch Mai', '20/02/2026 • 07:30 - 16:30')"
+                            class="btn btn-outline-danger w-100 rounded-pill">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent History -->
+        <h5 class="fw-bold mb-3">Lịch sử gần nhất</h5>
+        <div class="card border-0 shadow-sm p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-circle me-3">
+                    <i class="ph-bold ph-drop-half-bottom" style="font-size: 24px;"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="fw-bold mb-1">Hiến máu toàn phần (350ml)</h6>
+                    <p class="text-muted small mb-0">12/10/2025 tại Viện Huyết học TW</p>
+                </div>
+                <a href="history.html" class="btn btn-light btn-sm rounded-pill"><i
+                        class="ph-bold ph-caret-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Xác nhận đăng ký hiến máu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small mb-0">Sự kiện:</label>
+                        <div id="modalEventName" class="fw-bold fs-5">Tên sự kiện</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small mb-0">Thời gian:</label>
+                        <div id="modalEventTime" class="fw-bold">00:00 - 00:00, DD/MM/YYYY</div>
+                    </div>
+
+                    <div class="alert alert-warning border-0 d-flex mb-3" role="alert">
+                        <i class="ph-fill ph-warning-circle fs-4 me-2"></i>
+                        <div class="small">
+                            Khoảng cách giữa 2 lần hiến máu toàn phần tối thiểu là 84 ngày.
+                        </div>
+                    </div>
+
+                    <div class="form-check p-3 bg-light rounded">
+                        <input class="form-check-input" type="checkbox" value="" id="confirmCheckbox"
+                            onchange="toggleConfirmButton()">
+                        <label class="form-check-label fw-bold" for="confirmCheckbox">
+                            Tôi cam kết không hiến máu tại nơi khác trong 84 ngày qua.
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger fw-bold" id="btnConfirmReg" disabled
+                        onclick="confirmRegistration()">
+                        Xác nhận
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="donor.js"></script>
+</body>
+
+</html>

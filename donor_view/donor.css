@@ -1,0 +1,162 @@
+/* Custom styles for Donor Portal */
+
+/* Reuse variables from style.css where possible, adding new ones if needed */
+:root {
+    --primary-color: #ef4444;
+    /* match style.css */
+    --primary-hover: #dc2626;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --bg-color: #f9fafb;
+    --card-bg: #ffffff;
+    --radius: 0.5rem;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Consistent font */
+    display: block;
+    /* Override style.css flex layout */
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+}
+
+.nav-link.active {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+}
+
+/* Home - Gamification Card */
+.donor-card {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+    margin-bottom: 2rem;
+}
+
+.badge-donor {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    backdrop-filter: blur(4px);
+}
+
+/* Event List */
+.event-card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.event-img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.progress-custom {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e5e7eb;
+    margin: 0.5rem 0;
+}
+
+.progress-bar-custom {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* Ticket */
+.ticket-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #e5e7eb;
+}
+
+.qr-section {
+    background-color: #fef2f2;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 2px dashed #e5e7eb;
+    position: relative;
+}
+
+.ticket-info {
+    padding: 2rem;
+}
+
+.status-badge {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+/* History */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e5e7eb;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timeline-dot {
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    position: absolute;
+    left: -1.95rem;
+    /* Adjust based on padding */
+    top: 0.25rem;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}

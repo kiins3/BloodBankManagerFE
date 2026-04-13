@@ -1,0 +1,392 @@
+/* Staff View Specific Styles */
+
+/* --- Layout & Grid Overrides --- */
+.staff-stats-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.staff-stats-icon {
+    font-size: 1.5rem;
+}
+
+/* --- Dashboard Specifics --- */
+.event-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+
+.event-details {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* --- Reception Specifics --- */
+.reception-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-scan-qr {
+    flex: 1;
+    padding: 1.5rem;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.btn-walk-in {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    flex: 0.5;
+    justify-content: center;
+}
+
+/* Table Actions */
+.table-header-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.search-box-wrapper {
+    position: relative;
+    width: 300px;
+}
+
+.search-icon-overlay {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.search-input {
+    padding-left: 2.5rem;
+}
+
+/* --- Technical View Specifics --- */
+.filter-group {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-select {
+    width: 150px;
+}
+
+.technical-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* --- Distribution View Specifics --- */
+.hospital-name {
+    font-weight: 500;
+}
+
+.hospital-dept {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.req-qty-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Modal & Feedback --- */
+.qualification-result {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: none;
+    /* Styles will be injected by JS, but defaults can be here */
+}
+
+.fifo-table-container {
+    padding: 0;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+}
+
+.fifo-thead {
+    background-color: #f3f4f6;
+}
+
+/* --- Utilities that were inline --- */
+.text-mono {
+    font-family: monospace;
+    font-weight: 500;
+}
+
+.flex-center-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.w-auto {
+    width: auto;
+}
+
+/* --- Premium Modal UI (Staff View) --- */
+.detail-modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-header-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem!important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.detail-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-info-item .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.detail-info-item .value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.stat-chip {
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.detail-section-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.75rem;
+}
+
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.premium-table th {
+    background-color: #f1f5f9;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.premium-table td {
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+
+.premium-table tr:nth-child(even) {
+    background-color: #fbfcfe;
+}
+
+.status-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: status-pulse-anim 2s infinite;
+}
+
+@keyframes status-pulse-anim {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* --- Premium UI Enhancements --- */
+.scan-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.scan-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: #3b82f6;
+}
+
+.scan-icon-pulse {
+    width: 40px; height: 40px;
+    background: #eff6ff;
+    color: #3b82f6;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+}
+
+.scan-icon-pulse i { animation: ph-shake 2s infinite; }
+
+@keyframes ph-shake {
+    0%, 100% { transform: rotate(0); }
+    10%, 30%, 50%, 70%, 90% { transform: rotate(-5deg); }
+    20%, 40%, 60%, 80% { transform: rotate(5deg); }
+}
+
+.scan-input {
+    height: 52px !important;
+    font-size: 1.1rem !important;
+    border-radius: 10px !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+}
+
+.scan-input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+}
+
+#fifoTableBody tr.scanned-success {
+    background-color: #f0fdf4 !important;
+    border-left: 4px solid #22c55e;
+    transition: all 0.3s ease;
+}
+
+.scan-feedback-badge {
+    padding: 0.6rem 1.25rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+.bg-success-light { background-color: #f0fdf4 !important; color: #16a34a !important; }
+.bg-warning-light { background-color: #fffbeb !important; color: #d97706 !important; }
+.bg-danger-light { background-color: #fef2f2 !important; color: #dc2626 !important; }
+.bg-primary-light { background-color: #eff6ff !important; color: #3b82f6 !important; }
+/* --- Header Logout & User Info --- */
+.header {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 2rem;
+}
+
+.header-user-info {
+    display: flex;
+    align-items: center !important;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    line-height: 1.25;
+}
+
+.header-user-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #1e293b;
+}
+
+#headerRoleLabel {
+    font-size: 0.7rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.logout-btn-header {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fee2e2;
+    color: #ef4444;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+}
+
+.logout-btn-header:hover {
+    background: #fecaca;
+    transform: scale(1.1);
+}

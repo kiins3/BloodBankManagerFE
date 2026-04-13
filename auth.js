@@ -90,7 +90,7 @@ function setupForms() {
                         localStorage.setItem('user_role', role);
 
                         if (role === 'ADMIN') {
-                            defaultUrl = 'admin_view/index.html';
+                            defaultUrl = 'admin_view/admin_home.html';
                         } else if (role === 'DONOR') {
                             defaultUrl = 'donor_view/home.html';
                         } else if (role === 'HOSPITAL') {

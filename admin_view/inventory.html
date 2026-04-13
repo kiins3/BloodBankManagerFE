@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Ôªø<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,6 +18,7 @@
             color: #ea580c;
         }
     </style>
+    <script src="../script.js"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html">
+                    <a href="admin_home.html">
                         <i class="ph-bold ph-chart-line-up"></i>
                         T?ng quan
                     </a>
@@ -44,26 +45,26 @@
                 <li class="nav-item">
                     <a href="donors.html">
                         <i class="ph-bold ph-users"></i>
-                        Qu?n l˝ ngu?i hi?n
+                        Qu?n l√Ω ngu?i hi?n
                     </a>
                 </li>
                 <li class="nav-item nav-item-dropdown">
                     <div class="nav-item-header active" id="inventoryNavHeader">
                         <div class="left-icon">
                             <i class="ph-bold ph-drop-half-bottom"></i>
-                            <span>Kho m·u</span>
+                            <span>Kho m√°u</span>
                         </div>
                         <i class="ph-bold ph-caret-down" id="inventoryNavCaret"></i>
                     </div>
                     <div class="nav-dropdown-content active" id="inventoryNavContent">
-                        <a href="#" class="nav-dropdown-item active" id="navBloodList">Danh s·ch m·u</a>
-                        <a href="#" class="nav-dropdown-item" id="navEquipmentManager">Qu?n l˝ thi?t b?</a>
+                        <a href="#" class="nav-dropdown-item active" id="navBloodList">Danh s√°ch m√°u</a>
+                        <a href="#" class="nav-dropdown-item" id="navEquipmentManager">Qu?n l√Ω thi?t b?</a>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a href="campaigns.html">
                         <i class="ph-bold ph-calendar"></i>
-                        Chi?n d?ch hi?n m·u
+                        Chi?n d?ch hi?n m√°u
                     </a>
                 </li>
             <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
@@ -72,15 +73,15 @@
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Kho m·u</h2>
-                <p>Qu?n l˝ c·c don v? m·u, theo dıi h?n s? d?ng v‡ gi·m s·t m?c t?n kho.</p>
+                <h2>Kho m√°u</h2>
+                <p>Qu?n l√Ω c√°c don v? m√°u, theo d√µi h?n s? d?ng v√† gi√°m s√°t m?c t?n kho.</p>
             </header>
 
             <div id="bloodListView">
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng don v? m·u</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng don v? m√°u</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">4</h3>
                     </div>
                     <div class="card">
@@ -89,11 +90,11 @@
                         </h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">–„ d?t tru?c</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">√ê√£ d?t tru?c</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">–„ h?y/H?t h?n <i
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">√ê√£ h?y/H?t h?n <i
                                 class="ph-bold ph-warning-circle" style="color: #f97316;"></i></p>
                         <h3
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
@@ -105,12 +106,12 @@
                 <!-- Inventory Table -->
                 <div class="card">
                     <div style="margin-bottom: 1.5rem;">
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh m?c t˙i m·u trong
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh m?c t√∫i m√°u trong
                             kho
                         </h3>
-                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Theo dıi v‡ qu?n l˝ t?t c? c·c don
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Theo d√µi v√† qu?n l√Ω t?t c? c√°c don
                             v?
-                            m·u trong kho.</p>
+                            m√°u trong kho.</p>
                     </div>
 
                     <!-- Toolbar -->
@@ -123,7 +124,7 @@
                         </div>
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                            <option>T?t c? nhÛm m·u</option>
+                            <option>T?t c? nh√≥m m√°u</option>
                             <option>A+</option>
                             <option>A-</option>
                             <option>B+</option>
@@ -136,20 +137,20 @@
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                             <option>T?t c? ch? ph?m</option>
-                            <option>M·u to‡n ph?n</option>
+                            <option>M√°u to√†n ph?n</option>
                             <option>Kh?i h?ng c?u</option>
                             <option>Huy?t tuong</option>
                             <option>Ti?u c?u</option>
                         </select>
                         <select
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                            <option>T?t c? tr?ng th·i</option>
-                            <option>S?n s‡ng</option>
-                            <option>–„ d?t tru?c</option>
+                            <option>T?t c? tr?ng th√°i</option>
+                            <option>S?n s√†ng</option>
+                            <option>√ê√£ d?t tru?c</option>
                         </select>
                         <button class="btn btn-primary" onclick="alert('Printing Report...')">
                             <i class="ph-bold ph-file-pdf"></i>
-                            Xu?t b·o c·o
+                            Xu?t b√°o c√°o
                         </button>
                     </div>
 
@@ -158,16 +159,16 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>M„ t˙i</th>
-                                    <th>NhÛm m·u</th>
+                                    <th>M√£ t√∫i</th>
+                                    <th>Nh√≥m m√°u</th>
                                     <th>Lo?i ch? ph?m</th>
-                                    <th>Th? tÌch</th>
+                                    <th>Th? t√≠ch</th>
                                     <th>Ngu?i hi?n</th>
-                                    <th>Ng‡y l?y</th>
+                                    <th>Ng√†y l?y</th>
                                     <th>H?t h?n</th>
-                                    <th>V? trÌ</th>
+                                    <th>V? tr√≠</th>
                                      <tbody id="bloodTableBody">
-                                <!-- D? li?u t˙i m·u s? du?c n?p t?i d‚y -->
+                                <!-- D? li?u t√∫i m√°u s? du?c n?p t?i d√¢y -->
                             </tbody>
 
                                         </div>
@@ -192,11 +193,11 @@
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">4</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">C?nh b·o</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">C?nh b√°o</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">0</h3>
                     </div>
                     <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">B?o trÏ/H?ng</p>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">B?o tr√¨/H?ng</p>
                         <h3
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
                             0</h3>
@@ -208,10 +209,10 @@
                     <div
                         style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s·ch thi?t b?
+                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s√°ch thi?t b?
                                 b?o qu?n</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l˝ h? th?ng t? b?o qu?n
-                                m·u v‡ ch? ph?m.</p>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l√Ω h? th?ng t? b?o qu?n
+                                m√°u v√† ch? ph?m.</p>
                         </div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
                             <select id="equipmentTypeFilter" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
@@ -221,7 +222,7 @@
                                 <option value="ht">Huy?t tuong</option>
                             </select>
                             <button class="btn btn-primary" onclick="openEquipmentModal()">
-                                <i class="ph-bold ph-plus"></i> ThÍm thi?t b?
+                                <i class="ph-bold ph-plus"></i> Th√™m thi?t b?
                             </button>
                         </div>
                     </div>
@@ -230,18 +231,18 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>M„ t?</th>
-                                    <th>TÍn t?</th>
+                                    <th>M√£ t?</th>
+                                    <th>T√™n t?</th>
                                     <th>Lo?i ch? ph?m</th>
-                                    <th>Nhi?t d? (∞C)</th>
+                                    <th>Nhi?t d? (¬∞C)</th>
                                     <th>S?c ch?a</th>
-                                    <th>–ang ch?a</th>
-                                    <th>Tr?ng th·i</th>
-                                    <th>H‡nh d?ng</th>
+                                    <th>√êang ch?a</th>
+                                    <th>Tr?ng th√°i</th>
+                                    <th>H√†nh d?ng</th>
                                 </tr>
                             </thead>
                             <tbody id="equipmentTableBody">
-                                <!-- D? li?u thi?t b? s? du?c n?p t?i d‚y -->
+                                <!-- D? li?u thi?t b? s? du?c n?p t?i d√¢y -->
                             </tbody>
                         </table>
                     </div>
@@ -301,7 +302,7 @@
     <div class="modal-overlay" id="equipmentModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="equipmentModalTitle">ThÍm thi?t b? m?i</h3>
+                <h3 id="equipmentModalTitle">Th√™m thi?t b? m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
@@ -309,33 +310,33 @@
                     <input type="hidden" id="equipmentId">
 
                     <div class="form-group">
-                        <label>TÍn thi?t b?</label>
-                        <input type="text" id="eqName" class="form-control" placeholder="VÌ d?: T? h?ng c?u 3" required>
+                        <label>T√™n thi?t b?</label>
+                        <input type="text" id="eqName" class="form-control" placeholder="V√≠ d?: T? h?ng c?u 3" required>
                     </div>
 
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                         <div class="form-group">
                             <label>Lo?i ch? ph?m</label>
                             <select id="eqProductType" class="form-control" required>
-                                <option value="MAU_TOAN_PHAN">M·u to‡n ph?n</option>
-                                <option value="TUI_HONG_CAU">T˙i h?ng c?u</option>
-                                <option value="TUI_HUYET_TUONG">T˙i huy?t tuong</option>
-                                <option value="TUI_TIEU_CAU">T˙i ti?u c?u</option>
+                                <option value="MAU_TOAN_PHAN">M√°u to√†n ph?n</option>
+                                <option value="TUI_HONG_CAU">T√∫i h?ng c?u</option>
+                                <option value="TUI_HUYET_TUONG">T√∫i huy?t tuong</option>
+                                <option value="TUI_TIEU_CAU">T√∫i ti?u c?u</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>S?c ch?a t?i da (t˙i)</label>
+                            <label>S?c ch?a t?i da (t√∫i)</label>
                             <input type="number" id="eqMaxCapacity" class="form-control" placeholder="100" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>TiÍu chu?n nhi?t d?</label>
-                        <input type="text" id="eqStandard" class="form-control" placeholder="VÌ d?: 2 - 6 d? C" required>
+                        <label>Ti√™u chu?n nhi?t d?</label>
+                        <input type="text" id="eqStandard" class="form-control" placeholder="V√≠ d?: 2 - 6 d? C" required>
                     </div>
 
                     <div class="form-group" id="eqStatusContainer" style="display: none;">
-                        <label>Tr?ng th·i</label>
+                        <label>Tr?ng th√°i</label>
                         <select id="eqStatus" class="form-control">
                             <option value="ACTIVE">Ho?t d?ng (ACTIVE)</option>
                             <option value="UNACTIVE">Ng?ng ho?t d?ng (UNACTIVE)</option>
@@ -343,7 +344,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>–Ûng</button>
+                        <button type="button" class="btn btn-secondary" data-modal-close>√ê√≥ng</button>
                         <button type="submit" class="btn btn-primary" id="saveEquipmentBtn">Luu thi?t b?</button>
                     </div>
                 </form>
@@ -351,10 +352,12 @@
         </div>
     </div>
 
-    <script src="../script.js"></script>
+    
     <script src="admin.js"></script>
 </body>
 
 </html>
+
+
 
 

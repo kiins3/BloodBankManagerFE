@@ -4,6 +4,33 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Donor Portal Loaded");
     // Tự động load thông tin người dùng lên Navbar nếu có các element cần thiết
     initHomeNavbar();
+
+    // Hook search button (chỉ có trên events.html)
+    const btnSearch = document.getElementById('btnSearchEvent');
+    if (btnSearch) {
+        btnSearch.addEventListener('click', () => {
+            const loc = document.getElementById('searchLocation').value;
+            const date = document.getElementById('searchDate').value;
+            loadDonorEvents(loc, date, false);
+        });
+    }
+
+    // Load sự kiện: home.html (compact, 3 items) vs events.html (full list)
+    const eventsContainer = document.getElementById('donor-events-list');
+    if (eventsContainer) {
+        const isHomePage = window.location.pathname.endsWith('home.html');
+        loadDonorEvents('', '', isHomePage).then(() => {
+            // Sau khi load xong, kiểm tra có id truyền qua URL để auto-mở modal (chỉ ở events.html)
+            if (!isHomePage) {
+                const params = new URLSearchParams(window.location.search);
+                const eventId = params.get('id');
+                if (eventId) {
+                    const btn = document.querySelector(`a[onclick*="'${eventId}'"]`);
+                    if (btn) btn.click();
+                }
+            }
+        });
+    }
 });
 
 // Tải thông tin người dùng thật lên Navbar (avatar + tên)
@@ -73,9 +100,7 @@ if (document.getElementById('fullName')) {
     loadProfile();
 }
 
-if (document.getElementById('donor-events-list')) {
-    loadDonorEvents();
-}
+// Load events được xử lý trong DOMContentLoaded ở trên
 
 if (document.getElementById('ticketQrImg')) {
     loadTicketDetails();
@@ -300,11 +325,22 @@ async function loadTicketDetails() {
     }
 }
 
-async function loadDonorEvents() {
+async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = false) {
     const token = localStorage.getItem('access_token');
-    // Mặc dù lấy list event có thể không cần token tùy cấu hình BE, nhưng ta cứ truyền hoặc bỏ qua nếu FE đã quen truyền.
     const headers = {};
     if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const container = document.getElementById('donor-events-list');
+    if (!container) return;
+
+    // Hiển thị skeleton loader
+    container.innerHTML = `
+        <div class="col-12 text-center py-5 text-muted">
+            <div class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+            </div>
+            <p class="mt-2 small">Đang tải danh sách sự kiện...</p>
+        </div>`;
 
     try {
         const response = await fetch(`${API_BASE}/api/shared/event/get-list-event`, {
@@ -312,91 +348,139 @@ async function loadDonorEvents() {
             headers: headers
         });
 
-        if (response.ok) {
-            const data = await response.json();
-            const container = document.getElementById('donor-events-list');
-            container.innerHTML = '';
+        if (!response.ok) {
+            container.innerHTML = '<div class="col-12 text-center py-5 text-danger">Lỗi khi tải dữ liệu từ máy chủ.</div>';
+            return;
+        }
 
-            if (data.length === 0) {
-                container.innerHTML = '<div class="col-12 text-center py-5 text-muted">Hiện chưa có sự kiện nào.</div>';
-                return;
+        const result = await response.json();
+        console.log('[Events API] raw response:', JSON.stringify(result).substring(0, 500));
+        
+        // Hỗ trợ nhiều dạng response: { data: [...] } | { code, data: [...] } | [...]
+        let data;
+        if (Array.isArray(result)) {
+            data = result;
+        } else if (result.data && Array.isArray(result.data)) {
+            data = result.data;
+        } else if (result.content && Array.isArray(result.content)) {
+            data = result.content;
+        } else {
+            // Cố tìm mảng trong object
+            const firstArray = Object.values(result).find(v => Array.isArray(v));
+            data = firstArray || [];
+        }
+        
+        console.log('[Events API] parsed data length:', data ? data.length : 0);
+        container.innerHTML = '';
+
+        if (!data || !Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center py-5 text-muted">Hiện chưa có sự kiện nào.</div>';
+            return;
+        }
+
+        // Lọc dữ liệu phía Client
+        let filteredResults = data;
+        if (filterLoc) {
+            filteredResults = filteredResults.filter(e =>
+                (e.location || '').toLowerCase().includes(filterLoc.toLowerCase()) ||
+                (e.eventName || '').toLowerCase().includes(filterLoc.toLowerCase())
+            );
+        }
+        if (filterDate) {
+            filteredResults = filteredResults.filter(e => {
+                const start = new Date(e.startDate).toISOString().split('T')[0];
+                return start === filterDate;
+            });
+        }
+
+        if (filteredResults.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center py-5 text-muted">Không tìm thấy sự kiện nào khớp với yêu cầu.</div>';
+            return;
+        }
+
+        // compactMode (home.html): chỉ hiện 3 sự kiện, nút dẫn sang events.html
+        const displayList = compactMode ? filteredResults.slice(0, 3) : filteredResults;
+
+        displayList.forEach(e => {
+            const s = (e.status || "").toUpperCase().replace(/[^A-Z]/g, "");
+
+            let badgeHtml = '';
+            let buttonHtml = '';
+            let opacity = '1';
+
+            const start = new Date(e.startDate);
+            const end = new Date(e.endDate);
+            const timeStr = `${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, ${start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+
+            const percent = Math.round(((e.currentAmount || 0) / e.targetAmount) * 100);
+
+            if (s === 'DANGMO' || s === 'DANGDIENRA') {
+                badgeHtml = '<span class="badge bg-success position-absolute top-0 end-0 m-3">Đang mở</span>';
+                if (compactMode) {
+                    buttonHtml = `<a href="events.html?id=${e.eventId}" class="btn btn-danger w-100 rounded-pill fw-bold mt-2">Đăng ký tham gia</a>`;
+                } else {
+                    buttonHtml = `<a href="#" onclick="handleRegistration(event, '${e.eventId}', '${e.eventName}', '${timeStr}')" class="btn btn-danger w-100 rounded-pill fw-bold mt-2">Đăng ký tham gia</a>`;
+                }
+            } else if (s === 'SAPTOI') {
+                badgeHtml = '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3">Sắp tới</span>';
+                if (compactMode) {
+                    buttonHtml = `<a href="events.html?id=${e.eventId}" class="btn btn-primary w-100 rounded-pill fw-bold mt-2" style="background-color: var(--primary-color); border: none;">Xem sự kiện</a>`;
+                } else {
+                    buttonHtml = `<a href="#" onclick="handleRegistration(event, '${e.eventId}', '${e.eventName}', '${timeStr}')" class="btn btn-primary w-100 rounded-pill fw-bold mt-2" style="background-color: var(--primary-color); border: none;">Đăng ký tham gia</a>`;
+                }
+            } else if (s === 'DADONG') {
+                badgeHtml = '<span class="badge bg-secondary position-absolute top-0 end-0 m-3">Đã đóng</span>';
+                buttonHtml = `<button class="btn btn-light w-100 rounded-pill fw-bold mt-2 text-muted" disabled>Đã kết thúc</button>`;
+                opacity = '0.7';
+            } else {
+                badgeHtml = `<span class="badge bg-dark position-absolute top-0 end-0 m-3">${e.status}</span>`;
+                buttonHtml = `<button class="btn btn-light w-100 rounded-pill fw-bold mt-2 text-muted" disabled>Không khả dụng</button>`;
+                opacity = '0.5';
             }
 
-            // Chỉ hiển thị các sự kiện Đang mở hoặc Sắp tới nếu muốn, hoặc hiển thị hết. Ở đây sẽ hiển thị hết.
-            data.forEach(e => {
-                const s = (e.status || "").toUpperCase().replace(/[^A-Z]/g, "");
-                
-                let badgeHtml = '';
-                let buttonHtml = '';
-                let opacity = '1';
+            const imgText = encodeURIComponent(e.eventName.substring(0, 15));
+            const imgSrc = `https://placehold.co/600x300/e0f2fe/0984e3?text=${imgText}`;
 
-                const start = new Date(e.startDate);
-                const end = new Date(e.endDate);
-                const timeStr = `${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, ${start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+            const cardHtml = `
+                <div class="col-12 col-md-6 col-lg-4" style="opacity: ${opacity}">
+                    <div class="event-card bg-white d-flex flex-column h-100 shadow-sm rounded">
+                        <div class="position-relative">
+                            <img src="${imgSrc}" class="card-img-top event-img" alt="Event Image" style="height: 180px; object-fit: cover;">
+                            ${badgeHtml}
+                        </div>
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <h5 class="fw-bold mb-2">${e.eventName}</h5>
 
-                const percent = Math.round(((e.currentAmount || 0) / e.targetAmount) * 100);
-
-                if (s === 'DANGMO' || s === 'DANGDIENRA') {
-                    badgeHtml = '<span class="badge bg-success position-absolute top-0 end-0 m-3">Đang mở</span>';
-                    buttonHtml = `<a href="#" onclick="handleRegistration(event, '${e.eventId}', '${e.eventName}', '${timeStr}')" class="btn btn-danger w-100 rounded-pill fw-bold mt-2">Đăng ký tham gia</a>`;
-                } else if (s === 'SAPTOI') {
-                    badgeHtml = '<span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3">Sắp tới</span>';
-                    buttonHtml = `<a href="#" onclick="handleRegistration(event, '${e.eventId}', '${e.eventName}', '${timeStr}')" class="btn btn-primary w-100 rounded-pill fw-bold mt-2" style="background-color: var(--primary-color); border: none;">Đăng ký tham gia</a>`;
-                } else if (s === 'DADONG') {
-                    badgeHtml = '<span class="badge bg-secondary position-absolute top-0 end-0 m-3">Đã đóng</span>';
-                    buttonHtml = `<button class="btn btn-light w-100 rounded-pill fw-bold mt-2 text-muted" disabled>Đã kết thúc</button>`;
-                    opacity = '0.7';
-                } else {
-                    badgeHtml = `<span class="badge bg-dark position-absolute top-0 end-0 m-3">${e.status}</span>`;
-                    buttonHtml = `<button class="btn btn-light w-100 rounded-pill fw-bold mt-2 text-muted" disabled>Không khả dụng</button>`;
-                    opacity = '0.5';
-                }
-
-                // Random placeholder image based on name
-                const imgText = encodeURIComponent(e.eventName.substring(0, 15));
-                const imgSrc = `https://placehold.co/600x300/e0f2fe/0984e3?text=${imgText}`;
-
-                const cardHtml = `
-                    <div class="col-12 col-md-6 col-lg-4" style="opacity: ${opacity}">
-                        <div class="event-card bg-white d-flex flex-column h-100 shadow-sm rounded">
-                            <div class="position-relative">
-                                <img src="${imgSrc}" class="card-img-top event-img" alt="Event Image" style="height: 180px; object-fit: cover;">
-                                ${badgeHtml}
+                            <div class="mb-3 text-secondary small">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="ph-bold ph-clock me-2"></i> ${timeStr}
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="ph-bold ph-map-pin me-2"></i> ${e.location || 'Đang cập nhật'}
+                                </div>
                             </div>
-                            <div class="p-3 d-flex flex-column flex-grow-1">
-                                <h5 class="fw-bold mb-2">${e.eventName}</h5>
 
-                                <div class="mb-3 text-secondary small">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <i class="ph-bold ph-clock me-2"></i> ${timeStr}
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <i class="ph-bold ph-map-pin me-2"></i> ${e.location}
-                                    </div>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between small fw-bold mb-1">
+                                    <span>Tiến độ</span>
+                                    <span class="${percent >= 90 ? 'text-danger' : ''}">${e.currentAmount || 0}/${e.targetAmount}</span>
+                                </div>
+                                <div class="progress progress-custom mb-3" style="height: 8px;">
+                                    <div class="progress-bar ${percent >= 90 ? 'bg-danger' : 'bg-primary'}" role="progressbar" style="width: ${percent}%"></div>
                                 </div>
 
-                                <div class="mt-auto">
-                                    <div class="d-flex justify-content-between small fw-bold mb-1">
-                                        <span>Tiến độ</span>
-                                        <span class="${percent >= 90 ? 'text-danger' : ''}">${e.currentAmount || 0}/${e.targetAmount}</span>
-                                    </div>
-                                    <div class="progress progress-custom mb-3" style="height: 8px;">
-                                        <div class="progress-bar ${percent >= 90 ? 'bg-danger' : 'bg-primary'}" role="progressbar" style="width: ${percent}%"></div>
-                                    </div>
-                                    
-                                    ${buttonHtml}
-                                </div>
+                                ${buttonHtml}
                             </div>
                         </div>
                     </div>
-                `;
-                container.insertAdjacentHTML('beforeend', cardHtml);
-            });
-            
-        }
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHtml);
+        });
+
     } catch (error) {
         console.error("Lỗi khi fetch events:", error);
-        document.getElementById('donor-events-list').innerHTML = '<div class="col-12 text-center py-5 text-danger">Không thể kết nối đến máy chủ sự kiện.</div>';
+        container.innerHTML = '<div class="col-12 text-center py-5 text-danger">Không thể kết nối đến máy chủ sự kiện.</div>';
     }
 }
 
@@ -757,9 +841,8 @@ async function handleChangePassword(event) {
 }
 window.logout = function() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_info');
+        localStorage.clear();
         window.location.href = '../login.html';
     }
 }
+

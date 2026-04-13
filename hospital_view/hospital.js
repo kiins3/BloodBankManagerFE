@@ -113,11 +113,11 @@ window.changePassword = async function(e) {
 
 window.logout = function() {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
+        localStorage.clear();
         window.location.href = '../login.html';
     }
 }
+
 
 function selectUrgency(level, element) {
     document.querySelectorAll('.urgency-option').forEach(el => {

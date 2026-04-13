@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="../style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="../script.js"></script>
+    <script src="../script.js?v=3"></script>
+    <script src="admin.js?v=3"></script>
 </head>
 
 <body>
@@ -28,93 +29,99 @@
                 <li class="nav-item">
                     <a href="admin_home.html" class="active">
                         <i class="ph-bold ph-chart-line-up"></i>
-                        Tá»•ng quan
+                        Tổng quan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="donors.html">
                         <i class="ph-bold ph-users"></i>
-                        Quáº£n lÃ½ ngÆ°á»i hiáº¿n
+                        Quản lý người hiến
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="inventory.html">
                         <i class="ph-bold ph-drop-half-bottom"></i>
-                        Kho mÃ¡u
+                        Kho máu
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="campaigns.html">
                         <i class="ph-bold ph-calendar"></i>
-                        Chiáº¿n dá»‹ch hiáº¿n mÃ¡u
+                        Chiến dịch hiến máu
                     </a>
                 </li>
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> Ðang xu?t</a></li></ul>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" onclick="logout()" style="color: #ef4444; margin-top: 2rem;">
+                        <i class="ph-bold ph-sign-out"></i>
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h2>Tá»•ng quan</h2>
-                <p>Tá»•ng quan vá» hoáº¡t Ä‘á»™ng vÃ  má»©c tá»“n kho cá»§a kho mÃ¡u</p>
+                <h2>Tổng quan</h2>
+                <p>Tổng quan về hoạt động và mức tồn kho của kho máu</p>
             </header>
 
             <!-- Stats Cards -->
             <div class="grid-4">
-                <!-- Card 1: Tá»•ng cháº¿ pháº©m mÃ¡u -->
+                <!-- Card 1: Tổng chế phẩm máu -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Tá»•ng cháº¿ pháº©m mÃ¡u</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng chế phẩm máu</p>
                             <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">1,250</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Gá»“m 250 mÃ¡u toÃ n pháº§n & 1000 cháº¿ pháº©m
+                                Gồm 250 máu toàn phần & 1000 chế phẩm
                             </p>
                         </div>
                         <i class="ph-bold ph-drop" style="color: var(--primary-color);"></i>
                     </div>
                 </div>
 
-                <!-- Card 2: Chiáº¿n dá»‹ch sáº¯p tá»›i -->
+                <!-- Card 2: Chiến dịch sắp tới -->
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chiáº¿n dá»‹ch sáº¯p tá»›i</p>
-                            <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">2 Sá»± kiá»‡n</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Chiến dịch sắp tới</p>
+                            <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">2 Sự kiện</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                ÄH GTVT (20/11) - ÄÃ£ Ä‘Äƒng kÃ½: 150/200
+                                ĐH GTVT (20/11) - Đã đăng ký: 150/200
                             </p>
                         </div>
                         <i class="ph-bold ph-calendar-check" style="color: var(--text-secondary);"></i>
                     </div>
                 </div>
 
-                <!-- Card 3: YÃªu cáº§u chá» duyá»‡t -->
+                <!-- Card 3: Yêu cầu chờ duyệt -->
                 <div class="card" style="border-left: 4px solid var(--warning-color);">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">YÃªu cáº§u chá» duyá»‡t</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu chờ duyệt</p>
                             <h3
                                 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--warning-color);">
                                 5</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Cáº§n xá»­ lÃ½ gáº¥p tá»« cÃ¡c bá»‡nh viá»‡n
+                                Cần xử lý gấp từ các bệnh viện
                             </p>
                         </div>
                         <i class="ph-bold ph-clock-countdown" style="color: var(--warning-color);"></i>
                     </div>
                 </div>
 
-                <!-- Card 4: Cáº£nh bÃ¡o háº¿t háº¡n -->
+                <!-- Card 4: Cảnh báo hết hạn -->
                 <div class="card" style="border-left: 4px solid var(--danger-color);">
                     <div style="display: flex; justify-content: space-between; align-items: start;">
                         <div>
-                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cáº£nh bÃ¡o háº¿t háº¡n</p>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo hết hạn</p>
                             <h3
                                 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
                                 12</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                TÃºi mÃ¡u cÃ²n háº¡n < 7 ngÃ y </p>
+                                Túi máu còn hạn < 7 ngày </p>
                         </div>
                         <i class="ph-bold ph-warning-octagon" style="color: var(--danger-color);"></i>
                     </div>
@@ -124,17 +131,17 @@
             <!-- Charts -->
             <div class="grid-2">
                 <div class="card">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Kho mÃ¡u theo NhÃ³m</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Sá»‘ lÆ°á»£ng tá»“n kho
-                        thá»±c táº¿</p>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Kho máu theo Nhóm</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Số lượng tồn kho
+                        thực tế</p>
                     <div style="height: 300px; width: 100%;">
                         <canvas id="inventoryChart"></canvas>
                     </div>
                 </div>
                 <div class="card">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Hiá»‡u quáº£ Chiáº¿n dá»‹ch</h3>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Hiệu quả Chiến dịch</h3>
                     <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                        So sÃ¡nh ÄÄƒng kÃ½ Online vs Thá»±c táº¿
+                        So sánh Đăng ký Online vs Thực tế
                     </p>
                     <div style="height: 300px; width: 100%;">
                         <canvas id="campaignChart"></canvas>
@@ -146,17 +153,17 @@
             <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <div>
-                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">TÃ¬nh tráº¡ng cÃ¡c loáº¡i mÃ¡u
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Tình trạng các loại máu
                         </h3>
-                        <p style="font-size: 0.75rem; color: var(--text-secondary);">TÃ¬nh tráº¡ng sáºµn cÃ³ hiá»‡n táº¡i</p>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Tình trạng sẵn có hiện tại</p>
                     </div>
                     <!-- Dropdown Filter -->
                     <select id="bloodTypeFilter" class="form-control"
                         style="width: auto; padding: 0.25rem 0.5rem; font-size: 0.875rem;">
-                        <option value="whole">MÃ¡u toÃ n pháº§n</option>
-                        <option value="rbc">Há»“ng cáº§u</option>
-                        <option value="plasma">Huyáº¿t tÆ°Æ¡ng</option>
-                        <option value="platelets">Tiá»ƒu cáº§u</option>
+                        <option value="whole">Máu toàn phần</option>
+                        <option value="rbc">Hồng cầu</option>
+                        <option value="plasma">Huyết tương</option>
+                        <option value="platelets">Tiểu cầu</option>
                     </select>
                 </div>
 
@@ -166,9 +173,6 @@
             </div>
         </main>
     </div>
-    
 </body>
 
 </html>
-
-

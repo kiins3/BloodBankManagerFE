@@ -316,7 +316,6 @@ window.logout = function() {
         
         // Chuyển hướng về login.html
         const path = window.location.pathname;
-        alert("Đang đăng xuất từ: " + path);
         console.log("Logging out from path:", path);
         
         if (path.includes('admin_view') || path.includes('staff_view') || 
@@ -1421,20 +1420,30 @@ const setupCampaignManagement = () => {
 
 // ==================== AUTH & ROLE HELPERS ====================
 
+// Helper: redirect về login an toàn từ bất kỳ đâu
+function safeRedirectToLogin() {
+    const path = window.location.pathname;
+    if (path.includes('admin_view') || path.includes('staff_view') ||
+        path.includes('donor_view') || path.includes('hospital_view')) {
+        window.location.href = '../login.html';
+    } else {
+        window.location.href = 'login.html';
+    }
+}
+
 window.checkStaffRole = function(allowedRoles) {
     const role = (localStorage.getItem('user_role') || '').toUpperCase();
     const token = localStorage.getItem('access_token');
 
-    // 1. Check token
+    // 1. Kiểm tra token
     if (!token) {
-        window.location.href = 'login.html';
+        safeRedirectToLogin();
         return;
     }
 
-    // 2. Check role (if specific roles are required)
+    // 2. Kiểm tra quyền
     if (allowedRoles && allowedRoles.length > 0) {
         if (!allowedRoles.includes(role)) {
-            // If role not allowed for this page, redirect to dashboard
             if (window.location.pathname.indexOf('dashboard.html') === -1) {
                 alert('Bạn không có quyền truy cập trang này!');
                 window.location.href = 'dashboard.html';
@@ -1443,14 +1452,8 @@ window.checkStaffRole = function(allowedRoles) {
     }
 };
 
-window.logout = function() {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_info');
-        window.location.href = 'login.html';
-    }
-};
+// Bỏ định nghĩa logout trùng bên dưới — đã có hàm đúng ở trên (dòng 312)
+
 
 // Auto-init user info and sidebar visibility in header if element exists
 document.addEventListener('DOMContentLoaded', () => {

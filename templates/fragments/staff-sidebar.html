@@ -34,12 +34,19 @@
                 </a>
             </li>
 
-            <!-- STAFF_TECH: Kỹ thuật -->
-            <li class="nav-item staff-tech-only" style="display:none;">
-                <a href="technical.html" th:classappend="${activeNav == 'technical'} ? 'active' : ''">
-                    <i class="ph-bold ph-flask"></i>
-                    Quy trình kỹ thuật
-                </a>
+            <!-- STAFF_TECH: Kỹ thuật Dropdown -->
+            <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                    <div class="left-icon">
+                        <i class="ph-bold ph-flask"></i>
+                        <span>Kỹ thuật</span>
+                    </div>
+                    <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                </div>
+                <div class="nav-dropdown-content">
+                    <a href="technical.html" class="nav-dropdown-item" th:classappend="${activeNav == 'technical'} ? 'active' : ''">Danh sách máu</a>
+                    <a href="equipment.html" class="nav-dropdown-item" th:classappend="${activeNav == 'equipment'} ? 'active' : ''">Quản lý thiết bị</a>
+                </div>
             </li>
 
             <!-- STAFF_INVENTORY: Điều phối -->
@@ -60,7 +67,7 @@
 
             <!-- Chung: Tài khoản -->
             <li class="nav-item" style="margin-top: auto;">
-                <a href="#" th:classappend="${activeNav == 'account'} ? 'active' : ''">
+                <a href="javascript:void(0)" onclick="openProfileModal()" th:classappend="${activeNav == 'account'} ? 'active' : ''">
                     <i class="ph-bold ph-user-circle"></i>
                     Tài khoản
                 </a>

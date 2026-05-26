@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="staff.css">
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<<<<<<< Updated upstream
     <script src="../script.js"></script>
+=======
+    <!-- html5-qrcode for camera-based barcode scanning -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="../js/script.js"></script>
+>>>>>>> Stashed changes
     <!-- WebSocket -->
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -23,26 +29,37 @@
             color: white;
             width: 360px;
             border-radius: 10px;
-            box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 2px 8px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 32px rgba(211, 47, 47, 0.45), 0 2px 8px rgba(0, 0, 0, 0.25);
             z-index: 99999;
             font-family: 'Inter', Arial, sans-serif;
             border: 2px solid #ff8a80;
-            transition: transform 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s;
+            transition: transform 0.4s cubic-bezier(.4, 0, .2, 1), opacity 0.4s;
             transform: translateX(0);
             opacity: 1;
         }
+
         #urgent-alert-box.alert-hidden {
             transform: translateX(120%);
             opacity: 0;
             pointer-events: none;
         }
+
         .alert-pulse {
             animation: alertPulse 1.2s infinite;
         }
+
         @keyframes alertPulse {
-            0%, 100% { box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 0 0 0 rgba(211,47,47,0.5); }
-            50%       { box-shadow: 0 8px 32px rgba(211,47,47,0.45), 0 0 0 12px rgba(211,47,47,0); }
+
+            0%,
+            100% {
+                box-shadow: 0 8px 32px rgba(211, 47, 47, 0.45), 0 0 0 0 rgba(211, 47, 47, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 8px 32px rgba(211, 47, 47, 0.45), 0 0 0 12px rgba(211, 47, 47, 0);
+            }
         }
+
         .alert-header {
             background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%);
             padding: 12px 16px;
@@ -54,22 +71,26 @@
             align-items: center;
             letter-spacing: 0.5px;
         }
+
         .alert-body {
             padding: 14px 16px 10px;
             line-height: 1.6;
         }
+
         .alert-body h3 {
             color: #fff200;
             margin: 0 0 10px;
             font-size: 1.05rem;
         }
+
         .alert-body p {
             margin: 4px 0;
             font-size: 0.88rem;
             opacity: 0.92;
         }
+
         .alert-close-btn {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             color: white;
             cursor: pointer;
@@ -82,7 +103,11 @@
             justify-content: center;
             transition: background 0.2s;
         }
-        .alert-close-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .alert-close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         .alert-confirm-btn {
             width: 100%;
             background: #ffffff;
@@ -96,10 +121,14 @@
             letter-spacing: 0.5px;
             transition: background 0.2s;
         }
-        .alert-confirm-btn:hover { background: #ffe6e6; }
+
+        .alert-confirm-btn:hover {
+            background: #ffe6e6;
+        }
+
         .alert-divider {
             height: 1px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             margin: 0 16px;
         }
     </style>
@@ -122,18 +151,25 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i
-                            class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i
-                            class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"
-                        class="active"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i
-                            class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()"
-                        style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
-                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()"
-                        style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <!-- Kỹ thuật Dropdown -->
+                <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                    <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                        <div class="left-icon">
+                            <i class="ph-bold ph-flask"></i>
+                            <span>Kỹ thuật</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                    </div>
+                    <div class="nav-dropdown-content">
+                        <a href="technical.html" class="nav-dropdown-item">Danh sách máu</a>
+                        <a href="equipment.html" class="nav-dropdown-item">Quản lý thiết bị</a>
+                    </div>
+                </li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html" class="active"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="inventory.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -157,7 +193,42 @@
             </header>
 
             <div class="card">
-                <h3 style="margin-bottom: 1.5rem;">Danh sách yêu cầu</h3>
+                <div
+                    style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+
+                    <h3 style="margin: 0; margin-bottom: 10px; white-space: nowrap;">Danh sách yêu cầu</h3>
+
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 15px; margin-bottom: 10px;">
+
+                        <div
+                            style="display: flex; align-items: center; border: 1px solid #dee2e6; border-radius: 0.375rem; padding: 0 12px; background-color: #fff; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);">
+                            <i class="ph-bold ph-magnifying-glass" style="color: #6c757d; font-size: 1.1rem;"></i>
+                            <input type="text" id="searchHospitalName" placeholder="Tìm tên bệnh viện..."
+                                style="border: none; outline: none; padding: 0.5rem 0.75rem; background: transparent; min-width: 250px;">
+                        </div>
+
+                        <select id="filterPriority" class="form-control"
+                            style="width: auto; min-width: 150px; cursor: pointer; padding: 0.5rem 0.75rem; border: 1px solid #dee2e6; border-radius: 0.375rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); -webkit-appearance: auto; appearance: auto;">
+                            <option value="">-- Mức độ --</option>
+                            <option value="BINH_THUONG">Bình thường</option>
+                            <option value="KHAN_CAP">Khẩn cấp</option>
+                        </select>
+
+                        <select id="filterStatus" class="form-control"
+                            style="width: auto; min-width: 180px; cursor: pointer; padding: 0.5rem 0.75rem; border: 1px solid #dee2e6; border-radius: 0.375rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); -webkit-appearance: auto; appearance: auto;">
+                            <option value="">-- Tất cả trạng thái --</option>
+                            <option value="CHO_DUYET">Chờ duyệt</option>
+                            <option value="DA_DUYET_MOT_PHAN">Duyệt một phần</option>
+                            <option value="DA_DUYET_TOAN_BO">Duyệt toàn bộ</option>
+                            <option value="DANG_GIAO">Đang giao hàng</option>
+                            <option value="GIAO_THANH_CONG">Giao thành công</option>
+                            <option value="HOAN_THANH">Hoàn thành</option>
+                            <option value="DA_HUY">Đã hủy</option>
+                        </select>
+
+                    </div>
+                </div>
+
                 <table style="width: 100%;">
                     <thead>
                         <tr>
@@ -237,13 +308,13 @@
 
     <!-- Approve Modal inside Distribution -->
     <div id="approveModal" class="modal-overlay">
-        <div class="modal" style="max-width: 700px;">
+        <div class="modal" style="max-width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
                 <h3>Duyệt xuất kho: <span id="approveHospital">...</span></h3>
                 <button class="close-modal" data-modal-close>&times;</button>
             </div>
 
-            <div class="modal-body p-3">
+            <div class="modal-body p-3" style="overflow-y: auto; flex: 1;">
                 <div class="alert alert-warning mb-3 d-none" id="partialWarning">
                     <i class="ph-fill ph-warning me-1"></i> Lưu ý: Số lượng xuất ít hơn yêu cầu (Xuất một phần).
                 </div>
@@ -315,7 +386,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end mb-3">
-                    <button class="btn btn-outline-primary btn-sm">
+                    <button class="btn btn-outline-primary btn-sm" onclick="openBagBarcodeScanModal()">
                         <i class="ph-bold ph-scan"></i> Quét Barcode thay thế
                     </button>
                 </div>
@@ -363,12 +434,12 @@
 
     <!-- Order Detail Modal (Staff View) -->
     <div id="orderDetailModal" class="modal-overlay">
-        <div class="modal" style="max-width: 750px;">
+        <div class="modal" style="max-width: 750px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
                 <h3>Chi tiết phiếu yêu cầu: <span id="staffDetailReqId">...</span></h3>
                 <button class="close-modal" onclick="closeStaffDetailModal()">&times;</button>
             </div>
-            <div class="modal-body p-0" id="staffDetailModalBody">
+            <div class="modal-body p-0" id="staffDetailModalBody" style="overflow-y: auto; flex: 1;">
                 <div class="text-center py-5">
                     <i class="ph-bold ph-spinner ph-spin" style="font-size:2.5rem; color: var(--primary-color);"></i>
                     <p class="mt-3 text-muted fw-bold">Đang tải dữ liệu hồ sơ...</p>
@@ -396,17 +467,30 @@
         <button onclick="closeUrgentAlert()" class="alert-confirm-btn">✔ TÔI ĐÃ TIẾP NHẬN</button>
     </div>
 
+    <!-- Barcode Scanner Modal for Blood Bags -->
+    <div id="bagBarcodeScanModal" class="modal-overlay" style="z-index: 2000;">
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h3><i class="ph-bold ph-scan me-2"></i> Quét camera đối chiếu túi máu</h3>
+                <button class="close-modal" onclick="closeBagBarcodeScanModal()">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-muted small mb-2">Hướng camera vào mã vạch (Barcode/QR) trên túi máu</p>
+                <div id="bag-barcode-reader" style="width: 100%; border-radius: 0.5rem; overflow: hidden;"></div>
+                <div id="bag-barcode-scan-result" class="mt-3" style="display:none;">
+                    <div class="alert alert-success">
+                        <i class="ph-bold ph-check-circle"></i> Quét thành công:
+                        <span id="bag-barcode-scanned-code"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-secondary" onclick="closeBagBarcodeScanModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+
     <script src="staff.js"></script>
-    <!-- <script>
-        function openApproveModal(hospital, type, product, qty) {
-            const modal = document.getElementById('approveModal');
-            if (modal) {
-                document.getElementById('approveHospital').innerText = hospital;
-                document.getElementById('reqSummary').innerText = `${qty} Túi ${type} (${product})`;
-                modal.classList.add('active');
-            }
-        }
-    </script> -->
 </body>
 
 </html>

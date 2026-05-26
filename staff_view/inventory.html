@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Returned Orders Management - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="staff.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- html5-qrcode for camera-based barcode scanning -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="../js/script.js"></script>
+    <style>
+        /* Tabs for return management */
+        .tabs-header {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .scan-card-custom {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+        
+        .scan-icon-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+    </style>
+    <script>
+        // Check role: Only for STAFF_INVENTORY
+        checkStaffRole(['STAFF_INVENTORY']);
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon"><i class="ph-bold ph-drop"></i></div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p id="staffRoleLabel">Staff Portal</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <!-- Kỹ thuật Dropdown -->
+                <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                    <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                        <div class="left-icon">
+                            <i class="ph-bold ph-flask"></i>
+                            <span>Kỹ thuật</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                    </div>
+                    <div class="nav-dropdown-content">
+                        <a href="technical.html" class="nav-dropdown-item">Danh sách máu</a>
+                        <a href="equipment.html" class="nav-dropdown-item">Quản lý thiết bị</a>
+                    </div>
+                </li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="inventory.html" class="active"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()"
+                        style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()"
+                        style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div style="flex: 1;">
+                    <h2>Quản lý hàng trả lại</h2>
+                    <p>Xử lý các đơn hàng giao thất bại hoặc bị trả lại từ bệnh viện</p>
+                </div>
+
+                <div class="header-user-info">
+                    <div class="user-details">
+                        <span class="header-user-name">Staff Member</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
+                    </div>
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Premium Quick Barcode Scan Card -->
+            <div class="scan-card-custom">
+                <div class="d-flex align-items-center gap-3" style="flex: 1;">
+                    <div class="scan-icon-pulse" style="width: 44px; height: 44px; background: #eff6ff; color: #3b82f6; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        <i class="ph-bold ph-barcode"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 class="m-0" style="font-size: 0.95rem; color: #1e293b; font-weight: 700;">Quét Barcode túi máu trả lại</h4>
+                        <p class="m-0 mt-1" style="font-size: 0.8rem; color: #64748b;">Nhập hoặc quét mã vạch để kiểm tra ngay tức thì tính hợp lệ của túi máu vật lý</p>
+                        <div class="input-group mt-2" style="max-width: 500px; display: flex;">
+                            <input type="text" class="form-control" id="quickBarcodeInput" placeholder="Nhập hoặc quét mã vạch túi máu..." style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                            <button class="btn btn-primary" onclick="quickScanBarcode()" style="border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 0.5rem 1.25rem;">
+                                <i class="ph-bold ph-magnifying-glass"></i> Kiểm tra
+                            </button>
+                        </div>
+                        <!-- Scan result preview area -->
+                        <div id="scanResultPreview" style="display:none; max-width: 500px;"></div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary d-flex align-items-center gap-2" onclick="openBagBarcodeScanModal()">
+                    <i class="ph-bold ph-scan"></i> Quét qua Camera
+                </button>
+            </div>
+
+            <!-- Tab Container -->
+            <div class="card p-4">
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" id="tab-waiting-btn" onclick="switchTab('waiting-returns')">
+                            <i class="ph-bold ph-hourglass"></i> Yêu cầu chờ xử lý hoàn trả
+                        </button>
+                        <button class="tab-btn" id="tab-history-btn" onclick="switchTab('return-history')">
+                            <i class="ph-bold ph-clock-counter-clockwise"></i> Lịch sử hoàn trả đã xử lý
+                        </button>
+                    </div>
+
+                    <!-- Tab 1: Waiting Returns -->
+                    <div class="tab-content active" id="tab-waiting-returns">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="m-0" style="font-size: 1rem; color: #334155; font-weight: 700;">Danh sách đơn hàng bị từ chối / trả về</h4>
+                            <button class="btn btn-light border btn-sm" onclick="loadReturnedRequests()">
+                                <i class="ph-bold ph-arrows-clockwise"></i> Làm mới
+                            </button>
+                        </div>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn / Bệnh viện</th>
+                                    <th>Chi tiết túi máu đã xuất</th>
+                                    <th>Tổng số túi</th>
+                                    <th>Trạng thái hiện tại</th>
+                                    <th>Ngày cập nhật</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returnedRequestTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-5">
+                                        <i class="ph-bold ph-spinner ph-spin" style="font-size: 2rem;"></i>
+                                        <p class="mt-2">Đang tải dữ liệu...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tab 2: Return History -->
+                    <div class="tab-content" id="tab-return-history" style="display:none;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="m-0" style="font-size: 1rem; color: #334155; font-weight: 700;">Lịch sử xử lý hoàn trả túi máu</h4>
+                            <button class="btn btn-light border btn-sm" onclick="loadReturnHistory()">
+                                <i class="ph-bold ph-arrows-clockwise"></i> Làm mới
+                            </button>
+                        </div>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Mã túi / Chế phẩm</th>
+                                    <th>Bệnh viện gửi trả</th>
+                                    <th>Người xử lý</th>
+                                    <th>Hình thức xử lý</th>
+                                    <th>Lý do hoàn trả</th>
+                                    <th>Ngày xử lý</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returnHistoryTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-5">
+                                        <i class="ph-bold ph-spinner ph-spin" style="font-size: 2rem;"></i>
+                                        <p class="mt-2">Đang tải lịch sử...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirm Return Modal -->
+    <div id="confirmReturnModal" class="modal-overlay">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Xác nhận nhập kho hàng trả lại</h3>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+            <div class="modal-body p-3">
+                <div id="returnSummary" class="mb-3 p-3 bg-light rounded border">
+                    <!-- Dynamic summary -->
+                </div>
+                <div class="alert alert-info py-2 px-3 mb-3">
+                    <i class="ph-bold ph-info me-1"></i> Các túi máu trong đơn hàng này sẽ được chuyển về trạng thái <strong>Trong kho</strong> sau khi xác nhận.
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ghi chú xác nhận</label>
+                    <textarea class="form-control" id="returnNote" rows="3" placeholder="Nhập lý do trả lại hoặc tình trạng túi máu..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-modal-close>Hủy</button>
+                <button class="btn btn-primary" id="confirmReturnFinalBtn">Xác nhận nhập kho</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="staff.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadReturnedRequests === 'function') {
+                loadReturnedRequests();
+            } else {
+                console.error('loadReturnedRequests is not defined in staff.js');
+            }
+        });
+    </script>
+    <!-- Return Process Modal -->
+    <div id="returnProcessModal" class="modal-overlay" style="z-index: 2100;">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="processModalTitle">Xử lý hàng trả lại</h3>
+                <button type="button" class="close-modal" onclick="closeModal('returnProcessModal')">&times;</button>
+            </div>
+            <form id="returnProcessForm">
+                <div class="modal-body p-3">
+                    <input type="hidden" id="processBloodBagId">
+                    <input type="hidden" id="processHospitalId">
+                    
+                    <div id="bulkProcessSummary" class="alert alert-info py-2 px-3 mb-3" style="display: none;">
+                        <i class="ph-bold ph-info"></i> Đang chọn xử lý hàng loạt cho <strong id="bulkProcessCount">0</strong> túi máu.
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Lý do xử lý / Trả hàng <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" id="processReason" required placeholder="Nhập lý do chi tiết...">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Hành động xử lý <span style="color:red">*</span></label>
+                        <select class="form-control" id="processAction" required>
+                            <option value="">-- Chọn hành động --</option>
+                            <option value="KIEM_DINH">Chuyển kỹ thuật kiểm định (Chờ kiểm định)</option>
+                            <option value="TIEU_HUY">Chỉ định tiêu hủy (Chờ hủy)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('returnProcessModal')">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận xử lý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Return Detail Modal -->
+    <div id="requestReturnDetailModal" class="modal-overlay" style="z-index: 2000;">
+        <div class="modal" style="max-width: 800px; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <h3>Chi tiết đơn hàng hoàn trả: #REQ-<span id="detailReturnReqId">...</span></h3>
+                <button type="button" class="close-modal" onclick="closeRequestReturnDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body p-3" style="overflow-y: auto; flex: 1;">
+                <div class="detail-header-card mb-4" style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem!important; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; border-radius: 12px;">
+                    <div class="detail-info-item">
+                        <div class="label">Bệnh viện gửi trả</div>
+                        <div class="value" id="detailReturnHospital">---</div>
+                    </div>
+                    <div class="detail-info-item">
+                        <div class="label">Mức độ ưu tiên</div>
+                        <div class="value" id="detailReturnPriority">---</div>
+                    </div>
+                </div>
+                
+                <h4 class="mb-2" style="font-size: 0.95rem; color: #334155; font-weight: bold;">Danh sách túi máu bị bệnh viện hoàn trả / từ chối</h4>
+                <div class="card p-0 overflow-hidden border mb-3">
+                    <table style="width: 100%; font-size: 0.875rem;" class="premium-table">
+                        <thead class="fifo-thead">
+                            <tr>
+                                <th style="width: 45px;" class="text-center">
+                                    <input type="checkbox" id="selectAllReturnBags" onchange="toggleSelectAllReturnBags(this)" style="cursor: pointer; width: 16px; height: 16px; display: inline-block;">
+                                </th>
+                                <th>Mã túi máu</th>
+                                <th>Chế phẩm</th>
+                                <th>Thể tích</th>
+                                <th>Hạn dùng</th>
+                                <th>Lý do hoàn trả</th>
+                                <th>Trạng thái</th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestReturnBagsTableBody">
+                            <!-- Dynamic bags list -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 d-flex justify-content-between">
+                <button class="btn btn-primary d-flex align-items-center gap-1" id="bulkInspectBtn" onclick="openBulkProcessModalFromDetail()" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    <i class="ph-bold ph-check-square"></i> Xử lý hàng loạt (<span id="selectedBagsCount">0</span>)
+                </button>
+                <button class="btn btn-secondary" onclick="closeRequestReturnDetailModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barcode Scanner Modal for Blood Bags -->
+    <div id="bagBarcodeScanModal" class="modal-overlay" style="z-index: 2200;">
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h3><i class="ph-bold ph-scan me-2"></i> Quét camera đối chiếu túi máu</h3>
+                <button class="close-modal" onclick="closeBagBarcodeScanModal()">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="text-muted small mb-2">Hướng camera vào mã vạch (Barcode/QR) trên túi máu</p>
+                <div id="bag-barcode-reader" style="width: 100%; border-radius: 0.5rem; overflow: hidden;"></div>
+                <div id="bag-barcode-scan-result" class="mt-3" style="display:none;">
+                    <div class="alert alert-success">
+                        <i class="ph-bold ph-check-circle"></i> Quét thành công:
+                        <span id="bag-barcode-scanned-code"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-secondary" onclick="closeBagBarcodeScanModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

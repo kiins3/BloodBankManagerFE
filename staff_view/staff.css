@@ -390,3 +390,69 @@
     background: #fecaca;
     transform: scale(1.1);
 }
+
+/* Custom Dropdown for Bulk Actions */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu-custom {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: #ffffff;
+    min-width: 220px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+    padding: 0.5rem 0;
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+.dropdown-menu-custom.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item-custom {
+    background: none;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    text-align: left;
+    width: 100%;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: background-color 0.2s, color 0.2s;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.dropdown-item-custom:hover:not(:disabled) {
+    background-color: #f3f4f6;
+}
+
+.dropdown-item-custom:disabled {
+    color: var(--text-secondary);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Equipment - Blood Bank</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="staff.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Check role: Technical only for STAFF_TECH
+        checkStaffRole(['STAFF_TECH']);
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" th:replace="~{templates/fragments/staff-sidebar :: sidebar('equipment')}">
+            <div class="brand">
+                <div class="brand-icon"><i class="ph-bold ph-drop"></i></div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p id="staffRoleLabel">Staff Portal</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <!-- Kỹ thuật Dropdown (mock fallback) -->
+                <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                    <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                        <div class="left-icon">
+                            <i class="ph-bold ph-flask"></i>
+                            <span>Kỹ thuật</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                    </div>
+                    <div class="nav-dropdown-content">
+                        <a href="technical.html" class="nav-dropdown-item">Danh sách máu</a>
+                        <a href="equipment.html" class="nav-dropdown-item active">Quản lý thiết bị</a>
+                    </div>
+                </li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="inventory.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div style="flex: 1;">
+                    <h2>Quản lý thiết bị</h2>
+                    <p>Quản lý hệ thống tủ bảo quản máu và chế phẩm.</p>
+                </div>
+                
+                <div class="header-user-info">
+                    <div class="user-details">
+                        <span class="header-user-name">Staff Member</span>
+                        <span id="headerRoleLabel">Đang xác định...</span>
+                    </div>
+                    <button onclick="logout()" class="logout-btn-header" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Status Cards -->
+            <div class="grid-4">
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem;">
+                    <div>
+                        <div class="text-secondary small text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing:0.05em; margin-bottom:0.25rem;">Tổng số tủ/thiết bị</div>
+                        <div class="fs-3 fw-bold" id="totalEquipments" style="font-size:1.85rem; color:#1e293b;">--</div>
+                    </div>
+                    <div style="background-color: #eff6ff; color: #3b82f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-bold ph-hard-drives" style="font-size: 1.5rem;"></i>
+                    </div>
+                </div>
+
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem;">
+                    <div>
+                        <div class="text-secondary small text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing:0.05em; margin-bottom:0.25rem;">Hoạt động</div>
+                        <div class="fs-3 fw-bold text-success" id="activeEquipments" style="font-size:1.85rem;">--</div>
+                    </div>
+                    <div style="background-color: #ecfdf5; color: #10b981; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-bold ph-check-circle" style="font-size: 1.5rem;"></i>
+                    </div>
+                </div>
+
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem;">
+                    <div>
+                        <div class="text-secondary small text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing:0.05em; margin-bottom:0.25rem;">Cảnh báo</div>
+                        <div class="fs-3 fw-bold text-warning" id="warningEquipments" style="font-size:1.85rem;">0</div>
+                    </div>
+                    <div style="background-color: #fffbeb; color: #f59e0b; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-bold ph-warning-octagon" style="font-size: 1.5rem;"></i>
+                    </div>
+                </div>
+
+                <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem;">
+                    <div>
+                        <div class="text-secondary small text-uppercase fw-bold" style="font-size:0.75rem; letter-spacing:0.05em; margin-bottom:0.25rem;">Bảo trì/Hỏng</div>
+                        <div class="fs-3 fw-bold text-danger" id="maintenanceEquipments" style="font-size:1.85rem;">--</div>
+                    </div>
+                    <div style="background-color: #fef2f2; color: #ef4444; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-bold ph-wrench" style="font-size: 1.5rem;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="card">
+                <div class="filter-group-container"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h4 style="font-size:1.15rem; font-weight:600; color:var(--text-primary); margin-bottom:0.25rem;">Danh sách thiết bị bảo quản</h4>
+                        <p class="text-secondary small" style="margin:0;">Quản lý hệ thống tủ bảo quản máu và chế phẩm.</p>
+                    </div>
+                    <div class="filter-group" style="margin-bottom: 0; display: flex; gap: 0.75rem;">
+                        <select class="form-control filter-select" id="filterEquipmentProductType" onchange="loadEquipmentList()" style="width: 180px;">
+                            <option value="">Tất cả chế phẩm</option>
+                            <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
+                            <option value="TUI_HONG_CAU">Hồng cầu</option>
+                            <option value="TUI_HUYET_TUONG">Huyết tương</option>
+                            <option value="TUI_TIEU_CAU">Tiểu cầu</option>
+                        </select>
+                        <button class="btn btn-primary" id="reportBrokenBtn" onclick="openReportBrokenModal()" style="background-color: var(--text-primary); color: white;">
+                            <i class="ph-bold ph-warning"></i> Báo cáo hỏng
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Mã tủ</th>
+                                <th>Tên tủ</th>
+                                <th>Loại chế phẩm</th>
+                                <th>Nhiệt độ (°C)</th>
+                                <th>Sức chứa</th>
+                                <th>Đang chứa</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="equipmentTableBody">
+                            <tr><td colspan="8" class="text-center text-muted py-4">
+                                <i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite;"></i> Đang tải dữ liệu...
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: REPORT BROKEN CABINET (BÁO HỎNG TỦ) -->
+    <div id="reportBrokenModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-danger">Báo cáo sự cố thiết bị (Báo hỏng)</h5>
+                <button class="close-modal" data-modal-close>&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger py-2 d-flex align-items-center mb-3" style="background:#fef2f2; color:#ef4444; border:1px solid #fee2e2; border-radius:8px; padding: 0.75rem 1rem;">
+                    <i class="ph-bold ph-warning-octagon fs-5 me-2" style="font-size:1.25rem;"></i>
+                    <div style="font-size:0.9rem;">
+                        Báo cáo tủ bảo quản bị hỏng hoặc gặp sự cố kỹ thuật để chuyển sang trạng thái <strong>Bảo trì</strong>.
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label small fw-bold" style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Chọn thiết bị gặp sự cố</label>
+                    <select id="brokenEquipmentSelect" class="form-control">
+                        <option value="">-- Đang tải danh sách thiết bị --</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label small fw-bold" style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Lý do / Mô tả sự cố</label>
+                    <textarea id="brokenReason" class="form-control" rows="3" placeholder="Nhập chi tiết sự cố (ví dụ: nhiệt độ tăng bất thường, mất nguồn,...)"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-light border" data-modal-close>Hủy</button>
+                <button class="btn btn-danger" id="confirmReportBrokenBtn" onclick="confirmReportBroken()">
+                    <i class="ph-bold ph-megaphone"></i> Gửi cảnh báo hỏng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="staff.js"></script>
+</body>
+
+</html>

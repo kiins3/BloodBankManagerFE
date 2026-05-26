@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhật ký hoạt động - Blood Bank Manager</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .badge-role {
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .role-admin {
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+        }
+        .role-tech {
+            background-color: #f5f3ff;
+            color: #8b5cf6;
+            border: 1px solid #e0e7ff;
+        }
+        .role-inventory {
+            background-color: #eff6ff;
+            color: #3b82f6;
+            border: 1px solid #dbeafe;
+        }
+        
+        .badge-action {
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        
+        .action-create {
+            background-color: #ecfdf5;
+            color: #059669;
+        }
+        .action-update {
+            background-color: #fffbeb;
+            color: #d97706;
+        }
+        .action-danger {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+        .action-info {
+            background-color: #f0f9ff;
+            color: #0284c7;
+        }
+
+        /* JSON Diff modal styling */
+        .diff-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .diff-pane {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            max-height: 350px;
+            border: 1px solid #334155;
+            position: relative;
+        }
+        .diff-pane-title {
+            position: sticky;
+            top: 0;
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 0.25rem 0.5rem;
+            margin: -1rem -1rem 1rem -1rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+        }
+        .diff-pane pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .diff-highlight-add {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .diff-highlight-remove {
+            color: #f87171;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ph-bold ph-drop" style="font-size: 20px;"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>BloodBank</h1>
+                    <p>Management System</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html">
+                        <i class="ph-bold ph-chart-line-up"></i>
+                        Tổng quan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="donors.html">
+                        <i class="ph-bold ph-users"></i>
+                        Quản lý người hiến
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="inventory.html">
+                        <i class="ph-bold ph-drop-half-bottom"></i>
+                        Kho máu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="campaigns.html">
+                        <i class="ph-bold ph-calendar"></i>
+                        Chiến dịch hiến máu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="logs.html" class="active">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Nhật ký hoạt động
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;">
+                        <i class="ph-bold ph-sign-out"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <h2>Nhật ký hoạt động</h2>
+                <p>Theo dõi thời gian thực các thao tác nghiệp vụ, thay đổi dữ liệu của quản trị viên và nhân viên.</p>
+            </header>
+
+            <!-- Filter Controls -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <div style="position: relative; flex: 1; min-width: 200px;">
+                        <i class="ph ph-magnifying-glass"
+                            style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                        <input type="number" id="filterStaffId" placeholder="Mã nhân viên (Staff ID)..."
+                            style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                    </div>
+                    
+                    <select id="filterActionType" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                        <option value="">Tất cả loại thao tác</option>
+                        <option value="UPDATE_TEST_RESULT">UPDATE_TEST_RESULT</option>
+                        <option value="SEPARATE_BLOOD">SEPARATE_BLOOD</option>
+                        <option value="PRINT_LABEL_BAG">PRINT_LABEL_BAG</option>
+                        <option value="STORAGE_BLOOD">STORAGE_BLOOD</option>
+                        <option value="TRANSFER_STORAGE">TRANSFER_STORAGE</option>
+                        <option value="DISCARD_BAG">DISCARD_BAG</option>
+                        <option value="UNDO_DISCARD">UNDO_DISCARD</option>
+                        <option value="REVIEW_REQUEST">REVIEW_REQUEST</option>
+                        <option value="EXPORT_BLOOD">EXPORT_BLOOD</option>
+                        <option value="PROCESS_RETURN">PROCESS_RETURN</option>
+                        <option value="UPDATE_EQUIPMENT">UPDATE_EQUIPMENT</option>
+                        <option value="UPDATE_STAFF_PROFILE">UPDATE_STAFF_PROFILE</option>
+                    </select>
+
+                    <select id="filterEntityName" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                        <option value="">Tất cả đối tượng (Entity)</option>
+                        <option value="BloodBag">BloodBag (Túi máu)</option>
+                        <option value="TestResult">TestResult (Xét nghiệm)</option>
+                        <option value="BloodRequest">BloodRequest (Yêu cầu)</option>
+                        <option value="ReturnLog">ReturnLog (Trả máu)</option>
+                        <option value="StorageEquipment">StorageEquipment (Thiết bị bảo quản)</option>
+                        <option value="Staff">Staff (Nhân viên)</option>
+                    </select>
+
+                    <select id="filterPerformerRole" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                        <option value="">Tất cả vai trò</option>
+                        <option value="ADMIN">ADMIN (Quản trị viên)</option>
+                        <option value="STAFF_TECH">STAFF_TECH (Nhân viên Kỹ thuật)</option>
+                        <option value="STAFF_INVENTORY">STAFF_INVENTORY (Nhân viên Kho)</option>
+                    </select>
+
+                    <button class="btn btn-secondary" onclick="resetFilters()">
+                        <i class="ph ph-arrow-counter-clockwise"></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Thời gian</th>
+                                <th>Người thực hiện</th>
+                                <th>Vai trò</th>
+                                <th>Loại thao tác</th>
+                                <th>Đối tượng tác động</th>
+                                <th>Mã đối tượng</th>
+                                <th>Ghi chú</th>
+                                <th>Dữ liệu thay đổi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                                    Đang tải dữ liệu nhật ký...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div id="logsPaginationControls" style="display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; margin-top: 1.5rem;">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Data Detail / Compare Modal -->
+    <div class="modal-overlay" id="diffModal">
+        <div class="modal" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <h3>Chi tiết thay đổi dữ liệu</h3>
+                <button class="close-modal" onclick="closeDiffModal()"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 1rem;">
+                    <p><strong>Loại thao tác:</strong> <span id="modalActionType" class="badge-action action-info">--</span></p>
+                    <p style="margin-top: 0.5rem;"><strong>Đối tượng:</strong> <span id="modalEntityDisplay">--</span></p>
+                </div>
+
+                <div class="diff-container">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem;">
+                            <i class="ph ph-minus-circle" style="color: #ef4444;"></i> Dữ liệu cũ (Trước tác động)
+                        </div>
+                        <div class="diff-pane">
+                            <div class="diff-pane-title">OLD_DATA</div>
+                            <pre><code id="modalOldData">{}</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem;">
+                            <i class="ph ph-plus-circle" style="color: #10b981;"></i> Dữ liệu mới (Sau tác động)
+                        </div>
+                        <div class="diff-pane">
+                            <div class="diff-pane-title">NEW_DATA</div>
+                            <pre><code id="modalNewData">{}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDiffModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

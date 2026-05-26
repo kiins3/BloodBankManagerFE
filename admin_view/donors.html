@@ -1,11 +1,20 @@
 <!DOCTYPE html>
+<<<<<<< Updated upstream
 <html lang="en">
+=======
+<html lang="vi">
+>>>>>>> Stashed changes
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< Updated upstream
     <title>Donor Management - Blood Bank Manager</title>
     <link rel="stylesheet" href="../style.css">
+=======
+    <title>Quản lý người dùng - Blood Bank Manager</title>
+    <link rel="stylesheet" href="../css/style.css">
+>>>>>>> Stashed changes
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -31,7 +40,7 @@
                     </a>
                 </li>
                 <li class="nav-item nav-item-dropdown">
-                    <div class="nav-item-header active" id="userNavHeader">
+                    <div class="nav-item-header active" id="userNavHeader" style="cursor: pointer;">
                         <div class="left-icon">
                             <i class="ph-bold ph-users"></i>
                             <span>Qu?n l� ngu?i d�ng</span>
@@ -39,9 +48,17 @@
                         <i class="ph-bold ph-caret-down" id="userNavCaret"></i>
                     </div>
                     <div class="nav-dropdown-content active" id="userNavContent">
+<<<<<<< Updated upstream
                         <a href="#" class="nav-dropdown-item active" id="navDonorList">Qu?n l� ngu?i hi?n</a>
                         <a href="#" class="nav-dropdown-item" id="navStaffList">Qu?n l� nh�n vi�n</a>
                         <a href="#" class="nav-dropdown-item" id="navHospitalList">Qu?n l� b?nh vi?n</a>
+=======
+                        <a href="javascript:void(0)" class="nav-dropdown-item active" id="navDonorList">Quản lý người
+                            hiến</a>
+                        <a href="javascript:void(0)" class="nav-dropdown-item" id="navStaffList">Quản lý nhân viên</a>
+                        <a href="javascript:void(0)" class="nav-dropdown-item" id="navHospitalList">Quản lý bệnh
+                            viện</a>
+>>>>>>> Stashed changes
                     </div>
                 </li>
                 <li class="nav-item">
@@ -56,18 +73,39 @@
                         Chi?n d?ch hi?n m�u
                     </a>
                 </li>
+<<<<<<< Updated upstream
             <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
+=======
+                <li class="nav-item">
+                    <a href="logs.html">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Nhật ký hoạt động
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;">
+                        <i class="ph-bold ph-sign-out"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
+>>>>>>> Stashed changes
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
+<<<<<<< Updated upstream
                 <h2>Qu?n l� ngu?i d�ng</h2>
                 <p>Qu?n l� h? so ngu?i hi?n, nh�n vi�n v� ph�n quy?n h? th?ng</p>
+=======
+                <h2 id="viewTitle">Quản lý người dùng</h2>
+                <p id="viewDesc">Quản lý hồ sơ người hiến, nhân viên và phân quyền hệ thống</p>
+>>>>>>> Stashed changes
             </header>
 
             <!-- Donor Management View -->
             <div id="donorListView">
+<<<<<<< Updated upstream
 
             <!-- Stats -->
             <div class="grid-4">
@@ -151,14 +189,98 @@
                         </tbody>
                     </table>
                 </div>
+=======
+                <!-- Stats -->
+                <div class="grid-4">
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng người hiến</p>
+                        <h3 id="statTotalDonor" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Người hiến mới</p>
+                        <h3 id="statDonatedThisMonth"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">0</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Tháng này</p>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đủ điều kiện hiến</p>
+                        <h3 id="statActiveDonor"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--success-color);">
+                            0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đơn vị máu đã thu</p>
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #ea580c;">0</h3>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh sách người hiến</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Tìm kiếm và lọc cơ sở dữ liệu người
+                            hiến</p>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <div style="position: relative; flex: 1; min-width: 200px;">
+                            <i class="ph ph-magnifying-glass"
+                                style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                            <input type="text" id="searchKeyword" placeholder="Search donors by name or email..."
+                                style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                        </div>
+                        <select id="filterBloodType"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                            <option value="">Tất cả nhóm máu</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                        <select id="filterStatus"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="ACTIVE">Hoạt động (ACTIVE)</option>
+                            <option value="INACTIVE">Tạm khóa (INACTIVE)</option>
+                            <option value="KHACH_VANG_LAI">Khách vãng lai (KHACH_VANG_LAI)</option>
+                        </select>
+                        <button class="btn btn-primary" data-modal-target="donorModal">
+                            <i class="ph-bold ph-plus"></i> Thêm người hiến
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Họ tên</th>
+                                    <th>Email</th>
+                                    <th>Liên hệ</th>
+                                    <th>Nhóm máu</th>
+                                    <th>Tổng số lần</th>
+                                    <th>Lần hiến cuối</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donorTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="paginationControls"
+                        style="display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
+                    </div>
+>>>>>>> Stashed changes
                 </div>
             </div>
 
             <!-- Staff Management View -->
             <div id="staffListView" style="display: none;">
-                <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
+<<<<<<< Updated upstream
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng nh�n vi�n</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">24</h3>
                     </div>
@@ -173,26 +295,51 @@
                     <div class="card">
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu?n l� k? thu?t</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">14</h3>
+=======
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng nhân viên</p>
+                        <h3 id="statTotalStaff" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang hoạt động</p>
+                        <h3 id="statActiveStaff"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Quản lý kho</p>
+                        <h3 id="statInventoryStaff"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Quản lý kỹ thuật</p>
+                        <h3 id="statTechStaff"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">0</h3>
+>>>>>>> Stashed changes
                     </div>
                 </div>
 
-                <!-- Staff Database -->
                 <div class="card">
-                    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div
+                        style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
+<<<<<<< Updated upstream
                             <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch nh�n vi�n</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l� t�i kho?n v� ch?c v? nh�n s?</p>
+=======
+                            <h3 style="font-size: 1rem; font-weight: 600;">Danh sách nhân viên</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý tài khoản và chức vụ
+                                nhân sự</p>
+>>>>>>> Stashed changes
                         </div>
                         <button class="btn btn-primary" onclick="openStaffModal()">
                             <i class="ph-bold ph-plus"></i> Th�m nh�n vi�n
                         </button>
                     </div>
 
-                    <!-- Toolbar -->
                     <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+<<<<<<< Updated upstream
                             <input type="text" placeholder="T�m ki?m theo m�, t�n..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
@@ -205,10 +352,28 @@
                             <option>T?t c? tr?ng th�i</option>
                             <option>Ho?t d?ng</option>
                             <option>�� kh�a</option>
+=======
+                            <input type="text" id="searchStaffKeyword" placeholder="Tìm tên, email hoặc số điện thoại..."
+                                style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                        </div>
+                        <select id="filterStaffPosition"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                            <option value="">Tất cả vị trí</option>
+                            <option value="BAC_SI">Bác sĩ</option>
+                            <option value="Y_TA">Y tá</option>
+                            <option value="KY_THUAT">Kỹ thuật viên</option>
+                            <option value="QUAN_LY_KHO">Quản lý kho</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                        <select id="filterStaffStatus"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="ACTIVE">Hoạt động (ACTIVE)</option>
+                            <option value="INACTIVE">Tạm khóa (INACTIVE)</option>
+>>>>>>> Stashed changes
                         </select>
                     </div>
 
-                    <!-- Table -->
                     <div class="table-container">
                         <table>
                             <thead>
@@ -220,19 +385,27 @@
                                     <th>H�nh d?ng</th>
                                 </tr>
                             </thead>
+<<<<<<< Updated upstream
                             <tbody id="staffTableBody">
                                 <!-- D? li?u nh�n vi�n s? du?c n?p t?i d�y -->
                             </tbody>
+=======
+                            <tbody id="staffTableBody"></tbody>
+>>>>>>> Stashed changes
                         </table>
+                    </div>
+
+                    <div id="staffPaginationControls"
+                        style="display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
                     </div>
                 </div>
             </div>
 
             <!-- Hospital Management View -->
             <div id="hospitalListView" style="display: none;">
-                <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
+<<<<<<< Updated upstream
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng s? b?nh vi?n</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">15</h3>
                     </div>
@@ -247,26 +420,53 @@
                     <div class="card">
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Lu?ng m�u d� c?p</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1,250</h3>
+=======
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng số bệnh viện</p>
+                        <h3 id="statTotalHospital" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">0
+                        </h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang hợp tác</p>
+                        <h3 id="statActiveHospital"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">0</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu cấp máu</p>
+                        <h3 id="statTotalRequest"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">0
+                        </h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Yêu cầu đã duyệt</p>
+                        <h3 id="statApprovedRequest"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">0</h3>
+>>>>>>> Stashed changes
                     </div>
                 </div>
 
-                <!-- Hospital Database -->
                 <div class="card">
-                    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div
+                        style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
+<<<<<<< Updated upstream
                             <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s�ch b?nh vi?n</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l� d?i t�c v� th�ng tin b?nh vi?n</p>
+=======
+                            <h3 style="font-size: 1rem; font-weight: 600;">Danh sách bệnh viện</h3>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Quản lý đối tác và thông tin
+                                bệnh viện</p>
+>>>>>>> Stashed changes
                         </div>
                         <button class="btn btn-primary" onclick="openHospitalModal()">
                             <i class="ph-bold ph-plus"></i> Th�m b?nh vi?n
                         </button>
                     </div>
 
-                    <!-- Toolbar -->
                     <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+<<<<<<< Updated upstream
                             <input type="text" placeholder="T�m ki?m t�n b?nh vi?n..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
@@ -274,10 +474,19 @@
                             <option>T?t c? tr?ng th�i</option>
                             <option>�ang h?p t�c</option>
                             <option>Ng?ng h?p t�c</option>
+=======
+                            <input type="text" id="searchHospitalKeyword" placeholder="Tìm tên bệnh viện..."
+                                style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                        </div>
+                        <select id="filterHospitalStatus"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="ACTIVE">Đang hoạt động</option>
+                            <option value="INACTIVE">Ngừng hoạt động</option>
+>>>>>>> Stashed changes
                         </select>
                     </div>
 
-                    <!-- Table -->
                     <div class="table-container">
                         <table>
                             <thead>
@@ -289,31 +498,41 @@
                                 </tr>
                             </thead>
                             <tbody id="hospitalTableBody">
+<<<<<<< Updated upstream
                                 <!-- D? li?u b?nh vi?n s? du?c n?p t?i d�y -->
+=======
+>>>>>>> Stashed changes
                             </tbody>
                         </table>
+                    </div>
+
+                    <div id="hospitalPaginationControls"
+                        style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem;">
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Donor Modal (Add/Edit) -->
+    <!-- Donor Modal -->
     <div class="modal-overlay" id="donorModal">
-        <div class="modal">
+        <div class="modal" style="width: 600px;">
             <div class="modal-header">
                 <h3 id="donorModalTitle">Th�m ngu?i hi?n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
+<<<<<<< Updated upstream
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
                     Qu?n l� th�ng tin chi ti?t c?a ngu?i hi?n.
                 </p>
 
+=======
+>>>>>>> Stashed changes
                 <form id="donorForm">
                     <input type="hidden" id="donorId">
-
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+<<<<<<< Updated upstream
                         <div class="form-group">
                             <label>H? t�n</label>
                             <input type="text" id="donorName" class="form-control" placeholder="Nh?p h? t�n">
@@ -322,9 +541,15 @@
                             <label>CCCD / CMND</label>
                             <input type="text" id="donorCCCD" class="form-control" placeholder="Nh?p s? CCCD">
                         </div>
+=======
+                        <div class="form-group"><label>Họ tên</label><input type="text" id="donorName"
+                                class="form-control" required></div>
+                        <div class="form-group"><label>CCCD / CMND</label><input type="text" id="donorCCCD"
+                                class="form-control"></div>
+>>>>>>> Stashed changes
                     </div>
-
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+<<<<<<< Updated upstream
                         <div class="form-group">
                             <label>Ng�y sinh</label>
                             <input type="date" id="donorDob" class="form-control">
@@ -337,9 +562,17 @@
                                 <option value="Kh�c">Kh�c</option>
                             </select>
                         </div>
+=======
+                        <div class="form-group"><label>Ngày sinh</label><input type="date" id="donorDob"
+                                class="form-control"></div>
+                        <div class="form-group"><label>Giới tính</label><select id="donorGender" class="form-control">
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select></div>
+>>>>>>> Stashed changes
                     </div>
-
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+<<<<<<< Updated upstream
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" id="donorEmail" class="form-control" placeholder="Nh?p email">
@@ -355,36 +588,60 @@
                         <input type="text" id="donorAddress" class="form-control" placeholder="Nh?p d?a ch?">
                     </div>
 
+=======
+                        <div class="form-group"><label>Email</label><input type="email" id="donorEmail"
+                                class="form-control"></div>
+                        <div class="form-group"><label>Số điện thoại</label><input type="tel" id="donorPhone"
+                                class="form-control"></div>
+                    </div>
+                    <div class="form-group"><label>Địa chỉ</label><input type="text" id="donorAddress"
+                            class="form-control"></div>
+>>>>>>> Stashed changes
                     <div class="form-group">
                         <label>Nh�m m�u & Y?u t? Rh</label>
                         <div style="display: flex; gap: 1rem;">
                             <select id="donorBloodType" class="form-control" style="flex: 1;">
+<<<<<<< Updated upstream
                                 <option value="">Ch?n nh�m m�u</option>
+=======
+>>>>>>> Stashed changes
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="AB">AB</option>
                                 <option value="O">O</option>
                             </select>
                             <select id="donorRhFactor" class="form-control" style="flex: 1;">
+<<<<<<< Updated upstream
                                 <option value="">Y?u t? Rh</option>
+=======
+>>>>>>> Stashed changes
                                 <option value="+">+</option>
                                 <option value="-">-</option>
                             </select>
                         </div>
                     </div>
+<<<<<<< Updated upstream
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
                         <button type="submit" class="btn btn-primary" id="saveDonorBtn">Luu th�ng tin</button>
                     </div>
+=======
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary"
+                            data-modal-close>Đóng</button><button type="submit" class="btn btn-primary">Lưu thông
+                            tin</button></div>
+>>>>>>> Stashed changes
                 </form>
             </div>
         </div>
     </div>
-    <!-- Staff Modal (Add/Edit) -->
-    <div class="modal-overlay" id="staffModal">
-        <div class="modal">
+
+
+    <!-- Donor Detail Modal -->
+    <div class="modal-overlay" id="donorDetailModal">
+        <div class="modal" style="width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
+<<<<<<< Updated upstream
                 <h3 id="staffModalTitle">Th�m nh�n vi�n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
@@ -456,15 +713,93 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
                         <button type="submit" class="btn btn-primary" id="saveStaffBtn">Luu th�ng tin</button>
+=======
+                <h3>Chi tiết người hiến</h3>
+                <button class="close-modal" onclick="closeDonorDetailModal()"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 0;">
+                <div class="tabs"
+                    style="display: flex; border-bottom: 1px solid var(--border-color); padding: 0 1.5rem; background-color: #f9fafb;">
+                    <button class="tab-btn active" id="tabInfoBtn" onclick="switchDonorTab('info')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid var(--primary-color); color: var(--primary-color); font-weight: 600; cursor: pointer; outline: none;">Thông
+                        tin cá nhân</button>
+                    <button class="tab-btn" id="tabHistoryBtn" onclick="switchDonorTab('history')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); font-weight: 500; cursor: pointer; outline: none;">Lịch
+                        sử hiến</button>
+                </div>
+
+                <!-- Tab 1: Personal Info -->
+                <div class="tab-content" id="tabInfoContent" style="padding: 1.5rem;">
+                    <div id="donorDetailInfoContent">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Tab 2: Donation History -->
+                <div class="tab-content" id="tabHistoryContent" style="padding: 1.5rem; display: none;">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sự kiện</th>
+                                    <th>Ngày hiến</th>
+                                    <th>Lượng máu</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donorDetailHistoryContent">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="donorHistoryPagination"
+                        style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Staff Modal -->
+    <div class="modal-overlay" id="staffModal">
+        <div class="modal" style="width: 500px;">
+            <div class="modal-header">
+                <h3 id="staffModalTitle">Thêm nhân viên mới</h3><button class="close-modal" data-modal-close><i
+                        class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="staffForm">
+                    <input type="hidden" id="staffId">
+                    <div class="form-group"><label>Họ tên</label><input type="text" id="staffName" class="form-control"
+                            required></div>
+                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group"><label>Email</label><input type="email" id="staffEmail"
+                                class="form-control" required></div>
+                        <div class="form-group"><label>Mật khẩu</label><input type="password" id="staffPassword"
+                                class="form-control" value="123126" readonly></div>
+                    </div>
+                    <div class="form-group"><label>Vị trí</label><select id="staffPosition" class="form-control">
+                            <option value="QUAN_LY_KHO">Quản lý kho</option>
+                            <option value="KY_THUAT">Kỹ thuật viên</option>
+                            <option value="Y_TA">Y tá</option>
+                            <option value="BAC_SI">Bác sĩ</option>
+                            <option value="ADMIN">Admin</option>
+                        </select></div>
+                    <div class="form-group"><input type="checkbox" id="staffStatus" checked> <label>Kích hoạt tài
+                            khoản</label></div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary"
+                            data-modal-close>Đóng</button><button type="submit" class="btn btn-primary">Lưu</button>
+>>>>>>> Stashed changes
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Hospital Modal (Add/Edit) -->
-    <div class="modal-overlay" id="hospitalModal">
-        <div class="modal">
+
+    <!-- Staff Detail Modal -->
+    <div class="modal-overlay" id="staffDetailModal">
+        <div class="modal" style="width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
+<<<<<<< Updated upstream
                 <h3 id="hospitalModalTitle">Th�m b?nh vi?n m?i</h3>
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
@@ -513,16 +848,136 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-modal-close>��ng</button>
                         <button type="submit" class="btn btn-primary" id="saveHospitalBtn">Luu th�ng tin</button>
+=======
+                <h3>Chi tiết nhân viên</h3>
+                <button class="close-modal" onclick="closeStaffDetailModal()"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 0;">
+                <div class="tabs"
+                    style="display: flex; border-bottom: 1px solid var(--border-color); padding: 0 1.5rem; background-color: #f9fafb;">
+                    <button class="tab-btn active" id="staffTabInfoBtn" onclick="switchStaffTab('info')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid var(--primary-color); color: var(--primary-color); font-weight: 600; cursor: pointer; outline: none;">Thông
+                        tin cá nhân</button>
+                    <button class="tab-btn" id="staffTabHistoryBtn" onclick="switchStaffTab('history')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); font-weight: 500; cursor: pointer; outline: none;">Lịch
+                        sử phân công</button>
+                </div>
+
+                <!-- Tab 1: Personal Info -->
+                <div class="tab-content" id="staffTabInfoContent" style="padding: 1.5rem;">
+                    <div id="staffDetailInfoContent">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Tab 2: Assignment History -->
+                <div class="tab-content" id="staffTabHistoryContent" style="padding: 1.5rem; display: none;">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sự kiện</th>
+                                    <th>Vai trò</th>
+                                    <th>Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffDetailHistoryContent">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="staffHistoryPagination"
+                        style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hospital Modal -->
+    <div class="modal-overlay" id="hospitalModal">
+        <div class="modal" style="width: 500px;">
+            <div class="modal-header">
+                <h3 id="hospitalModalTitle">Thêm bệnh viện mới</h3><button class="close-modal" data-modal-close><i
+                        class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="hospitalForm">
+                    <input type="hidden" id="hospitalId">
+                    <div class="form-group"><label>Tên bệnh viện</label><input type="text" id="hospitalName"
+                            class="form-control" required></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="hospitalEmail"
+                            class="form-control" required></div>
+                    <div class="form-group"><label>Địa chỉ</label><input type="text" id="hospitalAddress"
+                            class="form-control"></div>
+                    <div class="form-group"><label>Số điện thoại</label><input type="text" id="hospitalPhone"
+                            class="form-control"></div>
+                    <div class="form-group"><input type="checkbox" id="hospitalStatus" checked> <label>Đang hợp
+                            tác</label></div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary"
+                            data-modal-close>Đóng</button><button type="submit" class="btn btn-primary">Lưu</button>
+>>>>>>> Stashed changes
                     </div>
                 </form>
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
     
     <script src="../script.js"></script>
+=======
+
+    <!-- Hospital Detail Modal -->
+    <div class="modal-overlay" id="hospitalDetailModal">
+        <div class="modal" style="width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <h3>Chi tiết bệnh viện</h3>
+                <button class="close-modal" onclick="closeHospitalDetailModal()"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 0;">
+                <div class="tabs"
+                    style="display: flex; border-bottom: 1px solid var(--border-color); padding: 0 1.5rem; background-color: #f9fafb;">
+                    <button class="tab-btn active" id="tabHospitalInfoBtn" onclick="switchHospitalTab('info')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid var(--primary-color); color: var(--primary-color); font-weight: 600; cursor: pointer; outline: none;">Thông
+                        tin bệnh viện</button>
+                    <button class="tab-btn" id="tabHospitalHistoryBtn" onclick="switchHospitalTab('history')"
+                        style="padding: 1rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); font-weight: 500; cursor: pointer; outline: none;">Lịch
+                        sử Request/Return</button>
+                </div>
+
+                <!-- Tab 1: Hospital Info -->
+                <div class="tab-content" id="tabHospitalInfoContent" style="padding: 1.5rem;">
+                    <div id="hospitalDetailInfoContent">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Tab 2: Hospital History -->
+                <div class="tab-content" id="tabHospitalHistoryContent" style="padding: 1.5rem; display: none;">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mã yêu cầu</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Số lượng/Thể tích</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hospitalDetailHistoryContent">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="hospitalHistoryPagination"
+                        style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+>>>>>>> Stashed changes
     <script src="admin.js"></script>
 </body>
 
 </html>
-
-

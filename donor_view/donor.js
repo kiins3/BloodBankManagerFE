@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 
+=======
+window.API_BASE = window.API_BASE || 'http://localhost:8080';
+window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
+>>>>>>> Stashed changes
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Donor Portal Loaded");
     // Tự động load thông tin người dùng lên Navbar nếu có các element cần thiết
@@ -109,6 +114,116 @@ if (document.getElementById('my-tickets-list')) {
     loadMyTickets();
 }
 
+if (document.getElementById('donorBloodType') || document.getElementById('upcomingEventsList')) {
+    loadDonorStat();
+    loadUpcomingEvents();
+}
+
+if (document.getElementById('historyTimeline')) {
+    loadHealthRecord();
+    loadMyHistory();
+}
+
+async function loadDonorStat() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/api/donor/donor-stat`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const bloodTypeEl = document.getElementById('donorBloodType');
+            const totalDonationEl = document.getElementById('donorTotalDonation');
+
+            if (bloodTypeEl) {
+                let bt = data.bloodType || '';
+                if (bt === '0') bt = 'O'; // Handle potential typo in DB
+                let rh = data.rhFactor || '';
+
+                if (!bt) {
+                    bloodTypeEl.textContent = '--';
+                } else {
+                    bloodTypeEl.textContent = `${bt}${rh}`;
+                }
+            }
+            if (totalDonationEl) {
+                totalDonationEl.textContent = data.totalTimeDonate || 0;
+            }
+        }
+    } catch (e) {
+        console.error("Lỗi khi tải donor stat:", e);
+    }
+}
+
+async function loadUpcomingEvents() {
+    const token = localStorage.getItem('access_token');
+    const headers = {};
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    try {
+        const response = await fetch(`${API_BASE}/api/shared/event/list-event-coming`, {
+            method: 'GET',
+            headers: headers
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const container = document.getElementById('upcomingEventsList');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center text-muted">Không có sự kiện nào sắp tới.</div>';
+                return;
+            }
+
+            const eventsToShow = data.slice(0, 3); // Display max 3 events on home page
+
+            eventsToShow.forEach((e, index) => {
+                const start = new Date(e.startDate);
+                const end = new Date(e.endDate);
+                const timeStr = `${start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })} • ${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
+
+                const imgSrc = index % 2 === 0 ? "https://placehold.co/600x300/ffeeee/red?text=Hien+Mau+Nhan+Dao" : "https://placehold.co/600x300/eef2ff/blue?text=Trao+Giot+Hong";
+                const badgeText = (e.status === 'DANG_DIEN_RA' || e.status === 'DANGMO' || e.status === 'DANG_MO') ? 'Đang mở' : 'Sắp diễn ra';
+                const badgeClass = (e.status === 'DANG_DIEN_RA' || e.status === 'DANGMO' || e.status === 'DANG_MO') ? 'bg-success' : 'bg-danger';
+
+                const cardHtml = `
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="event-card bg-white h-100 position-relative shadow-sm rounded border-0">
+                    <img src="${imgSrc}" class="card-img-top event-img" alt="Event" style="height: 160px; object-fit: cover; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;">
+                    <div class="p-3">
+                        <div class="badge ${badgeClass} mb-2">${badgeText}</div>
+                        <h6 class="fw-bold text-truncate" title="${e.eventName}">${e.eventName}</h6>
+                        <div class="d-flex align-items-center text-muted small mt-2">
+                            <i class="ph-bold ph-calendar-blank me-1"></i>
+                            <span>${timeStr}</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted small mt-1 mb-3">
+                            <i class="ph-bold ph-map-pin me-1"></i>
+                            <span class="text-truncate" title="${e.location}">${e.location || 'Đang cập nhật'}</span>
+                        </div>
+                        <a href="#"
+                            onclick="handleRegistration(event, '${e.eventId}', '${e.eventName}', '${timeStr}')"
+                            class="btn btn-outline-danger w-100 rounded-pill">Đăng ký ngay</a>
+                    </div>
+                </div>
+            </div>`;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+    } catch (error) {
+        console.error("Lỗi khi fetch upcoming events:", error);
+    }
+}
+
 async function loadMyTickets() {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -116,8 +231,15 @@ async function loadMyTickets() {
         return;
     }
 
+    let statusFilter = '';
+    const filterEl = document.getElementById('ticketStatusFilter');
+    if (filterEl) {
+        statusFilter = filterEl.value;
+    }
+    const queryStr = statusFilter ? `?status=${statusFilter}` : '';
+
     try {
-        const response = await fetch(`${API_BASE}/api/donor/registration/get-all-my-tickets`, {
+        const response = await fetch(`${API_BASE}/api/donor/registration/get-all-my-tickets${queryStr}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -130,7 +252,7 @@ async function loadMyTickets() {
             const emptyState = document.getElementById('emptyState');
 
             container.innerHTML = '';
-            
+
             if (!data || data.length === 0) {
                 emptyState.classList.remove('d-none');
                 return;
@@ -140,18 +262,21 @@ async function loadMyTickets() {
             // Hiển thị danh sách vé (BE đã sắp xếp sẵn ưu tiên gần đây nhất)
             data.forEach(ticket => {
                 let badgeHtml = '';
-                const s = (ticket.status || "").toUpperCase().replace(/[^A-Z]/g, "");
+                const regStatus = (ticket.registrationStatus || "").toUpperCase().replace(/[^A-Z]/g, "");
+                const eventStatus = (ticket.status || "").toUpperCase().replace(/[^A-Z]/g, "");
 
-                if (s === 'SAPTOI') {
-                    badgeHtml = '<span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 border border-warning">Sắp tới</span>';
-                } else if (s === 'DANGMO' || s === 'DANGDIENRA') {
-                    badgeHtml = '<span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 border border-success">Sắp diễn ra</span>';
-                } else if (s === 'DADONG') {
-                    badgeHtml = '<span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 border border-secondary">Đã đóng</span>';
-                } else if (s === 'DAHUY') {
+                if (regStatus === 'DADANGKY') {
+                    badgeHtml = '<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 border border-primary">Đã đăng ký</span>';
+                } else if (regStatus === 'DACHECKIN') {
+                    badgeHtml = '<span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3 border border-info">Đã check-in</span>';
+                } else if (regStatus === 'DAKHAM') {
+                    badgeHtml = '<span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 border border-warning">Đã khám</span>';
+                } else if (regStatus === 'DALAYMAU') {
+                    badgeHtml = '<span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 border border-success">Đã hiến máu</span>';
+                } else if (regStatus === 'DAHUY') {
                     badgeHtml = '<span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 border border-danger">Đã hủy</span>';
                 } else {
-                    badgeHtml = `<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 border border-primary">${ticket.status || 'Không rõ'}</span>`;
+                    badgeHtml = `<span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 border border-secondary">${ticket.registrationStatus || 'Không rõ'}</span>`;
                 }
 
                 let timeDisplay = '';
@@ -160,23 +285,31 @@ async function loadMyTickets() {
                     let endStr = "";
                     if (ticket.endDate) {
                         const end = new Date(ticket.endDate);
-                        endStr = ` - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit'})}`;
+                        endStr = ` - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
                     }
                     timeDisplay = `
                         <div class="d-flex align-items-center text-muted mb-2">
                             <i class="ph-bold ph-calendar-blank me-2 fs-5"></i>
                             <span class="fw-medium">${start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
                             <span class="mx-2">•</span>
-                            <span>${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit'})}${endStr}</span>
+                            <span>${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}${endStr}</span>
                         </div>
                     `;
                 }
 
+                // Khởi tạo ban đầu là RỖNG (Không hiện nút)
                 let cancelBtnHtml = '';
-                if (s === 'SAPTOI' || s === 'DANGMO' || s === 'DANGDIENRA') {
+
+                // Chỉ cho phép hủy nếu vé đang ở trạng thái Đã đăng ký
+                if (regStatus === 'DADANGKY') {
+
+                    // Lớp bảo vệ: Tìm đúng ID vé (nếu backend trả về tên là id thay vì registrationId thì vẫn lấy được)
+                    // Nếu không có cả 2, gán tạm là null để tránh lỗi cú pháp dấu phẩy
+                    const safeRegId = ticket.registrationId || ticket.id || null;
+
                     cancelBtnHtml = `
                         <button class="btn btn-outline-danger rounded-pill fw-bold px-4"
-                            onclick="showCancelModal('ticket-card-${ticket.eventId}', '${ticket.eventName}')">
+                            onclick="showCancelModal(${safeRegId}, '${ticket.eventName}')">
                             Hủy đăng ký
                         </button>
                     `;
@@ -184,7 +317,7 @@ async function loadMyTickets() {
 
                 const cardHtml = `
             <div class="col-12 col-md-6" id="ticket-card-${ticket.eventId}">
-                <div class="card border-0 shadow-sm h-100 ${s === 'DADONG' || s === 'DAHUY' ? 'opacity-75 bg-light' : ''}">
+                <div class="card border-0 shadow-sm h-100 ${eventStatus === 'DADONG' || regStatus === 'DAHUY' ? 'opacity-75 bg-light' : ''}">
                     <div class="card-body p-4 d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <h5 class="fw-bold mb-0 text-truncate header-font pe-2" title="${ticket.eventName}">${ticket.eventName}</h5>
@@ -224,7 +357,7 @@ async function loadMyTickets() {
 async function loadTicketDetails() {
     const params = new URLSearchParams(window.location.search);
     const eventId = params.get('id');
-    
+
     if (!eventId) {
         document.getElementById('ticketEventName').textContent = 'Mã vé không hợp lệ';
         document.getElementById('ticketStatus').innerHTML = '<i class="ph-bold ph-warning-circle me-1"></i> Lỗi';
@@ -248,13 +381,13 @@ async function loadTicketDetails() {
                 const d = profile.data ? profile.data : profile;
                 const donorNameEl = document.getElementById('ticketDonorName');
                 if (donorNameEl) donorNameEl.textContent = d.fullName || d.name || 'Người hiến máu';
-                
+
                 // Tranh thủ cập nhật tên lên Navbar
                 document.querySelectorAll('.dropdown-header, .ms-2.d-lg-none').forEach(el => {
-                     if(el.textContent.includes('Nguyễn Văn A')) el.textContent = d.fullName || d.name;
+                    if (el.textContent.includes('Nguyễn Văn A')) el.textContent = d.fullName || d.name;
                 });
             }
-        } catch(e) {}
+        } catch (e) { }
 
         // Kéo thông tin Vé
         const response = await fetch(`${API_BASE}/api/donor/registration/get-my-ticket/${eventId}`, {
@@ -266,7 +399,7 @@ async function loadTicketDetails() {
 
         if (response.ok) {
             const data = await response.json();
-            
+
             document.getElementById('ticketEventName').textContent = data.eventName || 'Sự kiện hiến máu';
             document.getElementById('ticketCodeText').textContent = "Mã vé: #" + (data.ticketCode || '----');
             if (data.qrCode) {
@@ -282,11 +415,11 @@ async function loadTicketDetails() {
                 const start = new Date(data.startDate);
                 document.getElementById('ticketDateRow').style.display = 'flex';
                 document.getElementById('ticketDateVal').textContent = start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                
+
                 if (data.endDate) {
                     const end = new Date(data.endDate);
                     document.getElementById('ticketTimeRow').style.display = 'flex';
-                    document.getElementById('ticketTimeVal').textContent = `${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit'})} - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit'})}`;
+                    document.getElementById('ticketTimeVal').textContent = `${start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
                 }
             }
 
@@ -302,15 +435,45 @@ async function loadTicketDetails() {
             const statusBadge = document.getElementById('ticketStatus');
             if (data.status === 'DA_DANG_KY') {
                 statusBadge.innerHTML = '<i class="ph-bold ph-check-circle me-1"></i> Sẵn sàng Check-in';
-                statusBadge.className = 'status-badge'; 
+                statusBadge.className = 'status-badge';
             } else if (data.status === 'DA_CHECK_IN') {
                 statusBadge.innerHTML = '<i class="ph-bold ph-check-circle me-1"></i> Đã Check-in';
-                statusBadge.className = 'status-badge bg-success text-white'; 
+                statusBadge.className = 'status-badge bg-success text-white';
                 statusBadge.style.background = '#10b981';
                 statusBadge.style.color = 'white';
             } else {
                 statusBadge.innerHTML = `<i class="ph-bold ph-info me-1"></i> ${data.status || 'Không rõ'}`;
                 statusBadge.className = 'status-badge bg-secondary text-white';
+            }
+
+            // Cấu hình nút Hủy đăng ký trong trang chi tiết vé
+            const cancelBtn = document.getElementById('cancelTicketBtn');
+            if (cancelBtn) {
+                if (data.status === 'DA_DANG_KY') {
+                    cancelBtn.style.display = 'block';
+                    
+                    let safeRegId = data.registrationId || data.regisId || data.id || null;
+                    if (!safeRegId) {
+                        try {
+                            const allTicketsRes = await fetch(`${API_BASE}/api/donor/registration/get-all-my-tickets`, {
+                                headers: { 'Authorization': `Bearer ${token}` }
+                            });
+                            if (allTicketsRes.ok) {
+                                const allTickets = await allTicketsRes.json();
+                                const matchingTicket = allTickets.find(t => String(t.eventId) === String(eventId));
+                                if (matchingTicket) {
+                                    safeRegId = matchingTicket.registrationId || matchingTicket.id;
+                                }
+                            }
+                        } catch (e) {
+                            console.error("Lỗi khi tìm registrationId từ danh sách vé:", e);
+                        }
+                    }
+                    
+                    cancelBtn.onclick = () => showCancelModal(safeRegId, data.eventName);
+                } else {
+                    cancelBtn.style.display = 'none';
+                }
             }
         } else {
             const err = await response.text();
@@ -342,7 +505,7 @@ async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = fa
         </div>`;
 
     try {
-        const response = await fetch(`${API_BASE}/api/shared/event/get-list-event`, {
+        const response = await fetch(`${API_BASE}/api/shared/event/list-event-coming`, {
             method: 'GET',
             headers: headers
         });
@@ -437,8 +600,18 @@ async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = fa
                 opacity = '0.5';
             }
 
+<<<<<<< Updated upstream
             const imgText = encodeURIComponent(e.eventName.substring(0, 15));
             const imgSrc = `https://placehold.co/600x300/e0f2fe/0984e3?text=${imgText}`;
+=======
+            // Chỉ hiển thị các sự kiện Đang mở hoặc Sắp tới nếu muốn, hoặc hiển thị hết. Ở đây sẽ hiển thị hết.
+            data.forEach(e => {
+                const s = (e.status || "").toUpperCase().replace(/[^A-Z]/g, "");
+
+                let badgeHtml = '';
+                let buttonHtml = '';
+                let opacity = '1';
+>>>>>>> Stashed changes
 
             const cardHtml = `
                 <div class="col-12 col-md-6 col-lg-4" style="opacity: ${opacity}">
@@ -472,11 +645,19 @@ async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = fa
                             </div>
                         </div>
                     </div>
+<<<<<<< Updated upstream
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', cardHtml);
         });
 
+=======
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+        }
+>>>>>>> Stashed changes
     } catch (error) {
         console.error("Lỗi khi fetch events:", error);
         container.innerHTML = '<div class="col-12 text-center py-5 text-danger">Không thể kết nối đến máy chủ sự kiện.</div>';
@@ -510,7 +691,7 @@ async function loadProfile() {
             if (document.getElementById('phone')) document.getElementById('phone').value = data.phone || '';
             if (document.getElementById('cccd')) document.getElementById('cccd').value = data.cccd || '';
 
-            
+
             // Xử lý định dạng ngày sinh cho thẻ <input type="date">
             if (document.getElementById('dob') && data.dob) {
                 let dobVal = data.dob;
@@ -533,15 +714,15 @@ async function loadProfile() {
             // Ghi đè tên lên giao diện avatar bên trái
             const profileName = document.querySelector('h5.fw-bold.mb-1');
             if (profileName) profileName.textContent = data.fullName || data.name || 'Người hiến máu';
-            
+
             const profileAvatar = document.querySelector('.card img.rounded-circle[width="128"]');
             if (profileAvatar && (data.fullName || data.name)) {
                 profileAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || data.name)}&background=random&size=128`;
             }
-            
+
             // Sửa luôn cả chữ Nguyễn Văn A trên thanh Navbar menu nếu có
             document.querySelectorAll('.dropdown-header, .ms-2.d-lg-none').forEach(el => {
-                 if(el.textContent.includes('Nguyễn Văn A')) el.textContent = data.fullName || data.name;
+                if (el.textContent.includes('Nguyễn Văn A')) el.textContent = data.fullName || data.name;
             });
 
             showToast("Đã tải thành công dữ liệu từ hệ thống", "success");
@@ -640,7 +821,7 @@ async function confirmRegistration() {
 
         if (res.ok) {
             alert("Đăng ký thành công! Đang chuyển đến vé của bạn...");
-            
+
             // Ẩn modal
             const modalEl = document.getElementById('confirmationModal');
             if (modalEl) {
@@ -664,39 +845,68 @@ async function confirmRegistration() {
 }
 
 // --- TICKET CANCELLATION LOGIC ---
+let registrationIdToCancel = null;
 
-let ticketIdToCancel = null;
+function showCancelModal(regId, eventName) {
+    console.log("ID vé cần hủy:", regId); // Check log xem có undefined không
 
-function showCancelModal(elementId, eventName) {
-    ticketIdToCancel = elementId;
+    registrationIdToCancel = regId;
     document.getElementById('cancelEventName').textContent = eventName;
 
-    // Show Modal
-    const modal = new bootstrap.Modal(document.getElementById('cancelModal'));
+    // SỬA Ở ĐÂY: Dùng getOrCreateInstance
+    const modalEl = document.getElementById('cancelModal');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     modal.show();
 }
 
-function confirmCancellation() {
-    if (!ticketIdToCancel) return;
+async function confirmCancellation() {
+    if (!registrationIdToCancel) return;
 
-    // 1. Remove the element from DOM
-    const cardElement = document.getElementById(ticketIdToCancel);
-    if (cardElement) {
-        cardElement.remove();
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        showToast("Bạn cần đăng nhập để thao tác.", "warning");
+        window.location.href = '../home/login.html';
+        return;
     }
 
-    // 2. Mock API Call Success
-    showToast("Hủy đăng ký thành công!", "success");
+    try {
+        const response = await fetch(`${API_BASE}/api/donor/registration/discard-my-ticket/${registrationIdToCancel}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-    // 3. Hide Modal
-    const modalEl = document.getElementById('cancelModal');
-    const modal = bootstrap.Modal.getInstance(modalEl); // Get existing instance
-    modal.hide();
+        // Đóng Modal an toàn
+        const modalEl = document.getElementById('cancelModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) {
+            modal.hide();
+        }
 
-    // 4. Check if list is empty
-    const ticketsContainer = document.querySelector('.row.g-4');
-    if (ticketsContainer && ticketsContainer.children.length === 0) {
-        document.getElementById('emptyState').classList.remove('d-none');
+        if (response.ok) {
+            showToast("Hủy đăng ký thành công!", "success");
+            const isTicketPage = window.location.pathname.includes('ticket.html');
+            if (isTicketPage) {
+                // Nếu ở trang chi tiết vé, quay về trang Vé Của Tôi sau 1.5s để cập nhật
+                setTimeout(() => {
+                    window.location.href = 'my_tickets.html';
+                }, 1500);
+            } else {
+                loadMyTickets();
+            }
+        } else {
+            const err = await response.text();
+            showToast("Hủy đăng ký thất bại: " + err, "danger");
+        }
+    } catch (error) {
+        console.error("Lỗi Fetch:", error);
+
+        const modalEl = document.getElementById('cancelModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        showToast("Lỗi kết nối tới máy chủ", "danger");
     }
 }
 
@@ -740,7 +950,7 @@ async function handleProfileSave(event) {
     // Trích xuất các trường thông tin y tế (đọc read-only)
     let bloodTypeField = document.getElementById('bloodType');
     let rhFactorField = document.getElementById('rhFactor');
-    
+
     let bloodTypeRaw = bloodTypeField ? bloodTypeField.value : '';
     let rhRaw = rhFactorField ? rhFactorField.value : '';
 
@@ -838,5 +1048,273 @@ async function handleChangePassword(event) {
         btn.innerHTML = originalText;
     }
 }
+<<<<<<< Updated upstream
 
 
+=======
+window.logout = function () {
+    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user_role');
+        localStorage.removeItem('user_info');
+        window.location.href = '../home/login.html';
+    }
+}
+
+// --- LỊCH SỬ HIẾN MÁU ---
+async function loadHealthRecord() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/api/donor/my-health-record`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const totalDonationEl = document.getElementById('totalDonationStat');
+            const totalVolumeEl = document.getElementById('totalVolumeStat');
+            
+            // Lấy element hiển thị nhóm máu (badge màu đỏ trên UI)
+            const bloodGroupEl = document.getElementById('bloodGroupBadge'); 
+
+            if (totalDonationEl) totalDonationEl.textContent = data.totalDonation || 0;
+            if (totalVolumeEl) {
+                const volLiters = (data.totalVolumeMl || 0) / 1000;
+                totalVolumeEl.textContent = volLiters + 'L';
+            }
+
+            // Xử lý hiển thị nhóm máu và Rh
+            if (bloodGroupEl) {
+                // Kiểm tra nếu có dữ liệu thì ghép lại (VD: "O" + "+" = "O+")
+                if (data.bloodType && data.rhFactor) {
+                    bloodGroupEl.textContent = `${data.bloodType}${data.rhFactor}`;
+                } else {
+                    // Nếu API trả về null như trong ảnh, hiển thị mặc định
+                    bloodGroupEl.textContent = 'Chưa rõ nhóm máu'; 
+                    // Hoặc bạn có thể ẩn luôn badge này bằng cách:
+                    // bloodGroupEl.style.display = 'none';
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Lỗi khi tải hồ sơ sức khỏe:", error);
+    }
+}
+
+async function loadMyHistory() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/api/donor/my-history`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            renderHistoryList(data.history || []);
+        } else {
+            document.getElementById('historyTimeline').innerHTML = '<p class="text-muted text-center mt-4">Không thể tải lịch sử hiến máu.</p>';
+        }
+    } catch (error) {
+        console.error("Lỗi khi tải lịch sử:", error);
+        document.getElementById('historyTimeline').innerHTML = '<p class="text-danger text-center mt-4">Lỗi kết nối đến máy chủ.</p>';
+    }
+}
+
+function renderHistoryList(historyArray) {
+    const container = document.getElementById('historyTimeline');
+    if (!container) return;
+
+    if (historyArray.length === 0) {
+        container.innerHTML = '<p class="text-muted text-center mt-4">Bạn chưa có lịch sử hiến máu nào.</p>';
+        return;
+    }
+
+    let html = '';
+    historyArray.forEach((item, index) => {
+        // Format date: yyyy-MM-ddTHH:mm:ss -> dd/MM/yyyy
+        let dateStr = "N/A";
+        if (item.donationDate) {
+            const d = new Date(item.donationDate);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            dateStr = `${day}/${month}/${year}`;
+        }
+
+        const isMostRecent = index === 0;
+        const dotClass = isMostRecent ? 'timeline-dot' : 'timeline-dot bg-secondary';
+
+        // Cấu trúc accordion
+        html += `
+            <div class="timeline-item">
+                <div class="${dotClass}"></div>
+                <div class="card border shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-white border-bottom-0 p-3 rounded-4" id="headingHistory${item.registrationId}">
+                        <div class="d-flex justify-content-between align-items-center" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#collapseHistory${item.registrationId}" aria-expanded="false" aria-controls="collapseHistory${item.registrationId}" onclick="viewHistoryDetail(${item.registrationId})">
+                            <div>
+                                <h5 class="fw-bold mb-1">${dateStr}</h5>
+                                <p class="mb-0 small text-secondary">${item.location || item.eventName || 'Không xác định'}</p>
+                            </div>
+                            <a href="javascript:void(0)" class="text-primary text-decoration-none small fw-medium d-flex align-items-center">
+                                Xem chi tiết <i class="ph-bold ph-caret-down ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="collapseHistory${item.registrationId}" class="accordion-collapse collapse" aria-labelledby="headingHistory${item.registrationId}">
+                        <div class="card-body pt-0">
+                            <hr class="opacity-10 mt-0 mb-3">
+                            <div id="historyDetailContent${item.registrationId}" class="text-center">
+                                <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span> Đang tải...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+async function viewHistoryDetail(registrationId) {
+    const detailContainer = document.getElementById(`historyDetailContent${registrationId}`);
+    if (!detailContainer) return;
+
+    // Check if already loaded to avoid redundant calls
+    if (!detailContainer.innerHTML.includes('spinner-border')) {
+        return;
+    }
+
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/api/donor/history-detail/${registrationId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            const volume = data.actualVolume || data.expectedVolume || '--';
+            const weight = data.screeningInfo?.weight || '--';
+            const bloodPressure = data.screeningInfo?.bloodPressure || '--';
+            const heartRate = data.screeningInfo?.heartRate || '--';
+            const hemoglobin = data.screeningInfo?.hemoglobin || '--';
+
+            const hiv = data.testResultInfo?.hiv || '--';
+            const hbv = data.testResultInfo?.hbv || '--';
+            const hcv = data.testResultInfo?.hcv || '--';
+            const syphilis = data.testResultInfo?.syphilis || '--';
+            const malaria = data.testResultInfo?.malaria || '--';
+            const conclusion = data.testResultInfo?.finalConclusion || '--';
+
+            // Helper format test status
+            const getTestStatus = (val) => {
+                if (val === 'AM_TINH') return '<span class="small text-success fw-bold"><i class="ph-fill ph-check-circle me-1"></i>Âm tính</span>';
+                if (val === 'DUONG_TINH') return '<span class="small text-danger fw-bold"><i class="ph-fill ph-warning-circle me-1"></i>Dương tính</span>';
+                if (val === 'NGHI_NGO') return '<span class="small text-warning fw-bold"><i class="ph-fill ph-question me-1"></i>Nghi ngờ</span>';
+                return `<span class="small text-muted">${val}</span>`;
+            };
+            
+            const conclusionClass = (conclusion || '').toLowerCase().includes('an toàn') ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger';
+
+            let resultHtml = `
+                <!-- Khám sàng lọc -->
+                <div class="d-flex flex-wrap text-center justify-content-between mb-2">
+                    <div class="flex-fill border-end px-2 mb-3">
+                        <i class="ph-fill ph-drop fs-4 text-danger mb-1" style="opacity: 0.8"></i>
+                        <div class="small text-secondary mb-1">Lượng máu</div>
+                        <div class="fw-bold fs-5">${volume} ml</div>
+                    </div>
+                    <div class="flex-fill border-end px-2 mb-3">
+                        <i class="ph-fill ph-heartbeat fs-4 text-danger mb-1" style="opacity: 0.8"></i>
+                        <div class="small text-secondary mb-1">Huyết áp</div>
+                        <div class="fw-bold fs-5">${bloodPressure}</div>
+                    </div>
+                    <div class="flex-fill border-end px-2 mb-3">
+                        <i class="ph-fill ph-scales fs-4 text-success mb-1" style="opacity: 0.8"></i>
+                        <div class="small text-secondary mb-1">Cân nặng</div>
+                        <div class="fw-bold fs-5">${weight} kg</div>
+                    </div>
+                    <div class="flex-fill border-end px-2 mb-3 d-none d-sm-block">
+                        <i class="ph-fill ph-activity fs-4 text-warning mb-1" style="opacity: 0.8"></i>
+                        <div class="small text-secondary mb-1">Nhịp tim</div>
+                        <div class="fw-bold fs-5">${heartRate} bpm</div>
+                    </div>
+                    <div class="flex-fill px-2 mb-3 d-none d-sm-block">
+                        <i class="ph-fill ph-flask fs-4 text-primary mb-1" style="opacity: 0.8"></i>
+                        <div class="small text-secondary mb-1">Huyết sắc tố</div>
+                        <div class="fw-bold fs-5">${hemoglobin} g/L</div>
+                    </div>
+                </div>
+
+                <hr class="opacity-10 mt-0 mb-4">
+
+                <!-- Kết quả xét nghiệm -->
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0 fw-bold text-dark d-flex align-items-center">
+                            <i class="ph-fill ph-clipboard-text text-primary me-2 fs-5"></i> Kết quả xét nghiệm
+                        </h6>
+                        <span class="badge ${conclusionClass} rounded-pill px-3 py-2 border-0">${conclusion}</span>
+                    </div>
+                    
+                    <div class="row g-x-4 g-y-3">
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <span class="small fw-medium text-secondary">HIV</span>
+                                ${getTestStatus(hiv)}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <span class="small fw-medium text-secondary">Viêm gan B (HBV)</span>
+                                ${getTestStatus(hbv)}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <span class="small fw-medium text-secondary">Viêm gan C (HCV)</span>
+                                ${getTestStatus(hcv)}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <span class="small fw-medium text-secondary">Giang mai</span>
+                                ${getTestStatus(syphilis)}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <span class="small fw-medium text-secondary">Sốt rét</span>
+                                ${getTestStatus(malaria)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            detailContainer.innerHTML = resultHtml;
+        } else {
+            detailContainer.innerHTML = '<p class="text-danger small mb-0 text-center">Không thể tải thông tin chi tiết.</p>';
+        }
+    } catch (error) {
+        console.error("Lỗi khi tải chi tiết lịch sử:", error);
+        detailContainer.innerHTML = '<p class="text-danger small mb-0 text-center">Lỗi kết nối.</p>';
+    }
+}
+>>>>>>> Stashed changes

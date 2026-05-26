@@ -66,7 +66,19 @@
                         Chi?n d?ch hi?n m�u
                     </a>
                 </li>
+<<<<<<< Updated upstream
             <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
+=======
+                <li class="nav-item">
+                    <a href="logs.html">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Nhật ký hoạt động
+                    </a>
+                </li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger"
+                        style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+            </ul>
+>>>>>>> Stashed changes
         </aside>
 
         <!-- Main Content -->
@@ -80,6 +92,7 @@
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
+<<<<<<< Updated upstream
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng don v? m�u</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">4</h3>
                     </div>
@@ -91,14 +104,27 @@
                     <div class="card">
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">�� d?t tru?c</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1</h3>
+=======
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng đơn vị máu</p>
+                        <h3 id="totalBloodBag" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">--</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Sắp hết hạn</p>
+                        <h3 id="expiringSoon"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #ea580c;">--</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Đã đặt trước</p>
+                        <h3 id="reservedBlood"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">--</h3>
+>>>>>>> Stashed changes
                     </div>
                     <div class="card">
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">�� h?y/H?t h?n <i
                                 class="ph-bold ph-warning-circle" style="color: #f97316;"></i></p>
-                        <h3
+                        <h3 id="discardedBlood"
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
-                            1
-                        </h3>
+                            --</h3>
                     </div>
                 </div>
 
@@ -113,16 +139,16 @@
                             m�u trong kho.</p>
                     </div>
 
-                    <!-- Toolbar -->
                     <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-                            <input type="text" placeholder="Search by unit ID or donor name..."
+                            <input type="text" id="searchBagId" placeholder="Mã túi máu..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
-                        <select
+                        <select id="filterBagBloodType"
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+<<<<<<< Updated upstream
                             <option>T?t c? nh�m m�u</option>
                             <option>A+</option>
                             <option>A-</option>
@@ -132,20 +158,54 @@
                             <option>AB-</option>
                             <option>O+</option>
                             <option>O-</option>
+=======
+                            <option value="">Tất cả Nhóm máu</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+>>>>>>> Stashed changes
                         </select>
-                        <select
+                        <select id="filterBagRh"
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+<<<<<<< Updated upstream
                             <option>T?t c? ch? ph?m</option>
                             <option>M�u to�n ph?n</option>
                             <option>Kh?i h?ng c?u</option>
                             <option>Huy?t tuong</option>
                             <option>Ti?u c?u</option>
+=======
+                            <option value="">Tất cả Rh</option>
+                            <option value="+">Rh+</option>
+                            <option value="-">Rh-</option>
+>>>>>>> Stashed changes
                         </select>
-                        <select
+                        <select id="filterBagProduct"
                             style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+<<<<<<< Updated upstream
                             <option>T?t c? tr?ng th�i</option>
                             <option>S?n s�ng</option>
                             <option>�� d?t tru?c</option>
+=======
+                            <option value="">Tất cả chế phẩm</option>
+                            <option value="MAU_TOAN_PHAN">Máu toàn phần</option>
+                            <option value="TUI_HONG_CAU">Hồng cầu khối</option>
+                            <option value="TUI_HUYET_TUONG">Huyết tương</option>
+                            <option value="TUI_TIEU_CAU">Tiểu cầu</option>
+                        </select>
+                        <select id="filterBagStatus"
+                            style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="CHO_XET_NGHIEM">Chờ xét nghiệm</option>
+                            <option value="CHO_TACH_CHIET">Chờ tách chiết</option>
+                            <option value="CHO_IN_NHAN">Chờ in nhãn</option>
+                            <option value="CHO_BAO_QUAN">Chờ bảo quản</option>
+                            <option value="DA_TACH_CHIET">Đã tách chiết</option>
+                            <option value="SAN_SANG">Sẵn sàng</option>
+                            <option value="CHO_HUY">Chờ hủy</option>
+                            <option value="DA_HUY">Đã hủy</option>
+                            <option value="DA_XUAT">Đã xuất khoa/viện</option>
+>>>>>>> Stashed changes
                         </select>
                         <button class="btn btn-primary" onclick="alert('Printing Report...')">
                             <i class="ph-bold ph-file-pdf"></i>
@@ -158,6 +218,7 @@
                         <table>
                             <thead>
                                 <tr>
+<<<<<<< Updated upstream
                                     <th>M� t�i</th>
                                     <th>Nh�m m�u</th>
                                     <th>Lo?i ch? ph?m</th>
@@ -172,7 +233,22 @@
 
                                         </div>
                                     </td>
+=======
+                                    <th>Mã túi</th>
+                                    <th>Nhóm máu</th>
+                                    <th>Loại chế phẩm</th>
+                                    <th>Thể tích</th>
+                                    <th>Người hiến</th>
+                                    <th>Ngày lấy</th>
+                                    <th>Hết hạn</th>
+                                    <th>Vị trí</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+>>>>>>> Stashed changes
                                 </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <!-- Dữ liệu túi máu sẽ được nạp tại đây -->
                             </tbody>
                         </table>
                     </div>
@@ -184,6 +260,7 @@
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
+<<<<<<< Updated upstream
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng s? t?/thi?t b?</p>
                         <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">4</h3>
                     </div>
@@ -198,8 +275,27 @@
                     <div class="card">
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">B?o tr�/H?ng</p>
                         <h3
+=======
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng số tủ/thiết bị</p>
+                        <h3 id="statTotalEquipment" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">--
+                        </h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Hoạt động</p>
+                        <h3 id="statActiveEquipment"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">--</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Cảnh báo</p>
+                        <h3 id="statWarningEquipment"
+                            style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">--</h3>
+                    </div>
+                    <div class="card">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Bảo trì/Hỏng</p>
+                        <h3 id="statMaintenanceEquipment"
+>>>>>>> Stashed changes
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--danger-color);">
-                            0</h3>
+                            --</h3>
                     </div>
                 </div>
 
@@ -214,11 +310,20 @@
                                 m�u v� ch? ph?m.</p>
                         </div>
                         <div style="display: flex; gap: 1rem; align-items: center;">
+<<<<<<< Updated upstream
                             <select id="equipmentTypeFilter" style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                                 <option value="all">T?t c? ch? ph?m</option>
                                 <option value="hc">H?ng c?u</option>
                                 <option value="tc">Ti?u c?u</option>
                                 <option value="ht">Huy?t tuong</option>
+=======
+                            <select id="equipmentTypeFilter"
+                                style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
+                                <option value="all">Tất cả chế phẩm</option>
+                                <option value="hc">Hồng cầu</option>
+                                <option value="tc">Tiểu cầu</option>
+                                <option value="ht">Huyết tương</option>
+>>>>>>> Stashed changes
                             </select>
                             <button class="btn btn-primary" onclick="openEquipmentModal()">
                                 <i class="ph-bold ph-plus"></i> Th�m thi?t b?
@@ -330,15 +435,26 @@
                     </div>
 
                     <div class="form-group">
+<<<<<<< Updated upstream
                         <label>Ti�u chu?n nhi?t d?</label>
                         <input type="text" id="eqStandard" class="form-control" placeholder="V� d?: 2 - 6 d? C" required>
+=======
+                        <label>Tiêu chuẩn nhiệt độ</label>
+                        <input type="text" id="eqStandard" class="form-control" placeholder="Ví dụ: 2 - 6 độ C"
+                            required>
+>>>>>>> Stashed changes
                     </div>
 
                     <div class="form-group" id="eqStatusContainer" style="display: none;">
                         <label>Tr?ng th�i</label>
                         <select id="eqStatus" class="form-control">
+<<<<<<< Updated upstream
                             <option value="ACTIVE">Ho?t d?ng (ACTIVE)</option>
                             <option value="UNACTIVE">Ng?ng ho?t d?ng (UNACTIVE)</option>
+=======
+                            <option value="ACTIVE">Hoạt động (ACTIVE)</option>
+                            <option value="INACTIVE">Ngừng hoạt động (INACTIVE)</option>
+>>>>>>> Stashed changes
                         </select>
                     </div>
 
@@ -356,5 +472,3 @@
 </body>
 
 </html>
-
-

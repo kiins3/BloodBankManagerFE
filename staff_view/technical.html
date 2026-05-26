@@ -30,9 +30,22 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
                 <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html" class="active"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
+                <!-- Kỹ thuật Dropdown -->
+                <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                    <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                        <div class="left-icon">
+                            <i class="ph-bold ph-flask"></i>
+                            <span>Kỹ thuật</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                    </div>
+                    <div class="nav-dropdown-content">
+                        <a href="technical.html" class="nav-dropdown-item active">Danh sách máu</a>
+                        <a href="equipment.html" class="nav-dropdown-item">Quản lý thiết bị</a>
+                    </div>
+                </li>
                 <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="inventory.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
                 <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
                 <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
             </ul>
@@ -100,15 +113,31 @@
                             <option value="HET_HAN">Hết hạn</option>
                         </select>
                     </div>
-                    <div class="bulk-actions" style="display: flex; gap: 0.5rem;">
+                    <div class="bulk-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
                         <button class="btn btn-secondary bulk-btn" id="bulkStoreBtn" onclick="openBulkStoreModal()"
                             disabled>
                             <i class="ph-bold ph-floppy-disk"></i> Lưu kho hàng loạt
                         </button>
-                        <button class="btn btn-danger bulk-btn" id="bulkDisposeBtn" onclick="openBulkDisposalModal()"
-                            disabled>
-                            <i class="ph-bold ph-trash"></i> Hủy hàng loạt
-                        </button>
+                        <div class="custom-dropdown" id="bulkDropdown">
+                            <button class="btn btn-secondary bulk-btn" id="bulkDropdownBtn" onclick="toggleBulkDropdown(event)"
+                                disabled style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                Hành động khác <i class="ph-bold ph-caret-down"></i>
+                            </button>
+                            <div class="dropdown-menu-custom" id="bulkDropdownMenu">
+                                <button class="dropdown-item-custom" id="bulkTransferBtn" onclick="openBulkTransferModal(); closeBulkDropdown();"
+                                    disabled>
+                                    <i class="ph-bold ph-arrows-left-right text-warning"></i> Chuyển tủ hàng loạt
+                                </button>
+                                <button class="dropdown-item-custom" id="bulkUndoDiscardBtn" onclick="openBulkUndoDiscardModal(); closeBulkDropdown();"
+                                    disabled>
+                                    <i class="ph-bold ph-arrow-counter-clockwise text-success"></i> Khôi phục hàng loạt
+                                </button>
+                                <button class="dropdown-item-custom" id="bulkDisposeBtn" onclick="openBulkDisposalModal(); closeBulkDropdown();"
+                                    disabled>
+                                    <i class="ph-bold ph-trash text-danger"></i> Hủy hàng loạt
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -146,6 +175,19 @@
             </div>
 
             <div class="modal-body p-3">
+                <!-- Physical Error / Technical Issue Switch -->
+                <div class="mb-4 p-3 bg-light rounded border border-warning" id="physicalErrorContainer" style="border: 1px solid #f59e0b !important;">
+                    <div class="form-check form-switch d-flex justify-content-between align-items-center ps-0">
+                        <label class="form-label mb-0 fw-bold text-warning" for="isPhysicalErrorSwitch" style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="ph-bold ph-warning fs-5"></i> Túi máu bị hỏng vật lý / Lỗi kỹ thuật
+                        </label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="isPhysicalErrorSwitch" onchange="togglePhysicalError(this)" style="cursor: pointer;">
+                    </div>
+                    <div class="small text-muted mt-1">
+                        Bật tùy chọn này nếu túi máu bị rách, hỏng vật lý hoặc gặp sự cố kỹ thuật trong quá trình xử lý. Hệ thống sẽ tự động thiết lập trạng thái Chờ hủy và gửi mail thông báo cho người hiến.
+                    </div>
+                </div>
+
                 <!-- Part A: Blood Typing -->
                 <div class="mb-4">
                     <h6 class="text-secondary small text-uppercase fw-bold mb-2">A. Định nhóm máu (Blood Typing)</h6>
@@ -473,6 +515,60 @@
         </div>
     </div>
 
+    <!-- MODAL: OVERRIDE REASON (CẢNH BÁO DUNG TÍCH THẤP) -->
+    <div id="overrideReasonModal" class="modal-overlay">
+        <div class="modal" style="max-width: 480px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center"
+                style="background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%); border-radius: 0.75rem 0.75rem 0 0;">
+                <div class="d-flex align-items-center gap-2">
+                    <span style="font-size:1.6rem;">⚠️</span>
+                    <h5 class="mb-0 fw-bold" style="color:#b45309;">Cảnh báo dung tích thấp</h5>
+                </div>
+                <button class="btn-close" onclick="closeOverrideModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Warning Banner -->
+                <div id="overrideWarningBanner"
+                    style="background:#fff7ed; border:1.5px solid #f59e0b; border-radius:0.6rem; padding:0.9rem 1rem; margin-bottom:1rem;">
+                    <p class="mb-0" style="color:#92400e; font-size:0.93rem; line-height:1.5;" id="overrideWarningMsg">
+                        <!-- Populated by JS -->
+                    </p>
+                </div>
+
+                <!-- Volume summary -->
+                <div id="overrideVolumeSummary"
+                    style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:0.5rem; padding:0.75rem 1rem; margin-bottom:1rem; font-size:0.88rem;">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Reason input -->
+                <div class="mb-2">
+                    <label class="form-label small fw-bold" for="overrideReasonInput"
+                        style="color:#b45309;">
+                        <i class="ph-bold ph-pencil-line"></i>
+                        Lý do ngoại lệ <span style="color:#dc2626;">*</span>
+                    </label>
+                    <textarea id="overrideReasonInput" class="form-control" rows="3"
+                        placeholder="Ví dụ: Người hiến có chỉ số Hct thấp, túi máu nhỏ hơn tiêu chuẩn..."
+                        style="border-color:#f59e0b; font-size:0.9rem; resize:vertical;"></textarea>
+                    <div class="small text-muted mt-1">
+                        Lý do sẽ được ghi nhận vào hồ sơ tách chiết để kiểm soát chất lượng.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3" style="gap:0.5rem;">
+                <button class="btn btn-light border" onclick="closeOverrideModal()">
+                    <i class="ph-bold ph-x"></i> Hủy bỏ
+                </button>
+                <button class="btn" id="confirmOverrideBtn"
+                    onclick="confirmFractionationWithOverride()"
+                    style="background:linear-gradient(135deg,#f59e0b,#d97706); color:#fff; font-weight:600; border:none;">
+                    <i class="ph-bold ph-check-circle"></i> Xác nhận &amp; Lưu ngoại lệ
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL: BULK STORE TO INVENTORY (LƯU KHO HÀNG LOẠT) -->
     <div id="storeModal" class="modal-overlay">
         <div class="modal" style="max-width: 500px;">
@@ -507,6 +603,70 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL: BULK TRANSFER (CHUYỂN TỦ HÀNG LOẠT) -->
+    <div id="transferModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Chuyển tủ bảo quản hàng loạt</h5>
+                <button class="btn-close" data-modal-close aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning py-2 d-flex align-items-center mb-3">
+                    <i class="ph-bold ph-arrows-left-right fs-5 me-2"></i>
+                    <div>
+                        Chuyển <strong id="transferBagCount">0</strong> túi máu đang chọn sang thiết bị bảo quản mới.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Chọn thiết bị bảo quản đích (Tủ)</label>
+                    <select id="transferStorageSelect" class="form-select">
+                        <option value="">-- Đang tải danh sách thiết bị --</option>
+                    </select>
+                </div>
+
+                <div class="small text-muted mb-0">
+                    * Danh sách túi: <span id="transferBagIds"></span>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
+                <button class="btn btn-warning text-white" id="confirmTransferBtn" onclick="confirmBulkTransfer()">
+                    <i class="ph-bold ph-arrows-left-right"></i> Xác nhận chuyển tủ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BULK UNDO DISCARD (KHÔI PHỤC HÀNG LOẠT) -->
+    <div id="undoDiscardModal" class="modal-overlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header border-bottom pb-3 mb-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-success">Khôi phục túi máu</h5>
+                <button class="btn-close" data-modal-close aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success py-2 d-flex align-items-center mb-3">
+                    <i class="ph-bold ph-arrow-counter-clockwise fs-5 me-2"></i>
+                    <div>
+                        Bạn có chắc chắn muốn khôi phục <strong id="undoDiscardBagCount">0</strong> túi máu đã hủy/chờ hủy được chọn?
+                    </div>
+                </div>
+                <div class="small text-muted mb-0">
+                    * Danh sách túi: <span id="undoDiscardBagIds"></span>
+                </div>
+            </div>
+            <div class="modal-footer border-top pt-3 mt-3">
+                <button class="btn btn-light border" data-modal-close>Bỏ qua</button>
+                <button class="btn btn-success" id="confirmUndoDiscardBtn" onclick="confirmBulkUndoDiscard()">
+                    <i class="ph-bold ph-arrow-counter-clockwise"></i> Xác nhận khôi phục
+                </button>
+            </div>
+        </div>
+    </div>
+
+
 
     <script src="../js/script.js"></script>
     <script src="staff.js"></script>

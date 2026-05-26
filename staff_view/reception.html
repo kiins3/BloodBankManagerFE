@@ -31,12 +31,30 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item"><a href="dashboard.html"><i class="ph-bold ph-squares-four"></i> Tổng quan</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html" class="active"><i class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
-                <li class="nav-item staff-tech-only" style="display:none;"><a href="technical.html"><i class="ph-bold ph-flask"></i> Kỹ thuật</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
-                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()" style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
-                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()" style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
+                <li class="nav-item staff-tech-only" style="display:none;"><a href="reception.html" class="active"><i
+                            class="ph-bold ph-user-plus"></i> Tiếp nhận</a></li>
+                <!-- Kỹ thuật Dropdown -->
+                <li class="nav-item-dropdown staff-tech-only" style="display:none;">
+                    <div class="nav-item-header" onclick="toggleSidebarDropdown(this)">
+                        <div class="left-icon">
+                            <i class="ph-bold ph-flask"></i>
+                            <span>Kỹ thuật</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down dropdown-arrow"></i>
+                    </div>
+                    <div class="nav-dropdown-content">
+                        <a href="technical.html" class="nav-dropdown-item">Danh sách máu</a>
+                        <a href="equipment.html" class="nav-dropdown-item">Quản lý thiết bị</a>
+                    </div>
+                </li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="distribution.html"><i
+                            class="ph-bold ph-truck"></i> Điều phối xuất kho</a></li>
+                <li class="nav-item staff-inventory-only" style="display:none;"><a href="inventory.html"><i
+                            class="ph-bold ph-drop-half-bottom"></i> Quản lý kho</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" onclick="openChangePasswordModal()"
+                        style="color:var(--secondary-color);"><i class="ph-bold ph-lock"></i> Đổi mật khẩu</a></li>
+                <li class="nav-item" style="margin-top:auto;"><a href="javascript:void(0)" onclick="logout()"
+                        style="color:#ef4444;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -49,11 +67,12 @@
                         <p>Check-in và Khám sàng lọc ban đầu</p>
                     </div>
                     <!-- Event Filter -->
-                    <select class="form-control" id="eventFilterSelect" style="width: auto; min-width: 250px;" onchange="handleEventSelectChange()">
-                        <option value="">-- Đang tải sự kiện --</option>
+                    <select class="form-control" id="eventFilterSelect" style="width: auto; min-width: 250px;"
+                        onchange="handleEventSelectChange()">
+                        <option value="">-- Sự kiện của tôi --</option>
                     </select>
                 </div>
-                
+
                 <div class="header-user-info" style="margin-left: 2rem;">
                     <div class="user-details">
                         <span class="header-user-name">Staff Member</span>
@@ -76,7 +95,8 @@
                     <i class="ph-bold ph-plus"></i>
                     Đăng ký vãng lai
                 </button>
-                <button class="btn" style="background-color:#16a34a; color:#fff;" onclick="exportEventDonors()" id="exportEventBtn" title="Xuất danh sách người hiến ra Excel">
+                <button class="btn" style="background-color:#16a34a; color:#fff;" onclick="exportEventDonors()"
+                    id="exportEventBtn" title="Xuất danh sách người hiến ra Excel">
                     <i class="ph-bold ph-microsoft-excel-logo"></i>
                     Xuất Excel
                 </button>
@@ -104,7 +124,10 @@
                         </tr>
                     </thead>
                     <tbody id="receptionTableBody">
-                        <tr><td colspan="4" class="text-center text-muted py-4">Vui lòng chọn sự kiện ở góc trên bên phải</td></tr>
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">Vui lòng chọn sự kiện ở góc trên bên
+                                phải</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -113,54 +136,92 @@
 
     <!-- Vital Signs Modal -->
     <div id="vitalModal" class="modal-overlay">
-        <div class="modal" style="max-width: 600px;">
-            <div class="modal-header">
-                <h3>Khám sàng lọc: <span id="donorNameDisplay"></span></h3>
-                <button class="close-modal" onclick="closeVitalModal()">&times;</button>
+        <div class="modal" style="max-width: 640px;">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; border-radius: 0.75rem 0.75rem 0 0;">
+                <h3 style="color: white; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="ph-bold ph-heartbeat"></i> Khám sàng lọc: <span id="donorNameDisplay"></span>
+                </h3>
+                <button class="close-modal" onclick="closeVitalModal()" style="color: white;">&times;</button>
             </div>
 
             <div class="modal-body p-3">
-                <!-- 1. Layout: Read-only Info -->
-                <div class="bg-light p-3 rounded mb-3">
-                    <h6 class="text-secondary small text-uppercase fw-bold mb-2">Thông tin người hiến</h6>
-                    <div class="d-flex justify-content-between">
+                <!-- 1. Donor Info Card -->
+                <div
+                    style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem;">
+                    <div
+                        style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; letter-spacing: 0.05em;">
+                        Thông tin người hiến</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
                         <div>
-                            <span class="d-block small text-muted">Họ tên</span>
-                            <span class="fw-bold" id="readName">Trần Thị B</span>
+                            <span style="font-size: 0.72rem; color: #64748b;">Họ tên</span>
+                            <div style="font-weight: 700; font-size: 0.9rem;" id="readName">--</div>
                         </div>
                         <div>
-                            <span class="d-block small text-muted">Tuổi</span>
-                            <span class="fw-bold">25</span>
+                            <span style="font-size: 0.72rem; color: #64748b;">Giới tính / Tuổi</span>
+                            <div style="font-weight: 600;" id="readGenderAge">--</div>
                         </div>
                         <div>
-                            <span class="d-block small text-muted">Cân nặng (Khai báo)</span>
-                            <span class="fw-bold">50 kg</span>
+                            <span style="font-size: 0.72rem; color: #64748b;">Cân nặng (khai báo)</span>
+                            <div style="font-weight: 600;" id="readDeclaredWeight">--</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. Layout: Input Stats -->
-                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Chỉ số sinh hiệu thực tế</h6>
-                <div class="row g-3 mb-3">
-                    <div class="col-md-4">
-                        <label class="form-label small">Cân nặng (kg)</label>
-                        <input type="number" id="weightInput" class="form-control" placeholder="VD: 55">
+                <!-- 2. Real-time Vital Inputs -->
+                <div
+                    style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #475569; margin-bottom: 0.75rem; letter-spacing: 0.05em;">
+                    Chỉ số sinh hiệu thực tế</div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <!-- Weight -->
+                    <div>
+                        <label
+                            style="font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; display: block;">Cân
+                            nặng (kg)</label>
+                        <input type="number" id="weightInput" class="form-control" placeholder="VD: 55"
+                            oninput="evaluateVitals()" style="border-radius: 0.4rem;">
+                        <div id="weightStatus" style="font-size: 0.7rem; margin-top: 0.25rem; min-height: 1rem;"></div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label small">Huyết áp (mmHg)</label>
-                        <input type="text" id="bpInput" class="form-control" placeholder="110/70">
+                    <!-- Blood Pressure -->
+                    <div>
+                        <label
+                            style="font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; display: block;">Huyết
+                            áp (mmHg)</label>
+                        <input type="text" id="bpInput" class="form-control" placeholder="110/70"
+                            oninput="evaluateVitals()" style="border-radius: 0.4rem;">
+                        <div id="bpStatus" style="font-size: 0.7rem; margin-top: 0.25rem; min-height: 1rem;"></div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label small">Mạch (lần/phút)</label>
-                        <input type="number" id="pulseInput" class="form-control" placeholder="80">
+                    <!-- Heart Rate -->
+                    <div>
+                        <label
+                            style="font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; display: block;">Nhịp
+                            tim (lần/phút)</label>
+                        <input type="number" id="pulseInput" class="form-control" placeholder="80"
+                            oninput="evaluateVitals()" style="border-radius: 0.4rem;">
+                        <div id="pulseStatus" style="font-size: 0.7rem; margin-top: 0.25rem; min-height: 1rem;"></div>
                     </div>
-                    <div class="col-md-8">
-                        <label class="form-label small">Nồng độ Hb / Test nhanh (Optional)</label>
-                        <input type="text" id="hbInput" class="form-control" placeholder="Kết quả test nhanh...">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                    <!-- Hb -->
+                    <div>
+                        <label
+                            style="font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; display: block;">Nồng
+                            độ Hb (g/dL) <span style="font-weight: 400; color: #9ca3af;">tùy chọn</span></label>
+                        <input type="number" step="0.1" id="hbInput" class="form-control" placeholder="VD: 12.5"
+                            oninput="evaluateVitals()" style="border-radius: 0.4rem;">
+                        <div id="hbStatus" style="font-size: 0.7rem; margin-top: 0.25rem; min-height: 1rem;"></div>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label small">Lượng máu y/cầu</label>
-                        <select id="expectedVolumeSelect" class="form-control">
+                    <!-- Blood Volume -->
+                    <div>
+                        <label
+                            style="font-size: 0.78rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem; display: block;">
+                            Lượng máu y/cầu
+                            <span id="volumeAutoLabel"
+                                style="font-size: 0.65rem; color: #16a34a; font-weight: 400; margin-left: 0.3rem;"></span>
+                        </label>
+                        <select id="expectedVolumeSelect" class="form-control" style="border-radius: 0.4rem;">
                             <option value="250">250 ml</option>
                             <option value="350" selected>350 ml</option>
                             <option value="450">450 ml</option>
@@ -168,41 +229,53 @@
                     </div>
                 </div>
 
-                <!-- 3. Conclusion -->
-                <h6 class="text-secondary small text-uppercase fw-bold mb-2">Kết luận</h6>
-                <div class="mb-3">
-                    <div class="d-flex gap-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="qualification" id="statusEligible"
-                                value="eligible" checked onchange="toggleReasonInput()">
-                            <label class="form-check-label fw-bold text-success" for="statusEligible">
-                                ĐỦ ĐIỀU KIỆN
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="qualification" id="statusDeferred"
-                                value="deferred" onchange="toggleReasonInput()">
-                            <label class="form-check-label fw-bold text-danger" for="statusDeferred">
-                                TẠM HOÃN / TỪ CHỐI
-                            </label>
-                        </div>
-                    </div>
+                <!-- 3. Live Summary Panel -->
+                <div id="vitalSummaryPanel"
+                    style="border-radius: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 1rem; background: #f8fafc; border: 1.5px solid #e2e8f0; display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="ph-bold ph-info" style="font-size: 1.25rem; color: #94a3b8;"></i>
+                    <span style="font-size: 0.82rem; color: #64748b;">Nhập chỉ số để xem đánh giá tự động...</span>
                 </div>
 
-                <!-- Reason Input (Hidden by default) -->
-                <div id="deferReasonGroup" class="mb-3" style="display: none;">
-                    <label class="form-label small text-danger">Lý do hoãn</label>
-                    <input type="text" id="deferReason" class="form-control border-danger" placeholder="Nhập lý do...">
+                <!-- 4. Conclusion -->
+                <div
+                    style="font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #475569; margin-bottom: 0.5rem; letter-spacing: 0.05em;">
+                    Kết luận</div>
+                <div style="display: flex; gap: 1.5rem; margin-bottom: 0.75rem;">
+                    <label
+                        style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 0.4rem; border: 2px solid #16a34a; background: #f0fdf4;">
+                        <input type="radio" name="qualification" id="statusEligible" value="eligible" checked
+                            onchange="toggleReasonInput()">
+                        <span style="font-weight: 700; color: #16a34a;">✅ ĐỦ ĐIỀU KIỆN</span>
+                    </label>
+                    <label
+                        style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem 1rem; border-radius: 0.4rem; border: 2px solid #dc2626; background: #fff5f5;">
+                        <input type="radio" name="qualification" id="statusDeferred" value="deferred"
+                            onchange="toggleReasonInput()">
+                        <span style="font-weight: 700; color: #dc2626;">⛔ TẠM HOÃN / TỪ CHỐI</span>
+                    </label>
+                </div>
+
+                <!-- Reason Input -->
+                <div id="deferReasonGroup"
+                    style="display: none; background: #fff5f5; border: 1px solid #fca5a5; border-radius: 0.4rem; padding: 0.75rem;">
+                    <label
+                        style="font-size: 0.78rem; font-weight: 600; color: #dc2626; margin-bottom: 0.25rem; display: block;">Lý
+                        do hoãn / từ chối <span style="color: #dc2626;">*</span></label>
+                    <input type="text" id="deferReason" class="form-control"
+                        placeholder="VD: Huyết áp cao, thiếu cân..." style="border-color: #fca5a5;">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeVitalModal()">Hủy</button>
-                <button class="btn btn-primary" onclick="saveVitalResult()"
-                    style="background-color: var(--primary-color);">Lưu kết quả</button>
+                <button class="btn btn-primary" onclick="saveVitalResult()" id="saveVitalBtn"
+                    style="background-color: var(--primary-color);">
+                    <i class="ph-bold ph-floppy-disk"></i> Lưu kết quả
+                </button>
             </div>
         </div>
     </div>
+
 
     <!-- Collect Blood Modal -->
     <div id="collectBloodModal" class="modal-overlay">
@@ -297,8 +370,8 @@
                         <div class="col-md-6">
                             <label class="form-label small">Giới tính <span class="text-danger">*</span></label>
                             <select id="wiGender" class="form-control" required>
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -334,9 +407,26 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeWalkInModal()">Hủy</button>
-                <button class="btn btn-primary" style="background-color: var(--primary-color);" onclick="submitWalkInRegistration()">Lưu & Đăng ký</button>
+            <div class="modal-footer" style="flex-direction: column; align-items: stretch; gap: 0.75rem;">
+                <!-- Xác nhận cam kết -->
+                <label
+                    style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 0.4rem; padding: 0.6rem 0.75rem;">
+                    <input type="checkbox" id="wiConsentCheck"
+                        style="margin-top: 0.15rem; width: 1rem; height: 1rem; flex-shrink: 0; accent-color: #dc2626;">
+                    <span style="font-size: 0.8rem; color: #92400e; line-height: 1.45;">
+                        <strong>Xác nhận:</strong> Người hiến đã <strong>ký giấy cam kết</strong> và tự chịu trách nhiệm
+                        về thông tin khai báo.
+                        Người hiến xác nhận <strong>chưa hiến máu trong vòng 84 ngày</strong> qua và đủ điều kiện sức
+                        khỏe để tham gia.
+                    </span>
+                </label>
+                <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                    <button class="btn btn-secondary" onclick="closeWalkInModal()">Hủy</button>
+                    <button class="btn btn-primary" style="background-color: var(--primary-color);"
+                        onclick="submitWalkInRegistration()">
+                        <i class="ph-bold ph-floppy-disk"></i> Lưu &amp; Đăng ký
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -374,7 +464,8 @@
             <div class="modal-body p-4">
                 <div style="background: #f9fafb; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #e5e7eb;">
                     <div class="d-flex align-items-center mb-3">
-                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #b91c1c); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        <div
+                            style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #b91c1c); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
                             <i class="ph-bold ph-user" style="color: white; font-size: 1.25rem;"></i>
                         </div>
                         <div>
@@ -384,19 +475,27 @@
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Giới tính</div>
+                            <div
+                                style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">
+                                Giới tính</div>
                             <div style="font-weight: 500;" id="ci-gender">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Ngày sinh</div>
+                            <div
+                                style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">
+                                Ngày sinh</div>
                             <div style="font-weight: 500;" id="ci-dob">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Số điện thoại</div>
+                            <div
+                                style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">
+                                Số điện thoại</div>
                             <div style="font-weight: 500;" id="ci-phone">--</div>
                         </div>
                         <div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">Mã vé</div>
+                            <div
+                                style="font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600;">
+                                Mã vé</div>
                             <div style="font-weight: 500; font-family: monospace;" id="ci-ticketCode">--</div>
                         </div>
                     </div>
@@ -407,7 +506,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeCheckinConfirmModal()">Huỷ</button>
-                <button class="btn btn-primary" id="confirmCheckinBtn" style="background-color: #ef4444; border-color: #ef4444;" onclick="doConfirmCheckin()">
+                <button class="btn btn-primary" id="confirmCheckinBtn"
+                    style="background-color: #ef4444; border-color: #ef4444;" onclick="doConfirmCheckin()">
                     <i class="ph-bold ph-check me-1"></i> Xác nhận Check-in
                 </button>
             </div>
@@ -416,20 +516,145 @@
 
     <script src="../js/script.js"></script>
     <script src="staff.js"></script>
-    <!-- <script>
-        function openVitalModal(name) {
-            const modal = document.getElementById('vitalModal');
-            const nameSpan = document.getElementById('donorNameDisplay');
-            if (modal && nameSpan) {
-                nameSpan.textContent = name;
-                document.getElementById('weightInput').value = '';
-                document.getElementById('bpInput').value = '';
-                document.getElementById('hbInput').value = '';
-                document.getElementById('qualificationResult').style.display = 'none';
-                modal.classList.add('active');
+
+    <!-- SockJS + STOMP cho WebSocket thông báo khách vãng lai -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script>
+        (function initVisitorWebSocket() {
+            let stompClient = null;
+            let wsEventId = null;
+
+            // Gọi hàm này sau khi sự kiện được chọn (từ handleEventSelectChange)
+            window.connectVisitorWS = function (eventId) {
+                if (!eventId) return;
+                if (stompClient && stompClient.connected && wsEventId === String(eventId)) return;
+                if (stompClient) { try { stompClient.disconnect(); } catch (e) { } }
+
+                wsEventId = String(eventId);
+                const socket = new SockJS('http://localhost:8080/ws-bloodbank');
+                stompClient = Stomp.over(socket);
+                stompClient.debug = null; // tắt log rác
+
+                const token = localStorage.getItem('access_token');
+                stompClient.connect({ Authorization: `Bearer ${token}` }, function () {
+                    stompClient.subscribe(`/topic/event/${eventId}/new-visitor`, function (msg) {
+                        try {
+                            const data = JSON.parse(msg.body);
+                            showVisitorNotification(data);
+                        } catch (e) { console.error('WS parse error', e); }
+                    });
+                    stompClient.subscribe(`/topic/event/${eventId}/cancel-visitor`, function (msg) {
+                        try {
+                            const data = JSON.parse(msg.body);
+                            showCancelVisitorNotification(data);
+                        } catch (e) { console.error('WS cancel parse error', e); }
+                    });
+                    console.log('[WS] Đã kết nối theo dõi khách vãng lai cho sự kiện', eventId);
+                }, function (err) {
+                    console.warn('[WS] Lỗi kết nối WebSocket:', err);
+                });
+            };
+
+            function showCancelVisitorNotification(data) {
+                const existing = document.getElementById('visitorCancelWsToast');
+                if (existing) existing.remove();
+
+                if (!document.getElementById('wsToastStyle')) {
+                    const style = document.createElement('style');
+                    style.id = 'wsToastStyle';
+                    style.textContent = `
+                    @keyframes wsSlideIn { from { transform: translateX(120%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+                    @keyframes wsSlideOut { from { transform: translateX(0); opacity:1; } to { transform: translateX(120%); opacity:0; } }
+                `;
+                    document.head.appendChild(style);
+                }
+
+                const toast = document.createElement('div');
+                toast.id = 'visitorCancelWsToast';
+                toast.style.cssText = `
+                position: fixed; top: 1.25rem; right: 1.25rem; z-index: 99999;
+                background: linear-gradient(135deg, #ea580c, #dc2626); color: white;
+                border-radius: 0.75rem; padding: 0.9rem 1.1rem;
+                box-shadow: 0 8px 30px rgba(220,38,38,0.35);
+                max-width: 340px; display: flex; gap: 0.75rem; align-items: flex-start;
+                animation: wsSlideIn 0.35s ease;
+            `;
+                toast.innerHTML = `
+                <i class="ph-bold ph-user-minus" style="font-size:1.5rem;flex-shrink:0;margin-top:1px;"></i>
+                <div style="flex:1;">
+                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;">⚠️ Đã hủy khách vãng lai!</div>
+                    <div style="font-size:0.82rem;opacity:0.93;">Đăng ký của <strong>${data.fullName || 'Khách vãng lai'}</strong> đã bị hủy.</div>
+                </div>
+                <button onclick="this.closest('#visitorCancelWsToast').remove()"
+                    style="background:rgba(255,255,255,0.2);border:none;color:white;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.9rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;">&times;</button>
+            `;
+
+                document.body.appendChild(toast);
+
+                // Tự ẩn sau 6 giây
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.animation = 'wsSlideOut 0.3s ease forwards';
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }, 6000);
+
+                // Reload bảng để đồng bộ
+                if (window.handleEventSelectChange) window.handleEventSelectChange();
             }
-        }
-    </script> -->
+
+            function showVisitorNotification(data) {
+                const existing = document.getElementById('visitorWsToast');
+                if (existing) existing.remove();
+
+                if (!document.getElementById('wsToastStyle')) {
+                    const style = document.createElement('style');
+                    style.id = 'wsToastStyle';
+                    style.textContent = `
+                    @keyframes wsSlideIn { from { transform: translateX(120%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+                    @keyframes wsSlideOut { from { transform: translateX(0); opacity:1; } to { transform: translateX(120%); opacity:0; } }
+                `;
+                    document.head.appendChild(style);
+                }
+
+                const toast = document.createElement('div');
+                toast.id = 'visitorWsToast';
+                toast.style.cssText = `
+                position: fixed; top: 1.25rem; right: 1.25rem; z-index: 99999;
+                background: linear-gradient(135deg, #1e40af, #3b82f6); color: white;
+                border-radius: 0.75rem; padding: 0.9rem 1.1rem;
+                box-shadow: 0 8px 30px rgba(30,64,175,0.35);
+                max-width: 340px; display: flex; gap: 0.75rem; align-items: flex-start;
+                animation: wsSlideIn 0.35s ease;
+            `;
+                toast.innerHTML = `
+                <i class="ph-bold ph-user-plus" style="font-size:1.5rem;flex-shrink:0;margin-top:1px;"></i>
+                <div style="flex:1;">
+                    <div style="font-weight:700;font-size:0.88rem;margin-bottom:0.2rem;">🔔 Khách vãng lai mới đăng ký!</div>
+                    <div style="font-size:0.82rem;opacity:0.93;"><strong>${data.fullName || '--'}</strong> — Đang chờ khám sàng lọc</div>
+                    <div style="font-size:0.73rem;opacity:0.75;margin-top:0.15rem;">Nhóm máu: ${data.bloodType || 'Chưa rõ'}</div>
+                </div>
+                <button onclick="this.closest('#visitorWsToast').remove()"
+                    style="background:rgba(255,255,255,0.2);border:none;color:white;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.9rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;">&times;</button>
+            `;
+
+                document.body.appendChild(toast);
+
+                // Tự ẩn sau 6 giây
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.animation = 'wsSlideOut 0.3s ease forwards';
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }, 6000);
+
+                // Reload bảng để hiện người mới
+                if (window.handleEventSelectChange) window.handleEventSelectChange();
+            }
+        })();
+    </script>
+
 </body>
 
 </html>

@@ -1,7 +1,10 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+window.API_BASE = window.API_BASE || 'http://localhost:8080';
+window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
 // Chart Configuration
 const setupCharts = () => {
+    if (window.location.pathname.includes('/admin_view/index.html') || window.location.pathname.endsWith('/admin_view/')) {
+        return;
+    }
     // Inventory Bar Chart (Existing)
     const ctxInventory = document.getElementById('inventoryChart');
     if (ctxInventory) {
@@ -182,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCharts();
     setupStatusGrid();
     setupModals();
+    if (typeof setupStaffDashboard === 'function') setupStaffDashboard();
 
     // Event Listener for Filter
     const filterSelect = document.getElementById('bloodTypeFilter');
@@ -309,7 +313,7 @@ const setupStaffActions = () => {
     }
 };
 
-window.logout = function() {
+window.logout = function () {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
@@ -535,7 +539,7 @@ const setupUserNavigation = () => {
     const navHeader = document.getElementById('userNavHeader');
     const navContent = document.getElementById('userNavContent');
     const navCaret = document.getElementById('userNavCaret');
-    
+
     // Dropdown Toggle
     if (navHeader && navContent && navCaret) {
         navHeader.addEventListener('click', () => {
@@ -565,12 +569,12 @@ const setupUserNavigation = () => {
             navDonorList.classList.add('active');
             navStaffList.classList.remove('active');
             if (navHospitalList) navHospitalList.classList.remove('active');
-            
+
             // Switch Views
             donorListView.style.display = 'block';
             staffListView.style.display = 'none';
             if (hospitalListView) hospitalListView.style.display = 'none';
-            
+
             // Update Header
             if (headerTitle) headerTitle.innerText = 'Quản lý người hiến';
             if (headerDesc) headerDesc.innerText = 'Quản lý hồ sơ người hiến và lịch sử hiến máu';
@@ -582,12 +586,12 @@ const setupUserNavigation = () => {
             navStaffList.classList.add('active');
             navDonorList.classList.remove('active');
             if (navHospitalList) navHospitalList.classList.remove('active');
-            
+
             // Switch Views
             staffListView.style.display = 'block';
             donorListView.style.display = 'none';
             if (hospitalListView) hospitalListView.style.display = 'none';
-            
+
             // Update Header
             if (headerTitle) headerTitle.innerText = 'Quản lý nhân viên';
             if (headerDesc) headerDesc.innerText = 'Quản lý tài khoản và chức vụ nhân sự';
@@ -600,12 +604,12 @@ const setupUserNavigation = () => {
                 navHospitalList.classList.add('active');
                 navStaffList.classList.remove('active');
                 navDonorList.classList.remove('active');
-                
+
                 // Switch Views
                 hospitalListView.style.display = 'block';
                 staffListView.style.display = 'none';
                 donorListView.style.display = 'none';
-                
+
                 // Update Header
                 if (headerTitle) headerTitle.innerText = 'Quản lý bệnh viện';
                 if (headerDesc) headerDesc.innerText = 'Quản lý đối tác và thông tin bệnh viện liên kết';
@@ -628,8 +632,8 @@ const setupStaffManagement = () => {
 
     const renderStaff = () => {
         tableBody.innerHTML = staffMembers.map(staff => {
-            const statusBadge = staff.status === 'active' 
-                ? '<span class="badge bg-success-light">Hoạt động</span>' 
+            const statusBadge = staff.status === 'active'
+                ? '<span class="badge bg-success-light">Hoạt động</span>'
                 : '<span class="badge" style="background: #e5e7eb; color: #374151;">Đã khóa</span>';
 
             const lockIcon = staff.status === 'active' ? 'ph-lock-key' : 'ph-lock-key-open';
@@ -656,7 +660,8 @@ const setupStaffManagement = () => {
         }).join('');
     };
 
-    renderStaff();
+    // Disable mock rendering
+    // renderStaff();
 
     // Globals for inline calls
     window.openStaffModal = (id) => {
@@ -669,25 +674,29 @@ const setupStaffManagement = () => {
         if (id) {
             const staff = staffMembers.find(s => s.id === id);
             if (!staff) return;
-            
+
             title.innerText = 'Thông tin nhân viên';
-            document.getElementById('staffId').value = staff.id;
-            document.getElementById('staffCode').value = staff.code;
-            document.getElementById('staffName').value = staff.name;
-            document.getElementById('staffEmail').value = staff.email || '';
-            document.getElementById('staffDob').value = staff.dob || '';
-            document.getElementById('staffCCCD').value = staff.cccd || '';
-            document.getElementById('staffGender').value = staff.gender || 'Nam';
-            document.getElementById('staffPhone').value = staff.phone || '';
-            document.getElementById('staffPosition').value = staff.position;
-            document.getElementById('staffStatus').checked = (staff.status === 'active');
+            if (document.getElementById('staffId')) document.getElementById('staffId').value = staff.id;
+            if (document.getElementById('staffCode')) document.getElementById('staffCode').value = staff.code || '';
+            if (document.getElementById('staffName')) document.getElementById('staffName').value = staff.name || '';
+            if (document.getElementById('staffEmail')) document.getElementById('staffEmail').value = staff.email || '';
+            if (document.getElementById('staffDob')) document.getElementById('staffDob').value = staff.dob || '';
+            if (document.getElementById('staffCCCD')) document.getElementById('staffCCCD').value = staff.cccd || '';
+            if (document.getElementById('staffGender')) document.getElementById('staffGender').value = staff.gender || 'Nam';
+            if (document.getElementById('staffPhone')) document.getElementById('staffPhone').value = staff.phone || '';
+            if (document.getElementById('staffPosition')) document.getElementById('staffPosition').value = staff.position || '';
+            if (document.getElementById('staffStatus')) document.getElementById('staffStatus').checked = (staff.status === 'active');
         } else {
             title.innerText = 'Thêm nhân viên mới';
-            form.reset();
-            document.getElementById('staffId').value = '';
-            document.getElementById('staffCode').value = '';
-            if (document.getElementById('staffGender')) document.getElementById('staffGender').value = 'Nam';
+            if (form) form.reset();
+            if (document.getElementById('staffId')) document.getElementById('staffId').value = '';
+            if (document.getElementById('staffCode')) document.getElementById('staffCode').value = '';
+            if (document.getElementById('staffName')) document.getElementById('staffName').value = '';
             if (document.getElementById('staffEmail')) document.getElementById('staffEmail').value = '';
+            if (document.getElementById('staffDob')) document.getElementById('staffDob').value = '';
+            if (document.getElementById('staffCCCD')) document.getElementById('staffCCCD').value = '';
+            if (document.getElementById('staffGender')) document.getElementById('staffGender').value = 'Nam';
+            if (document.getElementById('staffPhone')) document.getElementById('staffPhone').value = '';
             if (document.getElementById('staffStatus')) document.getElementById('staffStatus').checked = true;
         }
 
@@ -700,7 +709,7 @@ const setupStaffManagement = () => {
             const action = staff.status === 'active' ? 'khóa' : 'mở khóa';
             if (confirm(`Bạn có chắc chắn muốn ${action} tài khoản nhân viên này không?`)) {
                 staff.status = staff.status === 'active' ? 'locked' : 'active';
-                renderStaff();
+                if (typeof loadStaff === 'function') loadStaff();
             }
         }
     };
@@ -709,23 +718,37 @@ const setupStaffManagement = () => {
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const btn = document.getElementById('saveStaffBtn');
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Đang xử lý...';
+
+            const btn = e.submitter || form.querySelector('button[type="submit"]');
+            let originalText = 'Lưu';
+            if (btn) {
+                originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Đang xử lý...';
+            }
 
             const id = document.getElementById('staffId').value;
-            
+
+            const position = document.getElementById('staffPosition')?.value || '';
+            let role = 'STAFF_TECH';
+            if (position === 'QUAN_LY_KHO') {
+                role = 'STAFF_INVENTORY';
+            } else if (position === 'ADMIN') {
+                role = 'ADMIN';
+            }
+
             const payload = {
-                fullName: document.getElementById('staffName').value,
-                email: document.getElementById('staffEmail').value,
-                dob: document.getElementById('staffDob').value,
-                cccd: document.getElementById('staffCCCD').value,
-                gender: document.getElementById('staffGender').value,
-                phone: document.getElementById('staffPhone').value,
-                position: document.getElementById('staffPosition').value
+                fullName: document.getElementById('staffName')?.value || '',
+                email: document.getElementById('staffEmail')?.value || '',
+                password: document.getElementById('staffPassword')?.value || '123126',
+                position: position,
+                role: role
             };
+
+            if (document.getElementById('staffDob') && document.getElementById('staffDob').value) payload.dob = document.getElementById('staffDob').value;
+            if (document.getElementById('staffCCCD') && document.getElementById('staffCCCD').value) payload.cccd = document.getElementById('staffCCCD').value;
+            if (document.getElementById('staffGender')) payload.gender = document.getElementById('staffGender').value;
+            if (document.getElementById('staffPhone') && document.getElementById('staffPhone').value) payload.phone = document.getElementById('staffPhone').value;
 
             const token = localStorage.getItem('access_token');
 
@@ -755,9 +778,9 @@ const setupStaffManagement = () => {
                             gender: payload.gender,
                             phone: payload.phone,
                             position: payload.position,
-                            status: document.getElementById('staffStatus').checked ? 'active' : 'locked'
+                            status: document.getElementById('staffStatus').checked ? 'ACTIVE' : 'INACTIVE'
                         });
-                        renderStaff();
+                        if (typeof loadStaff === 'function') loadStaff();
                         closeModal(document.getElementById('staffModal'));
                     } else {
                         const err = await response.text();
@@ -770,8 +793,10 @@ const setupStaffManagement = () => {
             } catch (error) {
                 alert("Không thể kết nối đến máy chủ BE!");
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
             }
         });
     }
@@ -789,8 +814,8 @@ const setupHospitalManagement = () => {
 
     const renderHospitals = () => {
         tableBody.innerHTML = hospitals.map(hospital => {
-            const statusBadge = hospital.status === 'active' 
-                ? '<span class="badge bg-success-light">Đang hợp tác</span>' 
+            const statusBadge = hospital.status === 'active'
+                ? '<span class="badge bg-success-light">Đang hợp tác</span>'
                 : '<span class="badge" style="background: #e5e7eb; color: #374151;">Ngừng hợp tác</span>';
 
             return `
@@ -810,7 +835,8 @@ const setupHospitalManagement = () => {
         }).join('');
     };
 
-    renderHospitals();
+    // Disable mock rendering so admin.js can render real data
+    // renderHospitals();
 
     // Globals for inline calls
     window.openHospitalModal = (id) => {
@@ -823,21 +849,24 @@ const setupHospitalManagement = () => {
         if (id) {
             const hospital = hospitals.find(h => h.id === id);
             if (!hospital) return;
-            
+
             title.innerText = 'Thông tin bệnh viện';
-            document.getElementById('hospitalId').value = hospital.id;
-            document.getElementById('hospitalCode').value = hospital.code;
-            document.getElementById('hospitalName').value = hospital.name;
+            if (document.getElementById('hospitalId')) document.getElementById('hospitalId').value = hospital.id;
+            if (document.getElementById('hospitalCode')) document.getElementById('hospitalCode').value = hospital.code || '';
+            if (document.getElementById('hospitalName')) document.getElementById('hospitalName').value = hospital.name || '';
             if (document.getElementById('hospitalEmail')) document.getElementById('hospitalEmail').value = hospital.email || '';
-            document.getElementById('hospitalAddress').value = hospital.address || '';
-            document.getElementById('hospitalPhone').value = hospital.phone || '';
+            if (document.getElementById('hospitalAddress')) document.getElementById('hospitalAddress').value = hospital.address || '';
+            if (document.getElementById('hospitalPhone')) document.getElementById('hospitalPhone').value = hospital.phone || '';
             if (document.getElementById('hospitalStatus')) document.getElementById('hospitalStatus').checked = (hospital.status === 'active');
         } else {
             title.innerText = 'Thêm bệnh viện mới';
-            form.reset();
-            document.getElementById('hospitalId').value = '';
-            document.getElementById('hospitalCode').value = '';
+            if (form) form.reset();
+            if (document.getElementById('hospitalId')) document.getElementById('hospitalId').value = '';
+            if (document.getElementById('hospitalCode')) document.getElementById('hospitalCode').value = '';
+            if (document.getElementById('hospitalName')) document.getElementById('hospitalName').value = '';
             if (document.getElementById('hospitalEmail')) document.getElementById('hospitalEmail').value = '';
+            if (document.getElementById('hospitalAddress')) document.getElementById('hospitalAddress').value = '';
+            if (document.getElementById('hospitalPhone')) document.getElementById('hospitalPhone').value = '';
             if (document.getElementById('hospitalStatus')) document.getElementById('hospitalStatus').checked = true;
         }
 
@@ -849,18 +878,21 @@ const setupHospitalManagement = () => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const btn = document.getElementById('saveHospitalBtn');
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Đang xử lý...';
+            const btn = e.submitter || form.querySelector('button[type="submit"]');
+            let originalText = 'Lưu';
+            if (btn) {
+                originalText = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Đang xử lý...';
+            }
 
             const id = document.getElementById('hospitalId').value;
-            
+
             const payload = {
-                hospitalName: document.getElementById('hospitalName').value,
-                email: document.getElementById('hospitalEmail') ? document.getElementById('hospitalEmail').value : '',
-                address: document.getElementById('hospitalAddress').value,
-                hotline: document.getElementById('hospitalPhone').value
+                hospitalName: document.getElementById('hospitalName')?.value || '',
+                email: document.getElementById('hospitalEmail')?.value || '',
+                address: document.getElementById('hospitalAddress')?.value || '',
+                hotline: document.getElementById('hospitalPhone')?.value || ''
             };
 
             const token = localStorage.getItem('access_token');
@@ -888,7 +920,7 @@ const setupHospitalManagement = () => {
                             phone: payload.hotline,
                             status: document.getElementById('hospitalStatus') && document.getElementById('hospitalStatus').checked ? 'active' : 'inactive'
                         });
-                        renderHospitals();
+                        if (typeof loadHospitals === 'function') loadHospitals();
                         closeModal(document.getElementById('hospitalModal'));
                     } else {
                         const err = await response.text();
@@ -900,8 +932,10 @@ const setupHospitalManagement = () => {
             } catch (error) {
                 alert("Không thể kết nối đến máy chủ BE!");
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
             }
         });
     }
@@ -992,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', () => {
         equipmentFilter.addEventListener('change', (e) => {
             const selectedType = e.target.value;
             const rows = document.querySelectorAll('.equipment-row');
-            
+
             rows.forEach(row => {
                 if (selectedType === 'all' || row.dataset.type === selectedType) {
                     row.style.display = '';
@@ -1011,6 +1045,29 @@ const setupCampaignManagement = () => {
 
     let campaigns = [];
 
+    window.loadCampaignStats = async () => {
+        try {
+            const token = localStorage.getItem('access_token');
+            const res = await fetch(`${API_BASE}/api/admin/event/event-stat`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (document.getElementById('statUpcomingEvent')) {
+                    document.getElementById('statUpcomingEvent').innerText = data.upcomingEvent || 0;
+                }
+                if (document.getElementById('statOngoingEvent')) {
+                    document.getElementById('statOngoingEvent').innerText = data.ongoingEvent || 0;
+                }
+                if (document.getElementById('statCompletedEvent')) {
+                    document.getElementById('statCompletedEvent').innerText = data.completedEvent || 0;
+                }
+            }
+        } catch (error) {
+            console.error('Lỗi tải thống kê sự kiện', error);
+        }
+    };
+
     window.loadCampaigns = async () => {
         try {
             const token = localStorage.getItem('access_token');
@@ -1022,14 +1079,14 @@ const setupCampaignManagement = () => {
                 campaigns = data.map(e => {
                     const start = new Date(e.startDate);
                     const end = new Date(e.endDate);
-                    
+
                     const dateStr = start.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
                     const timeStart = start.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
                     const timeEnd = end.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-                    
+
                     // Dọn dẹp tuyệt đối: ÉP HOA, xóa tất cả ký tự không phải chữ cái (dấu cách, dấu gạch dưới, v.v.)
-                    const cleanStatus = (e.status || "").toUpperCase().replace(/[^A-Z]/g, "");
-                    
+                    const cleanStatus = (e.status || "").trim().toUpperCase();
+
                     return {
                         id: e.eventId,
                         name: e.eventName,
@@ -1044,13 +1101,13 @@ const setupCampaignManagement = () => {
                         donors: []
                     };
                 });
-                
+
                 // Hàm render đang ở bên dưới nên tí sẽ gọi ở đuôi setupCampaignManagement
                 if (typeof renderCampaigns === 'function') {
                     renderCampaigns();
                 }
             }
-        } catch(error) {
+        } catch (error) {
             console.error('Lỗi tải sự kiện', error);
         }
     };
@@ -1059,11 +1116,10 @@ const setupCampaignManagement = () => {
     const getStatusBadge = (status) => {
         // Ánh xạ trực tiếp từ key DB qua hiển thị
         switch (status) {
-            case 'SAPTOI': return '<span class="badge status-upcoming">Sắp tới</span>';
-            case 'DANGMO': 
-            case 'DANGDIENRA': return '<span class="badge status-happening">Đang mở</span>';
-            case 'DADONG': return '<span class="badge status-completed">Đã đóng</span>';
-            case 'DAHUY': return '<span class="badge status-cancelled">Đã hủy</span>';
+            case 'SAP_TOI': return '<span class="badge status-upcoming">Sắp tới</span>';
+            case 'DANG_MO': return '<span class="badge status-happening">Đang mở</span>';
+            case 'DA_DONG': return '<span class="badge status-completed">Đã đóng</span>';
+            case 'DA_HUY': return '<span class="badge status-cancelled">Đã hủy</span>';
             default: return `<span class="badge">${status || 'Không rõ'}</span>`;
         }
     };
@@ -1088,33 +1144,27 @@ const setupCampaignManagement = () => {
 
             // Buttons logic
             let buttons = `
-                <button class="action-btn" onclick="viewCampaignDetails(${c.id})" title="Xem chi tiết">
-                    <i class="ph-bold ph-eye"></i>
-                </button>
-            `;
+    <button class="action-btn" onclick="viewCampaignDetails(${c.id})" title="Xem chi tiết sự kiện">
+        <i class="ph-bold ph-eye"></i>
+    </button>
+    <button class="action-btn" onclick="viewAssignedStaff(${c.id})" title="Danh sách nhân viên được phân công">
+        <i class="ph-bold ph-users"></i>
+    </button>
+`;
 
             const s = (c.status || "").toUpperCase();
-            if (s === 'SAPTOI' || s === 'DANGMO' || s === 'DANGDIENRA') {
-                buttons += `
-                    <button class="action-btn" onclick="openEditCampaignModal(${c.id})" title="Chỉnh sửa">
-                        <i class="ph-bold ph-pencil"></i>
-                    </button>
-                `;
-                
-                if (s === 'SAPTOI') {
-                    buttons += `
-                        <button class="action-btn" onclick="cancelCampaign(${c.id})" title="Hủy sự kiện">
-                            <i class="ph-bold ph-trash" style="color: #ef4444;"></i>
-                        </button>
-                    `;
-                } else {
-                    buttons += `
-                        <button class="action-btn" onclick="closeCampaign(${c.id})" title="Đóng sự kiện">
-                            <i class="ph-bold ph-stop-circle" style="color: #f59e0b;"></i>
-                        </button>
-                    `;
-                }
-            }
+
+            buttons += `
+        <button class="action-btn" onclick="openEditCampaignModal(${c.id})" title="Chỉnh sửa">
+            <i class="ph-bold ph-pencil"></i>
+        </button>
+    `;
+
+            buttons += `
+        <button class="action-btn" onclick="cancelCampaign(${c.id})" title="Hủy sự kiện">
+            <i class="ph-bold ph-trash" style="color: #ef4444;"></i>
+        </button>
+    `;
             // Completed/Cancelled gets only View
 
             return `
@@ -1173,13 +1223,14 @@ const setupCampaignManagement = () => {
             document.getElementById('evtGoal').value = c.goal;
             document.getElementById('evtDesc').value = c.description || ''; // Assuming description field exists in object
 
-            // Handle Dates (Simulated parsing for demo)
-            // In real app, you'd parse c.date and c.time properly
+            // Handle Dates: set to datetime-local inputs
+            if (c.rawStart) document.getElementById('evtStart').value = c.rawStart.substring(0, 16);
+            if (c.rawEnd) document.getElementById('evtEnd').value = c.rawEnd.substring(0, 16);
 
             // Constrain Inputs
             document.getElementById('evtName').disabled = false;
             document.getElementById('evtDesc').disabled = false;
-            document.getElementById('evtGoal').disabled = false; // Maybe allow goal? User didn't specify, but usually yes.
+            document.getElementById('evtGoal').disabled = false;
 
             // Disable Restricted
             document.getElementById('evtLocation').disabled = true;
@@ -1195,7 +1246,7 @@ const setupCampaignManagement = () => {
     if (saveBtn) {
         saveBtn.addEventListener('click', async () => {
             if (saveBtn.disabled) return;
-            
+
             if (window.editingCampaignId) {
                 // UPDATE Logic
                 const origText = saveBtn.innerHTML;
@@ -1210,7 +1261,7 @@ const setupCampaignManagement = () => {
                 const payload = {
                     eventName: name,
                     targetAmount: goal,
-                    status: currentEvent ? currentEvent.status : "SAP_TOI" 
+                    status: currentEvent ? currentEvent.status : "SAP_TOI"
                 };
 
                 const token = localStorage.getItem('access_token');
@@ -1227,7 +1278,7 @@ const setupCampaignManagement = () => {
 
                     if (response.ok) {
                         alert('Cập nhật sự kiện thành công trên hệ thống!');
-                        
+
                         // Fake UI Update cho mượt
                         const c = campaigns.find(x => x.id === window.editingCampaignId);
                         if (c) {
@@ -1279,12 +1330,23 @@ const setupCampaignManagement = () => {
         document.getElementById('evtDesc').value = '';
     };
 
-    window.cancelCampaign = (id) => {
+    window.cancelCampaign = async (id) => {
         if (confirm('Bạn có chắc muốn HỦY sự kiện này không? Hành động này không thể hoàn tác.')) {
-            const c = campaigns.find(x => x.id === id);
-            if (c) {
-                c.status = 'cancelled';
-                renderCampaigns();
+            const token = localStorage.getItem('access_token');
+            try {
+                // Sử dụng PATCH /api/admin/event/cancel-event/{id} theo yêu cầu
+                const res = await fetch(`${API_BASE}/api/admin/event/cancel-event/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    alert('Đã hủy sự kiện thành công');
+                    loadCampaigns(); // Load lại từ server thay vì mock data
+                } else {
+                    alert('Lỗi hủy sự kiện: ' + await res.text());
+                }
+            } catch (e) {
+                console.error(e);
             }
         }
     };
@@ -1305,113 +1367,386 @@ const setupCampaignManagement = () => {
         }
     };
 
-    window.viewCampaignDetails = (id) => {
-        const c = campaigns.find(x => x.id === id);
-        if (!c) return;
-
+    window.viewCampaignDetails = async (id) => {
+        const token = localStorage.getItem('access_token');
         const modal = document.getElementById('eventDetailModal');
         const title = document.getElementById('eventDetailTitle');
         const body = document.getElementById('eventDetailBody');
 
-        title.innerText = `Chi tiết: ${c.name}`;
+        title.innerText = `Đang tải chi tiết...`;
+        body.innerHTML = `<div style="text-align: center; padding: 2rem;">Đang tải dữ liệu...</div>`;
+        openModal(modal);
 
-        // Common Event Info Section
-        const eventInfoHtml = `
-            <div style="background: #f9fafb; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border: 1px solid #e5e7eb;">
-                <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div>
-                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.25rem;">Thời gian</p>
-                        <div style="font-weight: 500;"><i class="ph-bold ph-calendar-blank"></i> ${c.date}</div>
-                        <div style="font-size: 0.875rem; color: var(--text-secondary); margin-left: 1.25rem;">${c.time}</div>
+        try {
+            const res = await fetch(`${API_BASE}/api/shared/event/event-detail/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                title.innerText = `Chi tiết: ${data.eventName || 'Sự kiện'}`;
+
+                const startDateStr = new Date(data.startDate).toLocaleString('vi-VN');
+                const endDateStr = new Date(data.endDate).toLocaleString('vi-VN');
+
+                const statusMap = {
+                    'SAP_TOI': '<span class="badge status-upcoming">Sắp tới</span>',
+                    'DANG_MO': '<span class="badge status-happening">Đang mở</span>',
+                    'DA_DONG': '<span class="badge status-completed">Đã đóng</span>',
+                    'DA_HUY': '<span class="badge status-cancelled">Đã hủy</span>'
+                };
+                const statusBadge = statusMap[data.status] || `<span class="badge">${data.status || 'Không rõ'}</span>`;
+
+                const eventInfoHtml = `
+                    <div style="background: #f9fafb; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; border: 1px solid #e5e7eb;">
+                        <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.25rem;">Thời gian</p>
+                                <div style="font-weight: 500;"><i class="ph-bold ph-calendar-blank"></i> Bắt đầu: ${startDateStr}</div>
+                                <div style="font-weight: 500; margin-top: 0.5rem;"><i class="ph-bold ph-calendar-blank"></i> Kết thúc: ${endDateStr}</div>
+                            </div>
+                            <div>
+                                <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.25rem;">Địa điểm & Trạng thái</p>
+                                <div style="font-weight: 500;"><i class="ph-bold ph-map-pin"></i> ${data.location || '--'}</div>
+                                <div style="margin-top: 0.5rem;">${statusBadge}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <p style="color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 0.25rem;">Địa điểm</p>
-                        <div style="font-weight: 500;"><i class="ph-bold ph-map-pin"></i> ${c.location}</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                         <div class="card" style="background: #f9fafb; padding: 1rem; box-shadow: none; border: 1px solid var(--border-color);">
+                            <p style="color: var(--text-secondary); font-size: 0.75rem;">Mục tiêu (ĐV máu)</p>
+                            <h3 style="font-size: 1.25rem;">${data.targetAmount || 0}</h3>
+                         </div>
+                         <div class="card" style="background: #f9fafb; padding: 1rem; box-shadow: none; border: 1px solid var(--border-color);">
+                            <p style="color: var(--text-secondary); font-size: 0.75rem;">Số người đăng ký</p>
+                            <h3 style="font-size: 1.25rem; color: #3b82f6;">${data.registeredCount || 0}</h3>
+                         </div>
+                         <div class="card" style="background: #f9fafb; padding: 1rem; box-shadow: none; border: 1px solid var(--border-color);">
+                            <p style="color: var(--text-secondary); font-size: 0.75rem;">Thực tế tham gia</p>
+                            <h3 style="font-size: 1.25rem; color: #10b981;">${data.actualCount || 0}</h3>
+                         </div>
                     </div>
-                </div>
+                `;
+
+                body.innerHTML = eventInfoHtml;
+
+                if (typeof window.loadRegisteredDonorsForEvent === 'function') {
+                    window.loadRegisteredDonorsForEvent(id);
+                }
+
+                if (typeof window.loadUnassignedStaffForEvent === 'function') {
+                    window.loadUnassignedStaffForEvent(id);
+                }
+            } else {
+                body.innerHTML = `<div style="text-align: center; color: red; padding: 2rem;">Lỗi tải dữ liệu chi tiết (${res.status})</div>`;
+            }
+        } catch (error) {
+            body.innerHTML = `<div style="text-align: center; color: red; padding: 2rem;">Mất kết nối máy chủ</div>`;
+            console.error('Lỗi fetch detail:', error);
+        }
+    };
+
+    window.loadRegisteredDonorsForEvent = async (eventId) => {
+        const body = document.getElementById('eventDetailBody');
+        const donorContainer = document.createElement('div');
+        donorContainer.id = 'registeredDonorsContainer';
+        donorContainer.style.marginTop = '1.5rem';
+        donorContainer.innerHTML = `
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; border-top: 1px solid #e5e7eb; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <span>Danh sách người đăng ký tham gia</span>
+                <span id="donorCountBadge" style="font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 9999px;">0 người</span>
+            </h4>
+            <div id="registeredDonorsList" style="max-height: 250px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 1rem; padding: 0.5rem;">
+                <div style="text-align: center; padding: 1rem; color: #6b7280;">Đang tải danh sách người đăng ký...</div>
             </div>
         `;
+        body.appendChild(donorContainer);
 
-        body.innerHTML = eventInfoHtml; // Start with Info
+        try {
+            const token = localStorage.getItem('access_token');
+            const res = await fetch(`${API_BASE}/api/staff/donor/get-list-donor-status/${eventId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
 
-        if (c.status === 'completed' || c.status === 'cancelled') {
-            // VIEW: RESULT STATS
-            const stats = c.stats || { participants: 0, units: 0, successRate: '0%' };
+            const listContainer = document.getElementById('registeredDonorsList');
+            const badge = document.getElementById('donorCountBadge');
 
-            // Add Export Excel Button for Completed events
-            const exportButton = c.status === 'completed' ? `
-                <div style="text-align: right; margin-bottom: 1rem;">
-                    <button class="btn btn-secondary" onclick="alert('Đang xuất báo cáo Excel...')">
-                        <i class="ph-bold ph-microsoft-excel-logo" style="color: #16a34a;"></i> Xuất danh sách Excel
-                    </button>
-                </div>
-            ` : '';
+            if (res.ok) {
+                const list = await res.json();
+                if (badge) badge.innerText = `${list.length} người`;
 
-            body.innerHTML += `
-                ${exportButton}
-                <div class="grid-4" style="margin-bottom: 1.5rem;">
-                     <div class="card" style="background: #f9fafb; padding: 1rem;">
-                        <p style="color: var(--text-secondary); font-size: 0.75rem;">Tổng người tham gia</p>
-                        <h3 style="font-size: 1.25rem;">${stats.participants}</h3>
-                     </div>
-                     <div class="card" style="background: #f9fafb; padding: 1rem;">
-                        <p style="color: var(--text-secondary); font-size: 0.75rem;">Đơn vị máu thu được</p>
-                        <h3 style="font-size: 1.25rem; color: #ef4444;">${stats.units}</h3>
-                     </div>
-                     <div class="card" style="background: #f9fafb; padding: 1rem;">
-                        <p style="color: var(--text-secondary); font-size: 0.75rem;">Tỷ lệ thành công</p>
-                        <h3 style="font-size: 1.25rem; color: #10b981;">${stats.successRate}</h3>
-                     </div>
-                </div>
-                
-                <h4 style="margin-bottom: 1rem; font-size: 0.875rem; font-weight: 600;">Danh sách người hiến thành công</h4>
-                <p style="color: var(--text-secondary); font-style: italic;">(Danh sách chi tiết đã được lưu trữ)</p>
-            `;
-        } else {
-            // VIEW: LIST OF REGISTRANTS (Upcoming + Happening)
-            // NO Time Slot, NO Actions, NO QR Scan
+                if (list.length === 0) {
+                    listContainer.innerHTML = `<div style="text-align: center; padding: 1rem; color: #6b7280;">Chưa có người hiến máu nào đăng ký sự kiện này.</div>`;
+                } else {
+                    const statusMap = {
+                        'DA_DANG_KY': '<span class="badge" style="background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Đã đăng ký</span>',
+                        'DA_HET_HAN': '<span class="badge" style="background-color: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Đã hết hạn</span>',
+                        'DA_HUY': '<span class="badge" style="background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Đã hủy</span>',
+                        'CHO_KHAM': '<span class="badge" style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Chờ khám</span>',
+                        'DONG_Y': '<span class="badge" style="background-color: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Đồng ý hiến</span>',
+                        'TU_CHOI': '<span class="badge" style="background-color: #fff5f5; color: #c53030; border: 1px solid #feb2b2; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Từ chối</span>',
+                        'DA_LAY_MAU': '<span class="badge" style="background-color: #e0f2fe; color: #075985; border: 1px solid #bae6fd; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Đã lấy máu</span>',
+                        'THAT_BAI': '<span class="badge" style="background-color: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Thất bại</span>',
+                        'HOAN_THANH': '<span class="badge" style="background-color: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">Hoàn thành</span>'
+                    };
 
-            let listHtml = c.donors.map(d => `
-                <tr>
-                    <td>
-                        <div style="font-weight: 500;">${d.name}</div>
-                    </td>
-                    <td>${d.phone}</td>
-                    <td>${getDonorStatusBadge(d.status)}</td>
-                </tr>
-            `).join('');
-
-            body.innerHTML += `
-                <div style="margin-bottom: 1rem;">
-                    <p><strong>Tiến độ:</strong> ${c.current} / ${c.goal} đăng ký</p>
-                </div>
-                
-                <div class="table-container" style="max-height: 400px; overflow-y: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Họ tên</th>
-                                <th>Liên hệ</th>
-                                <th>Trạng thái</th>
+                    let tableRows = list.map((d, index) => {
+                        const genderText = d.gender === 'NAM' ? 'Nam' : (d.gender === 'NU' ? 'Nữ' : d.gender || '--');
+                        const dobText = d.dob ? new Date(d.dob).toLocaleDateString('vi-VN') : '--';
+                        const statusBadge = statusMap[d.status] || `<span class="badge" style="font-size: 0.75rem; padding: 2px 6px; border-radius: 4px;">${d.status || '--'}</span>`;
+                        return `
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 0.5rem; text-align: center;">${index + 1}</td>
+                                <td style="padding: 0.5rem;"><span style="font-weight: 500;">${d.fullName || '--'}</span></td>
+                                <td style="padding: 0.5rem; text-align: center;">${dobText}</td>
+                                <td style="padding: 0.5rem; text-align: center;">${genderText}</td>
+                                <td style="padding: 0.5rem;">${d.phone || '--'}</td>
+                                <td style="padding: 0.5rem;">${d.email || '--'}</td>
+                                <td style="padding: 0.5rem; text-align: center;">${statusBadge}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            ${listHtml.length > 0 ? listHtml : '<tr><td colspan="3" style="text-align: center; color: var(--text-secondary); padding: 2rem;">Chưa có người đăng ký</td></tr>'}
-                        </tbody>
-                    </table>
-                </div>
-             `;
-        }
+                        `;
+                    }).join('');
 
+                    listContainer.innerHTML = `
+                        <div class="table-container" style="max-height: 230px; overflow-y: auto; margin: -0.5rem;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="background: #f9fafb; text-align: left; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #e5e7eb;">
+                                        <th style="padding: 0.5rem; text-align: center; font-weight: 600;">STT</th>
+                                        <th style="padding: 0.5rem; font-weight: 600;">Họ tên</th>
+                                        <th style="padding: 0.5rem; text-align: center; font-weight: 600;">Ngày sinh</th>
+                                        <th style="padding: 0.5rem; text-align: center; font-weight: 600;">Giới tính</th>
+                                        <th style="padding: 0.5rem; font-weight: 600;">Số điện thoại</th>
+                                        <th style="padding: 0.5rem; font-weight: 600;">Email</th>
+                                        <th style="padding: 0.5rem; text-align: center; font-weight: 600;">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+            } else {
+                listContainer.innerHTML = `<div style="text-align: center; padding: 1rem; color: red;">Lỗi khi tải danh sách người hiến máu (${res.status})</div>`;
+            }
+        } catch (e) {
+            console.error('Lỗi loadRegisteredDonorsForEvent:', e);
+            document.getElementById('registeredDonorsList').innerHTML = `<div style="text-align: center; padding: 1rem; color: red;">Lỗi kết nối máy chủ: ${e.message}</div>`;
+        }
+    };
+
+    window.viewAssignedStaff = async (id) => {
+        const token = localStorage.getItem('access_token');
+        const modal = document.getElementById('eventDetailModal');
+        const title = document.getElementById('eventDetailTitle');
+        const body = document.getElementById('eventDetailBody');
+
+        title.innerText = `Đang tải danh sách...`;
+        body.innerHTML = `<div style="text-align: center; padding: 2rem;">Đang tải danh sách nhân viên phân công...</div>`;
         openModal(modal);
+
+        try {
+            const res = await fetch(`${API_BASE}/api/admin/assignment/list-assignment-staff/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                title.innerText = `Phân công: ${data.eventName || 'Sự kiện'}`;
+
+                const staffList = data.assignedStaff || [];
+                let staffHtml = staffList.map(s => {
+                    const formatPosition = (pos) => {
+                        const map = {
+                            'QUAN_LY_KHO': 'Quản lý kho',
+                            'KY_THUAT': 'Kỹ thuật viên',
+                            'Y_TA': 'Y tá',
+                            'BAC_SI': 'Bác sĩ',
+                            'ADMIN': 'Admin'
+                        };
+                        return map[pos] || pos;
+                    };
+                    return `
+                    <tr>
+                        <td><span style="font-weight: 500;">NV${String(s.staffId || '').padStart(3, '0')}</span></td>
+                        <td>${s.fullName || '--'}</td>
+                        <td><span class="badge" style="background: #e0f2fe; color: #0369a1;">${formatPosition(s.position)}</span></td>
+                    </tr>
+                `}).join('');
+
+                const tableHtml = `
+                    <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f9fafb; text-align: left;">
+                                    <th style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Mã NV</th>
+                                    <th style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Họ tên</th>
+                                    <th style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Vị trí / Vai trò</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${staffHtml.length > 0 ? staffHtml : '<tr><td colspan="3" style="text-align: center; color: var(--text-secondary); padding: 2rem;">Chưa có nhân viên nào được phân công</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                body.innerHTML = tableHtml;
+            } else {
+                body.innerHTML = `<div style="text-align: center; color: red; padding: 2rem;">Lỗi tải dữ liệu nhân viên (${res.status})</div>`;
+            }
+        } catch (error) {
+            body.innerHTML = `<div style="text-align: center; color: red; padding: 2rem;">Mất kết nối máy chủ</div>`;
+            console.error('Lỗi fetch staff assign:', error);
+        }
     }
 
+    window.loadUnassignedStaffForEvent = async (eventId) => {
+        const body = document.getElementById('eventDetailBody');
+        const assignContainer = document.createElement('div');
+        assignContainer.id = 'assignStaffContainer';
+        assignContainer.style.marginTop = '1.5rem';
+        assignContainer.innerHTML = `
+            <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">Phân công nhân viên mới</h4>
+            <div id="unassignedStaffList" style="max-height: 250px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 1rem; padding: 0.5rem;">
+                <div style="text-align: center; padding: 1rem; color: #6b7280;">Đang tải danh sách nhân viên...</div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; align-items: center;">
+                <button class="btn btn-primary" onclick="submitAssignStaff(${eventId})"><i class="ph-bold ph-check"></i> Lưu phân công</button>
+            </div>
+        `;
+        body.appendChild(assignContainer);
+
+        try {
+            const token = localStorage.getItem('access_token');
+
+            // 1. Get assigned staff
+            let assignedStaffIds = [];
+            const resAssigned = await fetch(`${API_BASE}/api/admin/assignment/list-assignment-staff/${eventId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (resAssigned.ok) {
+                const dataAssign = await resAssigned.json();
+                if (dataAssign.assignedStaff) {
+                    assignedStaffIds = dataAssign.assignedStaff.map(s => s.staffId);
+                }
+            }
+
+            // 2. Get all staff (loại trừ QUAN_LY_KHO, ưu tiên chưa phân công lên đầu)
+            const resAll = await fetch(`${API_BASE}/api/admin/staff/get-smart-list-staff`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            let staffList = [];
+            if (resAll.ok) {
+                const resultBE = await resAll.json();
+                staffList = Array.isArray(resultBE) ? resultBE : (resultBE.data?.content || resultBE.content || resultBE.data || []);
+            }
+
+            const listContainer = document.getElementById('unassignedStaffList');
+            if (staffList.length === 0) {
+                listContainer.innerHTML = `<div style="text-align: center; padding: 1rem; color: #6b7280;">Không có nhân viên nào.</div>`;
+            } else {
+                listContainer.innerHTML = staffList.map(s => {
+                    const safeId = s.staffId || s.id || '';
+                    const staffRole = s.position || s.role || '';
+                    // Map vị trí nhân viên sang role phân công mặc định (enum: TIEP_DON, LAY_MAU, KHAM_SANG_LOC)
+                    let defaultRole = 'TIEP_DON';
+                    if (staffRole === 'BAC_SI') defaultRole = 'KHAM_SANG_LOC';
+                    else if (staffRole === 'Y_TA') defaultRole = 'LAY_MAU';
+
+                    const positionMap = { 'BAC_SI': 'Bác sĩ', 'Y_TA': 'Y tá', 'KY_THUAT': 'Kỹ thuật viên', 'ADMIN': 'Admin' };
+                    const positionLabel = positionMap[staffRole] || staffRole || '--';
+
+                    // Badge cho nhân viên đã phân công ở sự kiện khác (available = false)
+                    const isAvailable = s.available !== false;
+                    const availableBadge = !isAvailable
+                        ? `<span style="font-size:0.7rem; color:#d97706; background:#fef3c7; padding:1px 6px; border-radius:4px; margin-left:6px;">Đã phân công</span>`
+                        : '';
+
+                    return `
+                    <div style="display: flex; align-items: center; padding: 0.5rem; border-bottom: 1px solid #f3f4f6;">
+                        <input type="checkbox" id="staff_${safeId}" value="${safeId}" class="staff-checkbox" style="margin-right: 1rem; width: 1.15rem; height: 1.15rem; cursor: pointer;">
+                        <label for="staff_${safeId}" style="cursor: pointer; flex: 1; display: flex; flex-direction: column;">
+                            <div style="font-weight: 500;">${s.fullName || s.name || '--'} <span style="color: #6b7280; font-weight: normal; font-size: 0.875rem;">(NV${String(safeId).padStart(3, '0')})</span>${availableBadge}</div>
+                            <div style="font-size: 0.75rem; color: #6b7280;">Vị trí: ${positionLabel}</div>
+                        </label>
+                        <select class="staff-role-select" id="role_${safeId}" style="margin-left: 1rem; padding: 0.4rem; border: 1px solid var(--border-color); border-radius: var(--radius); font-size: 0.875rem; width: 160px; outline: none;">
+                            <option value="TIEP_DON" ${defaultRole === 'TIEP_DON' ? 'selected' : ''}>Tiếp đón</option>
+                            <option value="KHAM_SANG_LOC" ${defaultRole === 'KHAM_SANG_LOC' ? 'selected' : ''}>Khám sàng lọc</option>
+                            <option value="LAY_MAU" ${defaultRole === 'LAY_MAU' ? 'selected' : ''}>Lấy máu</option>
+                        </select>
+                    </div>
+                `}).join('');
+            }
+
+        } catch (e) {
+            document.getElementById('unassignedStaffList').innerHTML = `<div style="text-align: center; padding: 1rem; color: red;">Lỗi khi tải danh sách nhân viên: ${e.message}</div>`;
+        }
+    };
+
+    window.submitAssignStaff = async (eventId) => {
+        const checkboxes = document.querySelectorAll('.staff-checkbox:checked');
+        if (checkboxes.length === 0) {
+            alert('Vui lòng chọn ít nhất 1 nhân viên để phân công!');
+            return;
+        }
+        // Cấu trúc payload mới theo backend: Thu thập vai trò từ mỗi ô select của từng nhân viên
+        const assignments = Array.from(checkboxes).map(cb => {
+            const staffId = parseInt(cb.value);
+            const roleSelect = document.getElementById('role_' + staffId);
+            return {
+                staffId: staffId,
+                role: roleSelect ? roleSelect.value : 'TIEP_DON'
+            };
+        });
+
+        const payload = {
+            eventId: eventId,
+            assignments: assignments
+        };
+
+        const token = localStorage.getItem('access_token');
+        const btn = event.currentTarget;
+        const origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Đang lưu...';
+
+        try {
+            // Cập nhật endpoint để có eventId
+            const res = await fetch(`${API_BASE}/api/admin/assignment/assignment-staff/${eventId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert('Phân công nhân viên thành công!');
+                // Nạp lại chi tiết / Phân công để thấy danh sách đã cập nhật
+                viewCampaignDetails(eventId);
+            } else {
+                const err = await res.text();
+                alert('Lỗi phân công: ' + err);
+                btn.disabled = false;
+                btn.innerHTML = origText;
+            }
+
+        } catch (e) {
+            alert('Lỗi kết nối máy chủ!');
+            btn.disabled = false;
+            btn.innerHTML = origText;
+        }
+    };
+
     loadCampaigns();
+    if (typeof window.loadCampaignStats === 'function') window.loadCampaignStats();
 };
 
 // ==================== AUTH & ROLE HELPERS ====================
 
-window.checkStaffRole = function(allowedRoles) {
+window.checkStaffRole = function (allowedRoles) {
     const role = (localStorage.getItem('user_role') || '').toUpperCase();
     const token = localStorage.getItem('access_token');
 
@@ -1433,7 +1768,7 @@ window.checkStaffRole = function(allowedRoles) {
     }
 };
 
-window.logout = function() {
+window.logout = function () {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
@@ -1445,7 +1780,12 @@ window.logout = function() {
 // Auto-init user info and sidebar visibility in header if element exists
 document.addEventListener('DOMContentLoaded', () => {
     const userRole = localStorage.getItem('user_role');
-    
+
+    // Nếu là Bệnh viện hoặc Người hiến máu, không thực hiện các xử lý sidebar/header của nhân viên
+    if (userRole === 'HOSPITAL' || userRole === 'DONOR') {
+        return;
+    }
+
     // 1. Update Header Info
     const roleLabel = document.getElementById('headerRoleLabel');
     if (roleLabel) {
@@ -1460,15 +1800,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarRoleLabel = document.getElementById('staffRoleLabel');
 
     if (userRole === 'STAFF_TECH') {
-        techItems.forEach(el => el.style.display = 'block');
+        techItems.forEach(el => {
+            if (el.classList.contains('nav-item-dropdown')) {
+                el.style.display = 'flex';
+            } else {
+                el.style.display = 'block';
+            }
+        });
         if (sidebarRoleLabel) sidebarRoleLabel.textContent = 'Nhân viên Kỹ thuật';
     } else if (userRole === 'STAFF_INVENTORY') {
-        inventoryItems.forEach(el => el.style.display = 'block');
+        inventoryItems.forEach(el => {
+            if (el.classList.contains('nav-item-dropdown')) {
+                el.style.display = 'flex';
+            } else {
+                el.style.display = 'block';
+            }
+        });
         if (sidebarRoleLabel) sidebarRoleLabel.textContent = 'Nhân viên Kho';
     } else {
         // Dev fallback or generic staff
-        techItems.forEach(el => el.style.display = 'block');
-        inventoryItems.forEach(el => el.style.display = 'block');
+        techItems.forEach(el => {
+            if (el.classList.contains('nav-item-dropdown')) {
+                el.style.display = 'flex';
+            } else {
+                el.style.display = 'block';
+            }
+        });
+        inventoryItems.forEach(el => {
+            if (el.classList.contains('nav-item-dropdown')) {
+                el.style.display = 'flex';
+            } else {
+                el.style.display = 'block';
+            }
+        });
+    }
+
+    // 2b. Map existing "Tài khoản" sidebar items to openProfileModal() or inject if missing
+    let hasAccountNav = false;
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+        if ((a.textContent.includes('Tài khoản') || a.querySelector('.ph-user-circle')) && !a.textContent.includes('Hồ sơ Bệnh viện')) {
+            a.href = 'javascript:void(0)';
+            a.setAttribute('onclick', 'openProfileModal()');
+            hasAccountNav = true;
+        }
+    });
+
+    if (!hasAccountNav) {
+        const navMenu = document.querySelector('.nav-menu');
+        if (navMenu) {
+            const profileLi = document.createElement('li');
+            profileLi.className = 'nav-item';
+            profileLi.style.marginTop = 'auto'; // Put at the bottom before change password
+            profileLi.innerHTML = `
+                <a href="javascript:void(0)" onclick="openProfileModal()">
+                    <i class="ph-bold ph-user-circle"></i>
+                    Hồ sơ cá nhân
+                </a>
+            `;
+
+            // Insert it before Change Password
+            const changePasswordItem = Array.from(navMenu.querySelectorAll('.nav-item')).find(li => li.innerHTML.includes('openChangePasswordModal'));
+            if (changePasswordItem) {
+                navMenu.insertBefore(profileLi, changePasswordItem);
+            } else {
+                const logoutItem = navMenu.querySelector('li:last-child');
+                if (logoutItem) navMenu.insertBefore(profileLi, logoutItem);
+                else navMenu.appendChild(profileLi);
+            }
+        }
     }
 
     // 3. Load real user name from API
@@ -1507,9 +1906,9 @@ async function loadStaffUserInfo() {
 
 // ==================== CHANGE PASSWORD MODAL ====================
 
-window.openChangePasswordModal = function() {
+window.openChangePasswordModal = function () {
     let modal = document.getElementById('changePasswordModal');
-    
+
     if (!modal) {
         // Inject modal HTML if not already in DOM
         const modalHtml = `
@@ -1546,11 +1945,11 @@ window.openChangePasswordModal = function() {
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         modal = document.getElementById('changePasswordModal');
     }
-    
+
     modal.classList.add('active');
 };
 
-window.closeChangePasswordModal = function() {
+window.closeChangePasswordModal = function () {
     const modal = document.getElementById('changePasswordModal');
     if (modal) {
         modal.classList.remove('active');
@@ -1559,7 +1958,7 @@ window.closeChangePasswordModal = function() {
     }
 };
 
-window.submitChangePasswordStaff = async function(e) {
+window.submitChangePasswordStaff = async function (e) {
     e.preventDefault();
     const oldPassword = document.getElementById('oldPassword').value;
     const newPassword = document.getElementById('newPassword').value;
@@ -1574,7 +1973,7 @@ window.submitChangePasswordStaff = async function(e) {
 
     const token = localStorage.getItem('access_token');
     const rq = { oldPassword, newPassword, confirmPassword };
-    
+
     const btn = e.target.querySelector('button[type="submit"]');
     const originalText = btn.textContent;
     btn.disabled = true;
@@ -1604,3 +2003,343 @@ window.submitChangePasswordStaff = async function(e) {
         btn.textContent = originalText;
     }
 };
+
+// ==================== PROFILE MODAL ====================
+
+window.openProfileModal = async function () {
+    let modal = document.getElementById('profileModal');
+    const userRole = localStorage.getItem('user_role');
+    const isLocalAdmin = userRole === 'ADMIN';
+
+    if (!modal) {
+        // Inject modal HTML if not already in DOM
+        const modalHtml = `
+            <div id="profileModal" class="modal-overlay">
+                <div class="modal" style="max-width: 550px;">
+                    <div class="modal-header">
+                        <h3><i class="ph-bold ph-user-circle"></i> ${isLocalAdmin ? 'Hồ sơ cá nhân Admin' : 'Hồ sơ cá nhân nhân viên'}</h3>
+                        <button class="close-modal" onclick="closeProfileModal()">&times;</button>
+                    </div>
+                    <form id="profileForm" onsubmit="submitUpdateProfile(event)">
+                        <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
+                            <div id="profileLoading" style="text-align: center; padding: 2rem;">
+                                <i class="ph-bold ph-spinner" style="animation: spin 1s linear infinite; font-size: 2rem; display: inline-block;"></i>
+                                <p style="margin-top: 0.5rem; color: var(--text-secondary);">Đang tải thông tin...</p>
+                            </div>
+                            <div id="profileContent" style="display: none;">
+                                <div class="grid-2 gap-3 mb-3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">${isLocalAdmin ? 'Mã Admin' : 'Mã nhân viên'}</label>
+                                        <input type="text" id="profileStaffId" class="form-control" disabled readonly style="background-color: #f3f4f6;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Họ và tên *</label>
+                                        <input type="text" id="profileFullName" class="form-control" required style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;">
+                                    </div>
+                                </div>
+                                <div class="grid-2 gap-3 mb-3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Số CCCD/CMND *</label>
+                                        <input type="text" id="profileCCCD" class="form-control" required style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Ngày sinh *</label>
+                                        <input type="date" id="profileDob" class="form-control" required style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;">
+                                    </div>
+                                </div>
+                                <div class="grid-2 gap-3 mb-3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Giới tính *</label>
+                                        <select id="profileGender" class="form-control" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box; height: 38px;">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Chức vụ/Vị trí</label>
+                                        <input type="text" id="profilePosition" class="form-control" disabled readonly style="background-color: #f3f4f6;">
+                                    </div>
+                                </div>
+                                <div class="grid-2 gap-3 mb-3" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Email *</label>
+                                        <input type="email" id="profileEmail" class="form-control" required style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Số điện thoại *</label>
+                                        <input type="text" id="profilePhone" class="form-control" required style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" style="font-weight: 500; font-size: 0.875rem;">Địa chỉ *</label>
+                                    <textarea id="profileAddress" class="form-control" rows="3" required placeholder="Nhập địa chỉ của bạn" style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.5rem; box-sizing: border-box;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="profileFooter" style="display: none;">
+                            <button type="button" class="btn btn-secondary" onclick="closeProfileModal()">Đóng</button>
+                            <button type="submit" class="btn btn-primary" id="btnSaveProfile">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        modal = document.getElementById('profileModal');
+    }
+
+    modal.classList.add('active');
+
+    // Show loading
+    document.getElementById('profileLoading').style.display = 'block';
+    document.getElementById('profileContent').style.display = 'none';
+    document.getElementById('profileFooter').style.display = 'none';
+
+    // Fetch data
+    const token = localStorage.getItem('access_token');
+    try {
+        const res = await fetch(`${API_BASE}/api/shared/user/get-profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+            const data = await res.json();
+
+            document.getElementById('profileStaffId').value = data.staffId || '';
+            document.getElementById('profileFullName').value = data.fullName || '';
+            document.getElementById('profileCCCD').value = data.cccd || '';
+            document.getElementById('profileDob').value = data.dob || '';
+            document.getElementById('profileGender').value = data.gender || 'Nam';
+            document.getElementById('profilePosition').value = data.position || '';
+            document.getElementById('profileEmail').value = data.email || '';
+            document.getElementById('profilePhone').value = data.phone || '';
+            document.getElementById('profileAddress').value = data.address || '';
+
+            // Hide loading
+            document.getElementById('profileLoading').style.display = 'none';
+            document.getElementById('profileContent').style.display = 'block';
+            document.getElementById('profileFooter').style.display = 'flex';
+        } else {
+            alert('Không thể tải thông tin hồ sơ!');
+            closeProfileModal();
+        }
+    } catch (e) {
+        alert('Lỗi kết nối máy chủ khi tải hồ sơ!');
+        closeProfileModal();
+    }
+};
+
+window.closeProfileModal = function () {
+    const modal = document.getElementById('profileModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+};
+
+window.submitUpdateProfile = async function (e) {
+    e.preventDefault();
+    const token = localStorage.getItem('access_token');
+
+    const payload = {
+        fullName: document.getElementById('profileFullName').value.trim(),
+        cccd: document.getElementById('profileCCCD').value.trim(),
+        dob: document.getElementById('profileDob').value || null,
+        gender: document.getElementById('profileGender').value,
+        email: document.getElementById('profileEmail').value.trim(),
+        phone: document.getElementById('profilePhone').value.trim(),
+        address: document.getElementById('profileAddress').value.trim()
+    };
+
+    const btn = document.getElementById('btnSaveProfile');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Đang xử lý...';
+
+    try {
+        const res = await fetch(`${API_BASE}/api/staff/staff/update-profile`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            alert('Cập nhật thông tin thành công!');
+
+            // Cập nhật hiển thị tên ở Header ngay lập tức
+            const headerUserName = document.getElementById('headerUserName');
+            if (headerUserName) {
+                headerUserName.textContent = payload.fullName;
+            }
+            const avatarEl = document.getElementById('headerAvatar');
+            if (avatarEl) {
+                avatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(payload.fullName)}&background=c0392b&color=fff`;
+            }
+
+            closeProfileModal();
+        } else {
+            const err = await res.text();
+            alert('Lỗi cập nhật: ' + err);
+        }
+    } catch (e) {
+        alert('Lỗi kết nối máy chủ khi cập nhật!');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+    }
+};
+
+/* ================= STAFF DASHBOARD LOGIC ================= */
+const setupStaffDashboard = async () => {
+    const statPendingTest = document.getElementById('statPendingTest');
+    const assignmentsContainer = document.getElementById('assignmentsContainer');
+    if (!statPendingTest || !assignmentsContainer) return;
+
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        console.warn('No access token found.');
+        return;
+    }
+
+    // 1. Fetch General Stats
+    try {
+        const statRes = await fetch(`${API_BASE}/api/staff/general-stat`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (statRes.ok) {
+            const data = await statRes.json();
+            document.getElementById('statPendingTest').innerText = data.pendingTestBloodBag || 0;
+            document.getElementById('statPendingStorage').innerText = data.pendingStorageBloodBag || 0;
+            document.getElementById('statPendingRequest').innerText = data.pendingRequest || 0;
+
+            const expiring = data.expiringBloodBag || 0;
+            const expired = data.expiredBloodBag || 0;
+            document.getElementById('statExpiring').innerText = expiring + expired;
+        } else {
+            console.error('Failed to fetch general stats:', statRes.status);
+            throw new Error('Failed to fetch general stats');
+        }
+    } catch (e) {
+        console.error('Error fetching general stats', e);
+        ['statPendingTest', 'statPendingStorage', 'statPendingRequest', 'statExpiring'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = '0';
+        });
+    }
+
+    // 2. Fetch Assignments
+    try {
+        const assignRes = await fetch(`${API_BASE}/api/staff/assignment/my-assignment`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (assignRes.ok) {
+            const data = await assignRes.json();
+            const assignments = data.assignments || [];
+
+            if (assignments.length === 0) {
+                assignmentsContainer.innerHTML = `
+                    <div style="background-color: var(--bg-secondary); padding: 2.5rem 2rem; border-radius: 12px; text-align: center; color: var(--text-secondary); border: 2px dashed #e5e7eb;">
+                        <i class="ph ph-calendar-check" style="font-size: 3.5rem; color: var(--primary-color); margin-bottom: 1rem; opacity: 0.9;"></i>
+                        <h4 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.5rem; font-weight: 600;">Bạn chưa có lịch phân công sự kiện nào sắp tới.</h4>
+                        <p style="font-size: 1rem; color: var(--text-secondary);">Chúc bạn một ngày làm việc hiệu quả tại trung tâm!</p>
+                    </div>
+                `;
+            } else {
+                const formatDate = (dateString) => {
+                    if (!dateString) return '';
+                    const date = new Date(dateString);
+                    const pad = n => n.toString().padStart(2, '0');
+                    return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+                };
+
+                assignmentsContainer.innerHTML = assignments.map(task => {
+                    let roleLabel = '';
+                    switch (task.role) {
+                        case 'TIEP_NHAN': roleLabel = 'Tiếp nhận'; break;
+                        case 'BAC_SI': roleLabel = 'Bác sĩ khám'; break;
+                        case 'LAY_MAU': roleLabel = 'Lấy mẫu'; break;
+                        default: roleLabel = task.role || 'Chưa rõ';
+                    }
+
+                    return `
+                    <div class="card event-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 1.5rem; border-radius: 12px; margin-bottom: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background-color: #fff; transition: transform 0.2s, box-shadow 0.2s;">
+                        <div style="display: flex; gap: 1.5rem; align-items: center; flex: 1 1 auto; min-width: 300px;">
+                            <div style="background-color: var(--primary-color-light); color: var(--primary-color); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="ph-bold ph-calendar-star" style="font-size: 2.25rem;"></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem;">${task.eventName || 'Sự kiện hiến máu'}</h4>
+                                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.75rem;">
+                                    <span style="display: flex; align-items: center; gap: 0.35rem;"><i class="ph-bold ph-clock"></i> ${formatDate(task.startDate)} - ${formatDate(task.endDate)}</span>
+                                    <span style="display: flex; align-items: center; gap: 0.35rem;"><i class="ph-bold ph-map-pin"></i> ${task.location || 'Chưa cập nhật địa điểm'}</span>
+                                </div>
+                                <span class="badge" style="background-color: #fef3c7; color: #b45309; padding: 0.4rem 0.8rem; border-radius: 99px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <i class="ph-bold ph-user-circle"></i> Vai trò: ${roleLabel}
+                                </span>
+                            </div>
+                        </div>
+                        <div style="flex-shrink: 0; min-width: max-content; margin-top: 1rem;">
+                            <!-- Thêm responsive cho margin-top trên mobile/tablet sau nếu cần -->
+                        </div>
+                        <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                            <a href="reception.html" class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; background-color: var(--primary-color); color: white; text-decoration: none; transition: all 0.2s;">
+                                Đi tới điểm tiếp nhận <i class="ph-bold ph-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+            }
+        } else {
+            console.error('Failed to fetch assignments:', assignRes.status);
+            throw new Error('Failed to fetch assignments');
+        }
+    } catch (e) {
+        console.error('Error fetching assignments', e);
+        assignmentsContainer.innerHTML = '<p style="color: var(--danger-color); padding: 1rem;">Đã xảy ra lỗi khi tải danh sách phân công.</p>';
+    }
+};
+
+window.toggleSidebarDropdown = function (headerElement) {
+    const parent = headerElement.closest('.nav-item-dropdown');
+    if (!parent) return;
+    const content = parent.querySelector('.nav-dropdown-content');
+    const caret = parent.querySelector('.dropdown-arrow');
+    if (content) {
+        content.classList.toggle('active');
+        if (caret) {
+            if (content.classList.contains('active')) {
+                caret.classList.replace('ph-caret-down', 'ph-caret-up');
+            } else {
+                caret.classList.replace('ph-caret-up', 'ph-caret-down');
+            }
+        }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Auto open sidebar dropdowns if they contain active items
+    document.querySelectorAll('.nav-item-dropdown').forEach(dropdown => {
+        const hasActiveChild = dropdown.querySelector('.nav-dropdown-item.active');
+        if (hasActiveChild) {
+            const content = dropdown.querySelector('.nav-dropdown-content');
+            const header = dropdown.querySelector('.nav-item-header');
+            const caret = dropdown.querySelector('.dropdown-arrow');
+            if (content) content.classList.add('active');
+            if (header) header.classList.add('active');
+            if (caret) {
+                if (caret.classList.contains('ph-caret-down')) {
+                    caret.classList.replace('ph-caret-down', 'ph-caret-up');
+                }
+            }
+        }
+    });
+});

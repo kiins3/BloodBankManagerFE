@@ -114,8 +114,14 @@
                         Chiến dịch hiến máu
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="logs.html">
+                        <i class="ph-bold ph-clock-counter-clockwise"></i>
+                        Nhật ký hoạt động
+                    </a>
+                </li>
                 <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger"
-                        style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li>
+                        style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> Đăng xuất</a></li>
             </ul>
         </aside>
 
@@ -127,24 +133,18 @@
             </header>
 
             <!-- Stats KPI -->
-            <div class="grid-4">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
                 <div class="card">
                     <p style="color: var(--text-secondary); font-size: 0.875rem;">Sự kiện sắp tới</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">3</h3>
+                    <h3 id="statUpcomingEvent" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">0</h3>
                 </div>
                 <div class="card">
                     <p style="color: var(--text-secondary); font-size: 0.875rem;">Đang diễn ra</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">1</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Hôm nay</p>
+                    <h3 id="statOngoingEvent" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">0</h3>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tổng lượt đăng ký</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">850</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Tháng này</p>
-                </div>
-                <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Tỷ lệ hoàn thành</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">85%</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Đã kết thúc</p>
+                    <h3 id="statCompletedEvent" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">0</h3>
                 </div>
             </div>
 
@@ -280,16 +280,37 @@
                 const start = new Date(today); start.setHours(8, 0, 0, 0);
                 const end = new Date(today); end.setHours(17, 0, 0, 0);
 
+                // Reset state
+                window.editingCampaignId = null;
+                const titleHeader = modal.querySelector('.modal-header h3');
+                if (titleHeader) titleHeader.innerText = 'Tạo mới sự kiện';
+                
+                const saveBtn = document.getElementById('saveEventBtn');
+                if (saveBtn) saveBtn.innerText = 'Lưu sự kiện';
+
+                // Clear input values
+                document.getElementById('evtName').value = '';
+                document.getElementById('evtLocation').value = '';
+                document.getElementById('evtGoal').value = '';
+                document.getElementById('evtDesc').value = '';
+                document.getElementById('evtBanner').value = '';
+
+                // Enable all inputs
+                document.getElementById('evtName').disabled = false;
+                document.getElementById('evtLocation').disabled = false;
+                document.getElementById('evtGoal').disabled = false;
+                document.getElementById('evtDesc').disabled = false;
+                document.getElementById('evtStart').disabled = false;
+                document.getElementById('evtEnd').disabled = false;
+
                 // Format for datetime-local: YYYY-MM-DDTHH:mm
                 const formatDT = (d) => {
                     const offset = d.getTimezoneOffset() * 60000;
                     return new Date(d.getTime() - offset).toISOString().slice(0, 16);
                 };
 
-                if (!document.getElementById('evtStart').value) {
-                    document.getElementById('evtStart').value = formatDT(start);
-                    document.getElementById('evtEnd').value = formatDT(end);
-                }
+                document.getElementById('evtStart').value = formatDT(start);
+                document.getElementById('evtEnd').value = formatDT(end);
 
                 modal.classList.add('active');
             }
@@ -355,7 +376,7 @@
             btn.innerHTML = 'Đang lưu...';
 
             try {
-                const response = await fetch('http://localhost:8080/api/admin/event/create-event', {
+                const response = await fetch(`${API_BASE}/api/admin/event/create-event`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -370,6 +391,9 @@
                     // 5. Đồng bộ lại danh sách từ BE để đảm bảo đầy đủ chức năng
                     if (typeof loadCampaigns === 'function') {
                         await loadCampaigns();
+                        if (typeof window.loadCampaignStats === 'function') {
+                            await window.loadCampaignStats();
+                        }
                     } else {
                         // Nếu chưa kịp load global thì reload trang cho chắc
                         location.reload();

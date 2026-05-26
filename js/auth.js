@@ -1,5 +1,5 @@
-const API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-const API_BASE = API_DEPLOY;
+window.API_BASE = window.API_BASE || 'http://localhost:8080';
+window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
 function parseJwt(token) {
     try {
         const base64Url = token.split('.')[1];

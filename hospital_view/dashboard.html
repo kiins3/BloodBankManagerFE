@@ -50,7 +50,12 @@
                         Hồ sơ Bệnh viện
                     </a>
                 </li>
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> �ang xu?t</a></li></ul>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;">
+                        <i class="ph-bold ph-sign-out"></i> Đăng xuất
+                    </a>
+                </li>
+            </ul>
         </aside>
 
         <!-- Main Content -->
@@ -61,10 +66,10 @@
             </header>
 
             <!-- KPI Cards -->
-            <div class="grid-3">
-                <div class="card hospital-kpi-card">
+            <div class="grid-2">
+                <div class="card hospital-kpi-card" style="border-left: 4px solid #6b7280;">
                     <div>
-                        <div class="stat-value">3</div>
+                        <div class="stat-value" id="pendingCount">0</div>
                         <div class="stat-label">Đang chờ duyệt</div>
                     </div>
                     <div class="kpi-icon text-secondary">
@@ -73,26 +78,17 @@
                 </div>
                 <div class="card hospital-kpi-card" style="border-left: 4px solid #f97316;">
                     <div>
-                        <div class="stat-value text-warning">2</div>
+                        <div class="stat-value text-warning" id="transitCount">0</div>
                         <div class="stat-label">Đang vận chuyển</div>
                     </div>
                     <div class="kpi-icon text-warning">
                         <i class="ph-bold ph-truck"></i>
                     </div>
                 </div>
-                <div class="card hospital-kpi-card">
-                    <div>
-                        <div class="stat-value text-success">156</div>
-                        <div class="stat-label">Số túi máu đã nhận</div>
-                    </div>
-                    <div class="kpi-icon text-success">
-                        <i class="ph-bold ph-drop"></i>
-                    </div>
-                </div>
             </div>
 
             <div class="grid-2" style="grid-template-columns: 2fr 1fr; margin-top: 2rem;">
-                <!-- Recent Orders Config -->
+                <!-- Recent Orders -->
                 <div class="card">
                     <h3>Đơn hàng gần đây</h3>
                     <table style="width: 100%; margin-top: 1rem;">
@@ -103,21 +99,11 @@
                                 <th>Trạng thái</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="recentOrdersBody">
                             <tr>
-                                <td class="text-mono">REQ-009</td>
-                                <td>5 Túi O+ (Hồng cầu)</td>
-                                <td><span class="badge bg-warning-light">Đang vận chuyển</span></td>
-                            </tr>
-                            <tr>
-                                <td class="text-mono">REQ-008</td>
-                                <td>10 Túi A- (Huyết tương)</td>
-                                <td><span class="badge bg-secondary-light">Chờ duyệt</span></td>
-                            </tr>
-                            <tr>
-                                <td class="text-mono">REQ-007</td>
-                                <td>2 Túi B+ (Tiểu cầu)</td>
-                                <td><span class="badge bg-success-light">Đã nhận</span></td>
+                                <td colspan="3" class="text-center py-4">
+                                    <i class="ph-bold ph-spinner ph-spin" style="font-size: 1.5rem;"></i> Đang tải dữ liệu...
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -136,6 +122,15 @@
             </div>
         </main>
     </div>
+
+    <script src="hospital.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadDashboardStats === 'function') {
+                loadDashboardStats();
+            }
+        });
+    </script>
 </body>
 
 </html>

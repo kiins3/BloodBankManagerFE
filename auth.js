@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream:auth.js
-
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes:js/auth.js
 function parseJwt(token) {
     try {
         const base64Url = token.split('.')[1];

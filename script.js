@@ -1,13 +1,8 @@
-<<<<<<< Updated upstream:script.js
-var API_DEPLOY = 'https://bloodbankmanager-production.up.railway.app';
-var API_BASE = API_DEPLOY;
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes:js/script.js
 // Chart Configuration
 const setupCharts = () => {
-    if (window.location.pathname.includes('/admin_view/index.html') || window.location.pathname.endsWith('/admin_view/')) {
+    // Admin pages draw their own charts from real data (admin.js)
+    if (window.location.pathname.includes('/admin_view/')) {
         return;
     }
     // Inventory Bar Chart (Existing)
@@ -1760,7 +1755,6 @@ const setupCampaignManagement = () => {
 
 // ==================== AUTH & ROLE HELPERS ====================
 
-<<<<<<< Updated upstream:script.js
 // Helper: redirect về login an toàn từ bất kỳ đâu
 function safeRedirectToLogin() {
     const path = window.location.pathname;
@@ -1773,9 +1767,6 @@ function safeRedirectToLogin() {
 }
 
 window.checkStaffRole = function(allowedRoles) {
-=======
-window.checkStaffRole = function (allowedRoles) {
->>>>>>> Stashed changes:js/script.js
     const role = (localStorage.getItem('user_role') || '').toUpperCase();
     const token = localStorage.getItem('access_token');
 
@@ -1796,19 +1787,8 @@ window.checkStaffRole = function (allowedRoles) {
     }
 };
 
-<<<<<<< Updated upstream:script.js
 // Bỏ định nghĩa logout trùng bên dưới — đã có hàm đúng ở trên (dòng 312)
 
-=======
-window.logout = function () {
-    if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
-    }
-};
->>>>>>> Stashed changes:js/script.js
 
 // Auto-init user info and sidebar visibility in header if element exists
 document.addEventListener('DOMContentLoaded', () => {

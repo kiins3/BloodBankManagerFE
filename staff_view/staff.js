@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
-
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes
 /* Staff View Logic */
 
 // --- Visitor Phones Set: lưu số điện thoại để nhận diện cực kỳ chính xác ---

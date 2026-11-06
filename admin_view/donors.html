@@ -1,20 +1,11 @@
 <!DOCTYPE html>
-<<<<<<< Updated upstream
-<html lang="en">
-=======
 <html lang="vi">
->>>>>>> Stashed changes
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< Updated upstream
-    <title>Donor Management - Blood Bank Manager</title>
-    <link rel="stylesheet" href="../style.css">
-=======
     <title>Qu·∫£n l√Ω ng∆∞·ªùi d√πng - Blood Bank Manager</title>
-    <link rel="stylesheet" href="../css/style.css">
->>>>>>> Stashed changes
+    <link rel="stylesheet" href="../style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -48,17 +39,11 @@
                         <i class="ph-bold ph-caret-down" id="userNavCaret"></i>
                     </div>
                     <div class="nav-dropdown-content active" id="userNavContent">
-<<<<<<< Updated upstream
-                        <a href="#" class="nav-dropdown-item active" id="navDonorList">Qu?n l˝ ngu?i hi?n</a>
-                        <a href="#" class="nav-dropdown-item" id="navStaffList">Qu?n l˝ nh‚n viÍn</a>
-                        <a href="#" class="nav-dropdown-item" id="navHospitalList">Qu?n l˝ b?nh vi?n</a>
-=======
                         <a href="javascript:void(0)" class="nav-dropdown-item active" id="navDonorList">Qu·∫£n l√Ω ng∆∞·ªùi
                             hi·∫øn</a>
                         <a href="javascript:void(0)" class="nav-dropdown-item" id="navStaffList">Qu·∫£n l√Ω nh√¢n vi√™n</a>
                         <a href="javascript:void(0)" class="nav-dropdown-item" id="navHospitalList">Qu·∫£n l√Ω b·ªánh
                             vi·ªán</a>
->>>>>>> Stashed changes
                     </div>
                 </li>
                 <li class="nav-item">
@@ -73,9 +58,6 @@
                         Chi?n d?ch hi?n m·u
                     </a>
                 </li>
-<<<<<<< Updated upstream
-            <li class="nav-item"><a href="javascript:void(0)" onclick="logout()" class="text-danger" style="margin-top: 2rem;"><i class="ph-bold ph-sign-out"></i> ?ang xu?t</a></li></ul>
-=======
                 <li class="nav-item">
                     <a href="logs.html">
                         <i class="ph-bold ph-clock-counter-clockwise"></i>
@@ -88,108 +70,17 @@
                     </a>
                 </li>
             </ul>
->>>>>>> Stashed changes
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-<<<<<<< Updated upstream
-                <h2>Qu?n l˝ ngu?i d˘ng</h2>
-                <p>Qu?n l˝ h? so ngu?i hi?n, nh‚n viÍn v‡ ph‚n quy?n h? th?ng</p>
-=======
                 <h2 id="viewTitle">Qu·∫£n l√Ω ng∆∞·ªùi d√πng</h2>
                 <p id="viewDesc">Qu·∫£n l√Ω h·ªì s∆° ng∆∞·ªùi hi·∫øn, nh√¢n vi√™n v√† ph√¢n quy·ªÅn h·ªá th·ªëng</p>
->>>>>>> Stashed changes
             </header>
 
             <!-- Donor Management View -->
             <div id="donorListView">
-<<<<<<< Updated upstream
-
-            <!-- Stats -->
-            <div class="grid-4">
-                <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng ngu?i hi?n</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">156</h3>
-                </div>
-                <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">Ngu?i hi?n m?i</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">12</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">Th·ng n‡y</p>
-                </div>
-                <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">–? di?u ki?n hi?n</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: var(--success-color);">
-                        142</h3>
-                </div>
-                <div class="card">
-                    <p style="color: var(--text-secondary); font-size: 0.875rem;">–on v? m·u d„ thu</p>
-                    <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #ea580c;">520</h3>
-                </div>
-            </div>
-
-            <!-- Donor Database -->
-            <div class="card">
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s·ch ngu?i hi?n</h3>
-                    <p style="font-size: 0.75rem; color: var(--text-secondary);">TÏm ki?m v‡ l?c co s? d? li?u ngu?i
-                        hi?n</p>
-                </div>
-
-                <!-- Toolbar -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <div style="position: relative; flex: 1; min-width: 200px;">
-                        <i class="ph ph-magnifying-glass"
-                            style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-                        <input type="text" placeholder="Search donors by name or email..."
-                            style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                    </div>
-                    <select
-                        style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                        <option>T?t c? nhÛm m·u</option>
-                        <option>A+</option>
-                        <option>A-</option>
-                        <option>B+</option>
-                        <option>B-</option>
-                        <option>AB+</option>
-                        <option>AB-</option>
-                        <option>O+</option>
-                        <option>O-</option>
-                    </select>
-                    <select
-                        style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                        <option>T?t c? tr?ng th·i</option>
-                        <option>–? di?u ki?n</option>
-                        <option>KhÙng d? –K</option>
-                    </select>
-                    <button class="btn btn-primary" data-modal-target="donorModal">
-                        <i class="ph-bold ph-plus"></i>
-                        ThÍm ngu?i hi?n
-                    </button>
-                </div>
-
-                <!-- Table -->
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>H? tÍn</th>
-                                <th>Email</th>
-                                <th>LiÍn h?</th>
-                                <th>NhÛm m·u</th>
-                                <th>T?ng s? l?n</th>
-                                <th>L?n hi?n cu?i</th>
-                                <th>Tr?ng th·i</th>
-                                <th>H‡nh d?ng</th>
-                            </tr>
-                        </thead>
-                        <tbody id="donorTableBody">
-                            <!-- D? li?u ngu?i hi?n s? du?c n?p t?i d‚y -->
-                        </tbody>
-                    </table>
-                </div>
-=======
                 <!-- Stats -->
                 <div class="grid-4">
                     <div class="card">
@@ -272,7 +163,6 @@
                     <div id="paginationControls"
                         style="display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">
                     </div>
->>>>>>> Stashed changes
                 </div>
             </div>
 
@@ -280,22 +170,6 @@
             <div id="staffListView" style="display: none;">
                 <div class="grid-4">
                     <div class="card">
-<<<<<<< Updated upstream
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng nh‚n viÍn</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">24</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">–ang ho?t d?ng</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">22</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu?n l˝ kho</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">8</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu?n l˝ k? thu?t</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">14</h3>
-=======
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T·ªïng nh√¢n vi√™n</p>
                         <h3 id="statTotalStaff" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">0</h3>
                     </div>
@@ -313,7 +187,6 @@
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Qu·∫£n l√Ω k·ªπ thu·∫≠t</p>
                         <h3 id="statTechStaff"
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #8b5cf6;">0</h3>
->>>>>>> Stashed changes
                     </div>
                 </div>
 
@@ -321,14 +194,9 @@
                     <div
                         style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-<<<<<<< Updated upstream
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s·ch nh‚n viÍn</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l˝ t‡i kho?n v‡ ch?c v? nh‚n s?</p>
-=======
                             <h3 style="font-size: 1rem; font-weight: 600;">Danh s√°ch nh√¢n vi√™n</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu·∫£n l√Ω t√†i kho·∫£n v√† ch·ª©c v·ª•
                                 nh√¢n s·ª±</p>
->>>>>>> Stashed changes
                         </div>
                         <button class="btn btn-primary" onclick="openStaffModal()">
                             <i class="ph-bold ph-plus"></i> ThÍm nh‚n viÍn
@@ -339,20 +207,6 @@
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-<<<<<<< Updated upstream
-                            <input type="text" placeholder="TÏm ki?m theo m„, tÍn..."
-                                style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                        </div>
-                        <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>T?t c? v? trÌ</option>
-                            <option>Qu?n l˝ kho</option>
-                            <option>Qu?n l˝ k? thu?t</option>
-                        </select>
-                        <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>T?t c? tr?ng th·i</option>
-                            <option>Ho?t d?ng</option>
-                            <option>–„ khÛa</option>
-=======
                             <input type="text" id="searchStaffKeyword" placeholder="T√¨m t√™n, email ho·∫∑c s·ªë ƒëi·ªán tho·∫°i..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
@@ -370,7 +224,6 @@
                             <option value="">T·∫•t c·∫£ tr·∫°ng th√°i</option>
                             <option value="ACTIVE">Ho·∫°t ƒë·ªông (ACTIVE)</option>
                             <option value="INACTIVE">T·∫°m kh√≥a (INACTIVE)</option>
->>>>>>> Stashed changes
                         </select>
                     </div>
 
@@ -385,13 +238,7 @@
                                     <th>H‡nh d?ng</th>
                                 </tr>
                             </thead>
-<<<<<<< Updated upstream
-                            <tbody id="staffTableBody">
-                                <!-- D? li?u nh‚n viÍn s? du?c n?p t?i d‚y -->
-                            </tbody>
-=======
                             <tbody id="staffTableBody"></tbody>
->>>>>>> Stashed changes
                         </table>
                     </div>
 
@@ -405,22 +252,6 @@
             <div id="hospitalListView" style="display: none;">
                 <div class="grid-4">
                     <div class="card">
-<<<<<<< Updated upstream
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">T?ng s? b?nh vi?n</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">15</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">–ang h?p t·c</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #10b981;">12</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">YÍu c?u c?p m·u</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #f59e0b;">5</h3>
-                    </div>
-                    <div class="card">
-                        <p style="color: var(--text-secondary); font-size: 0.875rem;">Lu?ng m·u d„ c?p</p>
-                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">1,250</h3>
-=======
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">T·ªïng s·ªë b·ªánh vi·ªán</p>
                         <h3 id="statTotalHospital" style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem;">0
                         </h3>
@@ -440,7 +271,6 @@
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Y√™u c·∫ßu ƒë√£ duy·ªát</p>
                         <h3 id="statApprovedRequest"
                             style="font-size: 1.5rem; font-weight: 600; margin-top: 0.5rem; color: #3b82f6;">0</h3>
->>>>>>> Stashed changes
                     </div>
                 </div>
 
@@ -448,14 +278,9 @@
                     <div
                         style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
                         <div>
-<<<<<<< Updated upstream
-                            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem;">Danh s·ch b?nh vi?n</h3>
-                            <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu?n l˝ d?i t·c v‡ thÙng tin b?nh vi?n</p>
-=======
                             <h3 style="font-size: 1rem; font-weight: 600;">Danh s√°ch b·ªánh vi·ªán</h3>
                             <p style="font-size: 0.75rem; color: var(--text-secondary);">Qu·∫£n l√Ω ƒë·ªëi t√°c v√† th√¥ng tin
                                 b·ªánh vi·ªán</p>
->>>>>>> Stashed changes
                         </div>
                         <button class="btn btn-primary" onclick="openHospitalModal()">
                             <i class="ph-bold ph-plus"></i> ThÍm b?nh vi?n
@@ -466,15 +291,6 @@
                         <div style="position: relative; flex: 1; min-width: 200px;">
                             <i class="ph ph-magnifying-glass"
                                 style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
-<<<<<<< Updated upstream
-                            <input type="text" placeholder="TÏm ki?m tÍn b?nh vi?n..."
-                                style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
-                        </div>
-                        <select style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius); background: white;">
-                            <option>T?t c? tr?ng th·i</option>
-                            <option>–ang h?p t·c</option>
-                            <option>Ng?ng h?p t·c</option>
-=======
                             <input type="text" id="searchHospitalKeyword" placeholder="T√¨m t√™n b·ªánh vi·ªán..."
                                 style="padding: 0.5rem 0.5rem 0.5rem 2.25rem; width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); background: #f9fafb;">
                         </div>
@@ -483,7 +299,6 @@
                             <option value="">T·∫•t c·∫£ tr·∫°ng th√°i</option>
                             <option value="ACTIVE">ƒêang ho·∫°t ƒë·ªông</option>
                             <option value="INACTIVE">Ng·ª´ng ho·∫°t ƒë·ªông</option>
->>>>>>> Stashed changes
                         </select>
                     </div>
 
@@ -498,10 +313,6 @@
                                 </tr>
                             </thead>
                             <tbody id="hospitalTableBody">
-<<<<<<< Updated upstream
-                                <!-- D? li?u b?nh vi?n s? du?c n?p t?i d‚y -->
-=======
->>>>>>> Stashed changes
                             </tbody>
                         </table>
                     </div>
@@ -522,73 +333,23 @@
                 <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
             </div>
             <div class="modal-body">
-<<<<<<< Updated upstream
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Qu?n l˝ thÙng tin chi ti?t c?a ngu?i hi?n.
-                </p>
-
-=======
->>>>>>> Stashed changes
                 <form id="donorForm">
                     <input type="hidden" id="donorId">
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-<<<<<<< Updated upstream
-                        <div class="form-group">
-                            <label>H? tÍn</label>
-                            <input type="text" id="donorName" class="form-control" placeholder="Nh?p h? tÍn">
-                        </div>
-                        <div class="form-group">
-                            <label>CCCD / CMND</label>
-                            <input type="text" id="donorCCCD" class="form-control" placeholder="Nh?p s? CCCD">
-                        </div>
-=======
                         <div class="form-group"><label>H·ªç t√™n</label><input type="text" id="donorName"
                                 class="form-control" required></div>
                         <div class="form-group"><label>CCCD / CMND</label><input type="text" id="donorCCCD"
                                 class="form-control"></div>
->>>>>>> Stashed changes
                     </div>
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-<<<<<<< Updated upstream
-                        <div class="form-group">
-                            <label>Ng‡y sinh</label>
-                            <input type="date" id="donorDob" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Gi?i tÌnh</label>
-                            <select id="donorGender" class="form-control">
-                                <option value="Nam">Nam</option>
-                                <option value="N?">N?</option>
-                                <option value="Kh·c">Kh·c</option>
-                            </select>
-                        </div>
-=======
                         <div class="form-group"><label>Ng√†y sinh</label><input type="date" id="donorDob"
                                 class="form-control"></div>
                         <div class="form-group"><label>Gi·ªõi t√≠nh</label><select id="donorGender" class="form-control">
                                 <option value="Nam">Nam</option>
                                 <option value="N·ªØ">N·ªØ</option>
                             </select></div>
->>>>>>> Stashed changes
                     </div>
                     <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-<<<<<<< Updated upstream
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="donorEmail" class="form-control" placeholder="Nh?p email">
-                        </div>
-                        <div class="form-group">
-                            <label>S? di?n tho?i</label>
-                            <input type="tel" id="donorPhone" class="form-control" placeholder="Nh?p s? di?n tho?i">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>–?a ch?</label>
-                        <input type="text" id="donorAddress" class="form-control" placeholder="Nh?p d?a ch?">
-                    </div>
-
-=======
                         <div class="form-group"><label>Email</label><input type="email" id="donorEmail"
                                 class="form-control"></div>
                         <div class="form-group"><label>S·ªë ƒëi·ªán tho·∫°i</label><input type="tel" id="donorPhone"
@@ -596,41 +357,24 @@
                     </div>
                     <div class="form-group"><label>ƒê·ªãa ch·ªâ</label><input type="text" id="donorAddress"
                             class="form-control"></div>
->>>>>>> Stashed changes
                     <div class="form-group">
                         <label>NhÛm m·u & Y?u t? Rh</label>
                         <div style="display: flex; gap: 1rem;">
                             <select id="donorBloodType" class="form-control" style="flex: 1;">
-<<<<<<< Updated upstream
-                                <option value="">Ch?n nhÛm m·u</option>
-=======
->>>>>>> Stashed changes
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="AB">AB</option>
                                 <option value="O">O</option>
                             </select>
                             <select id="donorRhFactor" class="form-control" style="flex: 1;">
-<<<<<<< Updated upstream
-                                <option value="">Y?u t? Rh</option>
-=======
->>>>>>> Stashed changes
                                 <option value="+">+</option>
                                 <option value="-">-</option>
                             </select>
                         </div>
                     </div>
-<<<<<<< Updated upstream
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>–Ûng</button>
-                        <button type="submit" class="btn btn-primary" id="saveDonorBtn">Luu thÙng tin</button>
-                    </div>
-=======
                     <div class="modal-footer"><button type="button" class="btn btn-secondary"
                             data-modal-close>ƒê√≥ng</button><button type="submit" class="btn btn-primary">L∆∞u th√¥ng
                             tin</button></div>
->>>>>>> Stashed changes
                 </form>
             </div>
         </div>
@@ -641,79 +385,6 @@
     <div class="modal-overlay" id="donorDetailModal">
         <div class="modal" style="width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
-<<<<<<< Updated upstream
-                <h3 id="staffModalTitle">ThÍm nh‚n viÍn m?i</h3>
-                <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
-            </div>
-            <div class="modal-body">
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Qu?n l˝ thÙng tin chi ti?t v‡ quy?n truy c?p c?a nh‚n viÍn.
-                </p>
-
-                <form id="staffForm">
-                    <input type="hidden" id="staffId">
-
-                    <input type="hidden" id="staffCode">
-
-                    <div class="form-group">
-                        <label>H? tÍn</label>
-                        <input type="text" id="staffName" class="form-control" placeholder="Nh?p h? tÍn">
-                    </div>
-
-                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" id="staffEmail" class="form-control" placeholder="–?a ch? Email">
-                        </div>
-                        <div class="form-group">
-                            <label>M?t kh?u</label>
-                            <input type="text" id="staffPassword" class="form-control" value="123126" readonly style="background-color: #f3f4f6; color: var(--text-secondary); cursor: not-allowed;">
-                        </div>
-                    </div>
-
-                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>Ng‡y sinh</label>
-                            <input type="date" id="staffDob" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>S? CCCD</label>
-                            <input type="text" id="staffCCCD" class="form-control" placeholder="Nh?p s? CCCD">
-                        </div>
-                    </div>
-
-                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>Gi?i tÌnh</label>
-                            <select id="staffGender" class="form-control">
-                                <option value="Nam">Nam</option>
-                                <option value="N?">N?</option>
-                                <option value="Kh·c">Kh·c</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>S? di?n tho?i</label>
-                            <input type="tel" id="staffPhone" class="form-control" placeholder="Nh?p s? di?n tho?i">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>V? trÌ</label>
-                        <select id="staffPosition" class="form-control">
-                            <option value="Qu?n l˝ kho">Qu?n l˝ kho</option>
-                            <option value="Qu?n l˝ k? thu?t">Qu?n l˝ k? thu?t</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group" style="display: flex; gap: 0.5rem; align-items: center;">
-                        <input type="checkbox" id="staffStatus" checked>
-                        <label for="staffStatus" style="margin-bottom: 0;">Tr?ng th·i ho?t d?ng</label>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>–Ûng</button>
-                        <button type="submit" class="btn btn-primary" id="saveStaffBtn">Luu thÙng tin</button>
-=======
                 <h3>Chi ti·∫øt ng∆∞·ªùi hi·∫øn</h3>
                 <button class="close-modal" onclick="closeDonorDetailModal()"><i class="ph-bold ph-x"></i></button>
             </div>
@@ -788,7 +459,6 @@
                             kho·∫£n</label></div>
                     <div class="modal-footer"><button type="button" class="btn btn-secondary"
                             data-modal-close>ƒê√≥ng</button><button type="submit" class="btn btn-primary">L∆∞u</button>
->>>>>>> Stashed changes
                     </div>
                 </form>
             </div>
@@ -799,56 +469,6 @@
     <div class="modal-overlay" id="staffDetailModal">
         <div class="modal" style="width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
             <div class="modal-header">
-<<<<<<< Updated upstream
-                <h3 id="hospitalModalTitle">ThÍm b?nh vi?n m?i</h3>
-                <button class="close-modal" data-modal-close><i class="ph-bold ph-x"></i></button>
-            </div>
-            <div class="modal-body">
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.875rem;">
-                    Qu?n l˝ thÙng tin d?i t·c v‡ h? th?ng liÍn k?t b?nh vi?n.
-                </p>
-
-                <form id="hospitalForm">
-                    <input type="hidden" id="hospitalId">
-
-                    <input type="hidden" id="hospitalCode">
-
-                    <div class="form-group">
-                        <label>TÍn b?nh vi?n</label>
-                        <input type="text" id="hospitalName" class="form-control" placeholder="Nh?p tÍn b?nh vi?n">
-                    </div>
-
-                    <div class="form-group">
-                        <label>–?a ch?</label>
-                        <input type="text" id="hospitalAddress" class="form-control" placeholder="Nh?p d?a ch? b?nh vi?n">
-                    </div>
-
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" id="hospitalEmail" class="form-control" placeholder="–?a ch? Email">
-                        </div>
-                        <div class="form-group">
-                            <label>M?t kh?u</label>
-                            <input type="password" id="hospitalPassword" class="form-control" value="123126" readonly style="background-color: #f3f4f6; color: var(--text-secondary); cursor: not-allowed;">
-                        </div>
-                    </div>
-
-                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>S? di?n tho?i</label>
-                            <input type="text" id="hospitalPhone" class="form-control" placeholder="Nh?p S–T liÍn h?">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group" style="display: flex; gap: 0.5rem; align-items: center;">
-                        <input type="checkbox" id="hospitalStatus" checked>
-                        <label for="hospitalStatus" style="margin-bottom: 0;">–ang h?p t·c</label>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-modal-close>–Ûng</button>
-                        <button type="submit" class="btn btn-primary" id="saveHospitalBtn">Luu thÙng tin</button>
-=======
                 <h3>Chi ti·∫øt nh√¢n vi√™n</h3>
                 <button class="close-modal" onclick="closeStaffDetailModal()"><i class="ph-bold ph-x"></i></button>
             </div>
@@ -915,16 +535,11 @@
                             t√°c</label></div>
                     <div class="modal-footer"><button type="button" class="btn btn-secondary"
                             data-modal-close>ƒê√≥ng</button><button type="submit" class="btn btn-primary">L∆∞u</button>
->>>>>>> Stashed changes
                     </div>
                 </form>
             </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-    
-    <script src="../script.js"></script>
-=======
 
     <!-- Hospital Detail Modal -->
     <div class="modal-overlay" id="hospitalDetailModal">
@@ -975,8 +590,8 @@
         </div>
     </div>
 
-    <script src="../js/script.js"></script>
->>>>>>> Stashed changes
+    <script src="../config.js"></script>
+    <script src="../script.js"></script>
     <script src="admin.js"></script>
 </body>
 

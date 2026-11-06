@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
-
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Donor Portal Loaded");
     // Tự động load thông tin người dùng lên Navbar nếu có các element cần thiết
@@ -600,18 +595,8 @@ async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = fa
                 opacity = '0.5';
             }
 
-<<<<<<< Updated upstream
             const imgText = encodeURIComponent(e.eventName.substring(0, 15));
             const imgSrc = `https://placehold.co/600x300/e0f2fe/0984e3?text=${imgText}`;
-=======
-            // Chỉ hiển thị các sự kiện Đang mở hoặc Sắp tới nếu muốn, hoặc hiển thị hết. Ở đây sẽ hiển thị hết.
-            data.forEach(e => {
-                const s = (e.status || "").toUpperCase().replace(/[^A-Z]/g, "");
-
-                let badgeHtml = '';
-                let buttonHtml = '';
-                let opacity = '1';
->>>>>>> Stashed changes
 
             const cardHtml = `
                 <div class="col-12 col-md-6 col-lg-4" style="opacity: ${opacity}">
@@ -645,19 +630,11 @@ async function loadDonorEvents(filterLoc = '', filterDate = '', compactMode = fa
                             </div>
                         </div>
                     </div>
-<<<<<<< Updated upstream
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', cardHtml);
         });
 
-=======
-                `;
-                container.insertAdjacentHTML('beforeend', cardHtml);
-            });
-
-        }
->>>>>>> Stashed changes
     } catch (error) {
         console.error("Lỗi khi fetch events:", error);
         container.innerHTML = '<div class="col-12 text-center py-5 text-danger">Không thể kết nối đến máy chủ sự kiện.</div>';
@@ -865,7 +842,7 @@ async function confirmCancellation() {
     const token = localStorage.getItem('access_token');
     if (!token) {
         showToast("Bạn cần đăng nhập để thao tác.", "warning");
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -1048,16 +1025,12 @@ async function handleChangePassword(event) {
         btn.innerHTML = originalText;
     }
 }
-<<<<<<< Updated upstream
-
-
-=======
 window.logout = function () {
     if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_info');
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
     }
 }
 
@@ -1317,4 +1290,3 @@ async function viewHistoryDetail(registrationId) {
         detailContainer.innerHTML = '<p class="text-danger small mb-0 text-center">Lỗi kết nối.</p>';
     }
 }
->>>>>>> Stashed changes

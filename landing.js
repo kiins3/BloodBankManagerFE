@@ -24,13 +24,12 @@ async function loadLandingEvents() {
     if (!container) return;
 
     try {
-        const response = await fetch(`${API_BASE}/api/shared/event/get-list-event`, {
+        const response = await fetch(`${API_BASE}/api/shared/event/list-event-coming`, {
             method: 'GET'
         });
 
         if (response.ok) {
             const result = await response.json();
-            console.log('[Landing Events API] raw response:', JSON.stringify(result).substring(0, 500));
             
             // Hỗ trợ nhiều dạng response
             let data;
@@ -45,7 +44,6 @@ async function loadLandingEvents() {
                 data = firstArray || [];
             }
             
-            console.log('[Landing Events API] parsed data length:', data ? data.length : 0);
             container.innerHTML = '';
 
             if (!data || !Array.isArray(data) || data.length === 0) {

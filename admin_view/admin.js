@@ -1,14 +1,9 @@
-<<<<<<< Updated upstream
-
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes
 
 document.addEventListener('DOMContentLoaded', function () {
     const token = localStorage.getItem('access_token');
     if (!token) {
-        window.location.href = '../home/login.html';
+        window.location.href = '../login.html';
         return;
     }
 
@@ -600,6 +595,8 @@ async function loadBloodChart() {
             if (!ctx) return; 
 
             if (bloodChartInstance) bloodChartInstance.destroy();
+            const existingChart = Chart.getChart(ctx);
+            if (existingChart) existingChart.destroy();
             bloodChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -1495,7 +1492,7 @@ window.handleHospitalUpdate = async function(event, hospitalId) {
     }
 };
 
-window.logout = function () { localStorage.clear(); window.location.href = '../home/login.html'; }
+window.logout = function () { localStorage.clear(); window.location.href = '../login.html'; }
 
 // ==== UPDATE HANDLERS ====
 window.handleDonorUpdate = async function(event, donorId) {
@@ -2006,8 +2003,6 @@ window.openDiffModal = function(actionType, entityDisplay, oldEscaped, newEscape
     document.body.style.overflow = 'hidden';
 };
 
-<<<<<<< Updated upstream
-=======
 window.closeDiffModal = function() {
     const modal = document.getElementById('diffModal');
     if (modal) {
@@ -2218,5 +2213,4 @@ function showAdminAlert(data) {
         }
     }
 }
->>>>>>> Stashed changes
 

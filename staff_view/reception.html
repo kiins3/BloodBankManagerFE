@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- html5-qrcode for QR scanning -->
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="../config.js"></script>
     <script src="../script.js"></script>
     <script>
         // Check role: Reception only for STAFF_TECH
@@ -514,7 +515,6 @@
         </div>
     </div>
 
-    <script src="../script.js"></script>
     <script src="staff.js"></script>
 
     <!-- SockJS + STOMP cho WebSocket thông báo khách vãng lai -->
@@ -532,7 +532,7 @@
                 if (stompClient) { try { stompClient.disconnect(); } catch (e) { } }
 
                 wsEventId = String(eventId);
-                const socket = new SockJS('http://localhost:8080/ws-bloodbank');
+                const socket = new SockJS(`${window.API_BASE}/ws-bloodbank`);
                 stompClient = Stomp.over(socket);
                 stompClient.debug = null; // tắt log rác
 

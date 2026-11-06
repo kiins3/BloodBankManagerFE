@@ -1,11 +1,6 @@
 /* Hospital View Logic */
 
-<<<<<<< Updated upstream
-
-=======
 window.API_BASE = window.API_BASE || 'http://localhost:8080';
-window.API_DEPLOY = window.API_DEPLOY || 'http://localhost:8080';
->>>>>>> Stashed changes
 let hospitalProfile = null;
 let activeExportedBags = [];
 
